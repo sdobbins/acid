@@ -4,6 +4,8 @@
 
 # transcribes acid.R code into Python for easy simultaneous maintenance
 
+library(stringi)
+
 extra_functions <- c(
   "", 
   "def non_empty_string(string):", 
@@ -26,14 +28,18 @@ extra_functions <- c(
   ""
 )
 
-transcribe_R_file_to_Python_file <- function(R_file, Python_file, append = TRUE, start = 1L, finish = Inf) {
+transcribe_R_file_to_Python_file <- function(R_file, Python_file, append = TRUE, start = 1L, finish = Inf, excepts = NULL) {
   R_file_connection <- file(R_file)
   R_lines <- readLines(R_file_connection)
   close(R_file_connection)
   if (is.infinite(finish)) {
     finish <- length(R_lines)
   }
-  Python_lines <- transcribe_R_lines_to_Python(R_lines[start:finish])
+  R_lines <- R_lines[start:finish]
+  if (!is.null(excepts)) {
+    R_lines <- filter_out_lines_between(R_lines, names(excepts), unname(excepts), TRUE)
+  }
+  Python_lines <- transcribe_R_lines_to_Python(R_lines)
   Python_lines <- c("import functools", "import re", "import numpy as np", "", extra_functions, "", Python_lines, "")
   Python_file_connection <- file(Python_file)
   if (append) {
@@ -43,6 +49,13 @@ transcribe_R_file_to_Python_file <- function(R_file, Python_file, append = TRUE,
   }
   close(Python_file_connection)
   invisible(Python_lines)
+}
+
+filter_out_lines_between <- function(lines, starts, ends, exact = FALSE) {
+  for (i in seq_along(starts)) {
+    lines <- lines[-grep(lines, pattern = starts[[i]], fixed = exact):-(grep(lines, pattern = ends[[i]], fixed = exact) - 1L)]
+  }
+  return (lines)
 }
 
 transcribe_R_lines_to_Python <- function(R_lines) {
@@ -97,13 +110,13 @@ transcribe_R_lines_to_Python <- function(R_lines) {
   ### fix functions
   
   # fix vector assignments (flat)
-  lines <- gsub(lines, pattern = '( |\\()c\\((("[^"]+"(, *)?)+)\\)', replacement = "\\1[\\2]")
+  lines[containing_code] <- gsub(lines[containing_code], pattern = '( |\\()c\\((("[^"]+"(, *)?)+)\\)', replacement = "\\1[\\2]")
   
   # fix vector assignments (not flat)
-  lines <- fix_function_call_pattern(lines, "c", pattern = "( |\\()c\\(", before = "flat_concat([", after = "])", offset = 1L)
+  lines[containing_code] <- fix_function_call_pattern(lines[containing_code], "c", pattern = "( |\\()c\\(", before = "flat_concat([", after = "])", offset = 1L)
   
   # fix unique([x]) to list(set(x))
-  lines <- fix_function_call(lines, "unique", before = "list(set(", after = "))")
+  lines[containing_code] <- fix_function_call(lines[containing_code], "unique", before = "list(set(", after = "))")
   
   # fix unique(x) to np.unique(x)
   lines[containing_code] <- gsub(lines[containing_code], pattern = "unique(", fixed = TRUE, replacement = "np.unique(")
@@ -111,19 +124,19 @@ transcribe_R_lines_to_Python <- function(R_lines) {
   lines[containing_code] <- gsub(lines[containing_code], pattern = "sort(", fixed = TRUE, replacement = "np.sort(")
   
   # fix ending_with_word(...) to "\\b" + ... + "$"
-  lines <- fix_function_call(lines, "ending_with_word", before = '"\\\\b" + ', after = ' + "$"')
+  lines[containing_code] <- fix_function_call(lines[containing_code], "ending_with_word", before = '"\\\\b" + ', after = ' + "$"')
   
   # fix ending_with(...) to ... + "$"
-  lines <- fix_function_call(lines, "ending_with", after = ' + "$"')
+  lines[containing_code] <- fix_function_call(lines[containing_code], "ending_with", after = ' + "$"')
   
   # fix beginning_with_word(...) to "^" + ... + "\\\\b"
-  lines <- fix_function_call(lines, "beginning_with_word", before = '"^" + ', after = ' + "\\\\b"')
+  lines[containing_code] <- fix_function_call(lines[containing_code], "beginning_with_word", before = '"^" + ', after = ' + "\\\\b"')
   
   # fix beginning_with(...) to "^" + ...
-  lines <- fix_function_call(lines, "beginning_with", before = '"^" + ', after = "")
+  lines[containing_code] <- fix_function_call(lines[containing_code], "beginning_with", before = '"^" + ', after = "")
   
   # fix capturing_group(...) to "(" + ... + ")"
-  lines <- fix_function_call(lines, "capturing_group", before = '"(" + ', after = ' + ")"')
+  lines[containing_code] <- fix_function_call(lines[containing_code], "capturing_group", before = '"(" + ', after = ' + ")"')
   
   # fix isnt_empty(x) to len(x) != 0
   lines[containing_code] <- gsub(lines[containing_code], pattern = "isnt_empty\\(([^)]*)\\)", replacement = "len(\\1) != 0")
@@ -161,14 +174,17 @@ transcribe_R_lines_to_Python <- function(R_lines) {
   # lines[containing_code <- gsub(lines[containing_code], "%whichlike%", between = "")]
   
   # fix x %like% y and x %!like% y to x.find(y) > 0 and x.find(y) < 0 respectively
-  lines[containing_code] <- fix_infix_operator(lines[containing_code], "%like%", between = ".find(", after = ") > 0", parenthesize = TRUE)
-  lines[containing_code] <- fix_infix_operator(lines[containing_code], "%!like%", between = ".find(", after = ") < 0", parenthesize = TRUE)
+  lines[containing_code] <- fix_infix_operator_comprehension(lines[containing_code], op = "%like%", func = "bool(re.search(")
+  lines[containing_code] <- fix_infix_operator_comprehension(lines[containing_code], op = "%!like%", func = "not(bool(re.search(")
+  
+  # fix strrep function to str.join statement
+  lines[containing_code] <- gsub(lines[containing_code], pattern = "strrep\\((\\[[^]]+\\]), *([0-9]+)\\)", replacement = '"".join([thing * \\2 for thing in \\1])')
   
   # fix paste0 function when first arg is a one-element list (e_rules)
-  lines <- gsub(lines, pattern = 'paste0\\(e_rules, *("[^"]+")\\)', replacement = "(e_rules + \\1)")
+  lines[containing_code] <- gsub(lines[containing_code], pattern = 'paste0\\(e_rules, *("[^"]+")\\)', replacement = "(e_rules + \\1)")
   
   # fix paste0 function in most cases (i.e. paste0(something, "text") to [thing + "text" for thing in something])
-  lines <- gsub(lines, pattern = 'paste0\\(([^,]+), *("[^"]+")\\)', replacement = "[string + \\2 for string in \\1]")
+  lines[containing_code] <- gsub(lines[containing_code], pattern = 'paste0\\(([^,]+), *("[^"]+")\\)', replacement = "[string + \\2 for string in \\1]")
   
   ### fix logic
   
@@ -189,6 +205,12 @@ transcribe_R_lines_to_Python <- function(R_lines) {
   
   # fix assignment operator to equals
   lines[containing_code] <- gsub(lines[containing_code], pattern = "<-", replacement = "=")
+  
+  ### make a few hard-coded changes
+  
+  # fix digeseted_word_dictionary return to return an actual Python dictionary instead of named R vector
+  digested_word_dictionary_return <- grep(lines, pattern = "return re_name(words, original_text)", fixed = TRUE)
+  lines[digested_word_dictionary_return] <- gsub(lines[digested_word_dictionary_return], pattern = "return re_name(words, original_text)", fixed = TRUE, replacement = "return {original_words[i]:words[i] for i in xrange(len(words))}")
   
   return (lines)
 }
@@ -234,6 +256,20 @@ fix_infix_operator <- function(lines, op, between, after = ")", parenthesize = F
     } else {
       stri_sub(lines[l], from = left_phrase_info[["start"]], to = right_phrase_info[["end"]]) <- paste0(left_phrase_info[["string"]], between, right_phrase_info[["string"]], after)
     }
+    l <- num_of_first_line_that_matches(lines, op, exact = TRUE)
+  }
+  return (lines)
+}
+
+fix_infix_operator_comprehension <- function(lines, op, func) {
+  after_parens <- strrep(")", length(gregexpr(func, pattern = "(", fixed = TRUE)[[1L]]))
+  l <- num_of_first_line_that_matches(lines, op, exact = TRUE)
+  while (!is.na(l)) {
+    current_line <- lines[l]
+    pos <- regexpr(current_line, pattern = op, fixed = TRUE)[[1L]]
+    left_phrase_info <- find_phrase_to_left(current_line, op, pos)
+    right_phrase_info <- find_phrase_to_right(current_line, op, pos)
+    stri_sub(lines[l], from = left_phrase_info[["start"]], to = right_phrase_info[["end"]]) <- paste0("np.array([", func, right_phrase_info[["string"]], ", ", "word", after_parens, " for word in ", left_phrase_info[["string"]], "])")
     l <- num_of_first_line_that_matches(lines, op, exact = TRUE)
   }
   return (lines)

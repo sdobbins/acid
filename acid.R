@@ -163,8 +163,8 @@ pluralize <- function(words, ...) {
 
 ### Singulars and Plurals ---------------------------------------------------
 
-# requires lower or proper noun case to work
 pluralize_ <- function(words, ...) {
+  # requires lower or proper noun case to work
   # languages to turn on
   other_languages <- unlist(list(...), use.names = FALSE)
   if (is_empty(other_languages) || (isnt_empty(other_languages) && other_languages[[1]] == "All")) {
@@ -578,18 +578,18 @@ English_ish_keepers <- c("abolish", "blish", "blemish", "burnish", "dish", "fish
 English_ment_keepers <- c("parliament", "tournament", "testament", "ornament", "torment", "armament", "garment", "element", "plement", "department", "environment", "segment", "aliment", "moment", "comment", "condiment", "experiment", "ndiment", "pliment", "regiment", "sediment", "sentiment", "triment", "argument", "document", "instrument", "monument")
 English_ize_keepers <- c("baptize", "braize", "maize", "ognize", "organize", "ostracize", "prize", "seize", "size")
 
-English_able_double_consonants <- c("b", "d", "g", "m", "n", "p", "r", "t")
-English_doubled_consonants_able <- paste0(English_able_double_consonants, English_able_double_consonants, "able")
-English_ism_double_consonants <- c("b", "d", "g", "l", "n", "p", "t", "z")
-English_doubled_consonants_ism <- paste0(English_ism_double_consonants, English_ism_double_consonants, "ism")
-English_er_double_consonants <- c("b", "d", "g", "m", "n", "p", "t")
-English_doubled_consonants_er <- paste0(English_er_double_consonants, English_er_double_consonants, "er")
-English_est_double_consonants <- c("b", "d", "g", "m", "n", "p", "t")
-English_doubled_consonants_est <- paste0(English_est_double_consonants, English_est_double_consonants, "est")
-English_ed_double_consonants <- c("b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z")
-English_doubled_consonants_ed <- paste0(English_ed_double_consonants, English_ed_double_consonants, "ed")
-English_ing_double_consonants <- c("b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z")
-English_doubled_consonants_ing <- paste0(English_ing_double_consonants, English_ing_double_consonants, "ing")
+English_able_double_consonants <- strrep(c("b", "d", "g", "m", "n", "p", "r", "t"), 2)
+English_doubled_consonants_able <- paste0(English_able_double_consonants, "able")
+English_ism_double_consonants <- strrep(c("b", "d", "g", "l", "n", "p", "t", "z"), 2)
+English_doubled_consonants_ism <- paste0(English_ism_double_consonants, "ism")
+English_er_double_consonants <- strrep(c("b", "d", "g", "m", "n", "p", "t"), 2)
+English_doubled_consonants_er <- paste0(English_er_double_consonants, "er")
+English_est_double_consonants <- strrep(c("b", "d", "g", "m", "n", "p", "t"), 2)
+English_doubled_consonants_est <- paste0(English_est_double_consonants, "est")
+English_ed_double_consonants <- strrep(c("b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z"), 2)
+English_doubled_consonants_ed <- paste0(English_ed_double_consonants, "ed")
+English_ing_double_consonants <- strrep(c("b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z"), 2)
+English_doubled_consonants_ing <- paste0(English_ing_double_consonants, "ing")
 
 English_eer_keepers <- c("beer", "career", "cheer", "deer", "domineer", "engineer", "killdeer", "jeer", "leer", "peer", "pioneer", "queer", "reindeer", "schmeer", "sheer", "sneer", "steer", "veer", "veneer", "volunteer")
 English_ier_keepers <- c("brier", "cashier", "cavalier", "chandelier", "courier", "frontier", "glacier", "\\bpier", "premier", "soldier", "\\bspier", "\\btier")
