@@ -1,6 +1,6 @@
 # @author Scott Dobbins
-# @version 0.5
-# @date 2018-01-09 18:00
+# @version 0.5.0.1
+# @date 2018-01-11 20:00
 
 ### ACID
 # contains, pluralizer, singularizer, and lemmatizer
@@ -155,13 +155,13 @@ handle_language_arguments <- function(...) {
   }
 }
 
+
+### Singulars and Plurals ---------------------------------------------------
+
 pluralize <- function(words, ...) {
   arguments <- handle_language_arguments(...)
   return (pluralize_(words, arguments))
 }
-
-
-### Singulars and Plurals ---------------------------------------------------
 
 pluralize_ <- function(words, ...) {
   # requires lower or proper noun case to work
@@ -488,6 +488,34 @@ make_singular <- function(words) {
   can_be_made_singular <- are_plural & !of_indeterminate_number
   words[can_be_made_singular] <- singularize(words[can_be_made_singular])
   return (words)
+}
+
+get_singular_and_plural <- function(words, data_in = NULL) {
+  if (is.null(data_in)) {
+    are_plural <- is_plural(words)
+    are_indeterminate <- is.na(are_plural)
+    are_plural[are_indeterminate] <- FALSE
+    are_singular <- !are_indeterminate & !are_plural
+    indeterminates <- words[are_indeterminate]
+    plurals <- c(words[are_plural], pluralize(words[are_singular]))
+    singulars <- c(words[are_singular], singularize(words[are_plural]))
+    return (c(indeterminates, singulars, plurals))
+  } else if (data_in == 'singular') {
+    are_indeterminate <- is.na(is_plural(words))
+    indeterminates <- words[are_indeterminate]
+    singulars <- words[!are_indeterminate]
+    plurals <- pluralize(words[!are_indeterminate])
+    return (c(indeterminates, singulars, plurals))
+  } else if (data_in == 'plural') {
+    are_indeterminate <- is.na(is_plural(words))
+    indeterminates <- words[are_indeterminate]
+    plurals <- words[!are_indeterminate]
+    singulars <- singularize(words[!are_indeterminate])
+    return (c(indeterminates, singulars, plurals))
+  } else {
+    message('gets_singular_and_plual() only takes "singular" and "plural" as possible data_in arguments; defaulting to null case')
+    return (gets_singular_and_plural(words))
+  }
 }
 
 
