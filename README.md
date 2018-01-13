@@ -1,5 +1,5 @@
 # acid
-Word digester: an esay, accurate lemmatizer that also handles words outside dictionaries
+Word digester: an easy, accurate lemmatizer that also handles words outside dictionaries
 
 The R version has no external dependencies, though it runs slightly faster if you first load the "stringi" package. The R version also contains code for pluralizing words, which is not available in Python yet (though singularizing words, which is required for the lemmatizer/digester, is available through the Python version). 
 
