@@ -175,7 +175,8 @@ def singularize(words):
 
 def make_singular(words):
     can_be_made_singular = ~is_singular(words)
-    words[can_be_made_singular] = singularize(words[can_be_made_singular])
+    if any(can_be_made_singular):
+        words[can_be_made_singular] = singularize(words[can_be_made_singular])
     return words
 
 
