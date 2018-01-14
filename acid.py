@@ -620,7 +620,7 @@ def digested_word_dictionary(words):
     if len(subset) != 0:
         able_keeper_mask = np.array([not(bool(re.search("\\b" + any_of(English_able_keepers) + "$", word))) for word in subset])
         # e.g. "reliable" -> "rely"
-        iable_to_y = subset.endswith("iable") & ~np.any([subset.endswith(string) for string in English_iable_keepers], axis = 0)
+        iable_to_y = subset.endswith("iable") & np.array([not(bool(re.search("\\b" + any_of(English_iable_keepers) + "$", word))) for word in subset])
         subset[iable_to_y] = [string[:-5] + "y" for string in subset[iable_to_y]]
         # e.g. "despicable" -> "despise"
         icable_to_ise = subset.endswith("spicable")

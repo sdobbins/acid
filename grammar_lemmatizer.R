@@ -411,7 +411,7 @@ digested_word_dictionary <- function(words) {
   if (isnt_empty(subset)) {
     able_keeper_mask <- subset %!like% ending_with_word(any_of(English_able_keepers))
     # e.g. "reliable" -> "rely"
-    iable_to_y <- endsWith(subset, "iable") & !endsWithAny(subset, English_iable_keepers)
+    iable_to_y <- endsWith(subset, "iable") & subset %!like% ending_with_word(any_of(English_iable_keepers))
     subset[iable_to_y] <- replace_last_n_chars_with(subset[iable_to_y], 5L, "y")
     # e.g. "despicable" -> "despise"
     icable_to_ise <- endsWith(subset, "spicable")
