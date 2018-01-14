@@ -382,7 +382,8 @@ def digested_word_dictionary(words):
     # has desired side effect of simplifying number (plurals and singulars alike all end up as singular)
     # has desired side effect of taking "ies" verb forms to "y" as well, further simplifying things
     can_be_made_singular = np.array([not(bool(re.search("\\b" + any_of(English_s_keepers) + "$", word))) for word in words])
-    words[can_be_made_singular] = make_singular(words[can_be_made_singular])
+    if any(can_be_made_singular):
+        words[can_be_made_singular] = make_singular(words[can_be_made_singular])
   
     ### handle contractions
     # contractions block the ending of words (hiding endings in endsWith() checks), so they must be removed
