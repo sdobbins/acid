@@ -64,7 +64,7 @@ English_er_keepers <- c("under", "whether", "\\bever", "whenever", "wherever", "
 English_iest_keepers <- c("priest")
 English_est_keepers <- c("\\bbest", "digest", "earnest", "(\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(\\b|arm|head)rest", "\\btest", "\\bvest", "(\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(\\b|house)guest", "infest", "invest", "interest", "protest", "(\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers)
 English_ed_keepers <- c("\\bbed", "bred", "\\bfed", "hundred", "infrared", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed")
-English_ing_keepers <- c("bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "pending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(\\b|any|every|no|some)?thing", "\\bwing", "\\bzing")
+English_ing_keepers <- c("bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(\\b|any|every|no|some)?thing", "\\bwing", "\\bzing")
 
 English_s_keepers <- c("always", "perhaps", "whereas", "has", "is", "was")
 
@@ -176,7 +176,7 @@ digested_word_dictionary <- function(words) {
     is_wont <- subset %like% "\\bwon't$"
     subset[is_wont] <- replace_last_n_chars_with(subset[is_wont], 5L, "will")
     is_mightve <- subset %like% "\\bmight've$"
-    subset[is_mightve] <- replace_last_n_chars_with(subset[is_mightve], 8L, "may")
+    subset[is_mightve] <- replace_last_n_chars_with(subset[is_mightve], 8L, "might")
     is_contraction <- subset %like% "(n't|'ve|'ll|'re|')+$"
     subset[is_contraction] <- grem(subset[is_contraction], "(n't|'ve|'ll|'re|')+$")
     words[subset_scope] <- subset
@@ -206,6 +206,9 @@ digested_word_dictionary <- function(words) {
   
   reasonable_slice <- endsWith(words, "should")
   words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word("should"), replacement = "shall")
+  
+  reasonable_slice <- endsWith(words, "might")
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word("might"), replacement = "may")
   
   reasonable_slice <- endsWithAny(words, c("better", "best"))
   words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("better", "best"))), replacement = "good")
