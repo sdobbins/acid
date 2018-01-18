@@ -177,8 +177,8 @@ transcribe_R_lines_to_Python <- function(R_lines) {
   lines[containing_code] <- fix_infix_operator_comprehension(lines[containing_code], op = "%like%", func = "bool(re.search(")
   lines[containing_code] <- fix_infix_operator_comprehension(lines[containing_code], op = "%!like%", func = "not(bool(re.search(")
   
-  # fix strrep function to str.join statement
-  lines[containing_code] <- gsub(lines[containing_code], pattern = "strrep\\((\\[[^]]+\\]), *([0-9]+)\\)", replacement = '"".join([thing * \\2 for thing in \\1])')
+  # fix strrep function to list comprehension
+  lines[containing_code] <- gsub(lines[containing_code], pattern = "strrep\\((\\[[^]]+\\]), *([0-9]+)\\)", replacement = "[thing * \\2 for thing in \\1]")
   
   # fix paste0 function when first arg is a one-element list (e_rules)
   lines[containing_code] <- gsub(lines[containing_code], pattern = 'paste0\\(e_rules, *("[^"]+")\\)', replacement = "(e_rules + \\1)")

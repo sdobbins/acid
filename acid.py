@@ -259,17 +259,17 @@ English_ish_keepers = ["abolish", "blish", "blemish", "burnish", "dish", "fish",
 English_ment_keepers = ["parliament", "tournament", "testament", "ornament", "torment", "armament", "garment", "element", "plement", "department", "environment", "segment", "aliment", "moment", "comment", "condiment", "experiment", "ndiment", "pliment", "regiment", "sediment", "sentiment", "triment", "argument", "document", "instrument", "monument"]
 English_ize_keepers = ["baptize", "braize", "maize", "ognize", "organize", "ostracize", "prize", "seize", "size"]
 
-English_able_double_consonants = "".join([thing * 2 for thing in ["b", "d", "g", "m", "n", "p", "r", "t"]])
+English_able_double_consonants = [thing * 2 for thing in ["b", "d", "g", "m", "n", "p", "r", "t"]]
 English_doubled_consonants_able = [string + "able" for string in English_able_double_consonants]
-English_ism_double_consonants = "".join([thing * 2 for thing in ["b", "d", "g", "l", "n", "p", "t", "z"]])
+English_ism_double_consonants = [thing * 2 for thing in ["b", "d", "g", "l", "n", "p", "t", "z"]]
 English_doubled_consonants_ism = [string + "ism" for string in English_ism_double_consonants]
-English_er_double_consonants = "".join([thing * 2 for thing in ["b", "d", "g", "m", "n", "p", "t"]])
+English_er_double_consonants = [thing * 2 for thing in ["b", "d", "g", "m", "n", "p", "t"]]
 English_doubled_consonants_er = [string + "er" for string in English_er_double_consonants]
-English_est_double_consonants = "".join([thing * 2 for thing in ["b", "d", "g", "m", "n", "p", "t"]])
+English_est_double_consonants = [thing * 2 for thing in ["b", "d", "g", "m", "n", "p", "t"]]
 English_doubled_consonants_est = [string + "est" for string in English_est_double_consonants]
-English_ed_double_consonants = "".join([thing * 2 for thing in ["b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z"]])
+English_ed_double_consonants = [thing * 2 for thing in ["b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z"]]
 English_doubled_consonants_ed = [string + "ed" for string in English_ed_double_consonants]
-English_ing_double_consonants = "".join([thing * 2 for thing in ["b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z"]])
+English_ing_double_consonants = [thing * 2 for thing in ["b", "d", "g", "l", "m", "n", "p", "r", "t", "v", "z"]]
 English_doubled_consonants_ing = [string + "ing" for string in English_ing_double_consonants]
 
 English_eer_keepers = ["beer", "career", "cheer", "deer", "domineer", "engineer", "killdeer", "jeer", "leer", "peer", "pioneer", "queer", "reindeer", "schmeer", "sheer", "sneer", "steer", "veer", "veneer", "volunteer"]
@@ -278,7 +278,7 @@ English_er_keepers = flat_concat(["under", "whether", "\\bever", "whenever", "wh
 English_iest_keepers = ["priest"]
 English_est_keepers = flat_concat(["\\bbest", "digest", "earnest", "(\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(\\b|arm|head)rest", "\\btest", "\\bvest", "(\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(\\b|house)guest", "infest", "invest", "interest", "protest", "(\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers])
 English_ed_keepers = ["\\bbed", "bred", "\\bfed", "hundred", "infrared", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed"]
-English_ing_keepers = ["bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "pending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(\\b|any|every|no|some)?thing", "\\bwing", "\\bzing"]
+English_ing_keepers = ["bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(\\b|any|every|no|some)?thing", "\\bwing", "\\bzing"]
 
 English_s_keepers = ["always", "perhaps", "whereas", "has", "is", "was"]
 
