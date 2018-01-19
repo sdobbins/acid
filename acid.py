@@ -369,7 +369,10 @@ def digest_words(words):
     digest_dict = digested_word_dictionary(words)
     valid = results.nonzero()
     results[valid] = [digest_dict[word] for word in results[valid]]
-    return results
+    if type(words) is list:
+        return [result for result in results]
+    else:
+        return results
 
 def digested_word_dictionary(words):
     ### process only unique non-blank and non-NA values
