@@ -178,8 +178,8 @@ digested_word_dictionary <- function(words) {
     subset[is_wont] <- replace_last_n_chars_with(subset[is_wont], 5L, "will")
     is_mightve <- subset %like% "\\bmight've$"
     subset[is_mightve] <- replace_last_n_chars_with(subset[is_mightve], 8L, "might")
-    is_contraction <- subset %like% "(n't|'ve|'ll|'re|')+$"
-    subset[is_contraction] <- grem(subset[is_contraction], "(n't|'ve|'ll|'re|')+$")
+    is_contraction <- subset %like% "(?:n't|'ve|'ll|'re|')+$"
+    subset[is_contraction] <- grem(subset[is_contraction], "(?:n't|'ve|'ll|'re|')+$")
     words[subset_scope] <- subset
   }
   
