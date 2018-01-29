@@ -69,23 +69,23 @@ English_ing_keepers <- c("bring", "ceiling", "darling", "\\bding", "\\bduring", 
 English_s_keepers <- c("always", "perhaps", "whereas", "has", "is", "was")
 
 # rules for what kinds of word endings require an ultimate "e"
-general_e_rules <- capturing_group("(\\b|[^aieou]|ll)[aeiouy][bcfgkmsvz]")
-ce_rules <- capturing_group("[lnrs]c")
-de_rules <- capturing_group("([^aeiou][aeiou]|ui)d")
-ge_rules <- capturing_group("([dlr]|((r|ch|str)a|(ll|v)e|(b|h|cr)i|(c|sp)o|(l|p|pl|scro)u)n)g")
-le_rules <- capturing_group("((imp|wholes|sc|wh)a|((\\b|de)f|p|\\b[prt]|rev|sm)i|(cond|h|par|\\bp|recons|\\bt)o|(r|sched)u|y|[bcdfgkpstz])l")
-ne_rules <- capturing_group("([^aeiou][aiu]|(\\b([bchtz]|cl|dr)|chaper|(de|im|post|pro)p|ph|thr|[as]t)o)n")
-oe_rules <- capturing_group("(\\bh|(\\b|tip(py)?)t|(sh))o")
-pe_rules <- capturing_group("([^aeiou][aeiuy]|(\\b([cdhmr]|el)|gr|sc)o)p")
-re_rules <- capturing_group("([^aeiou][aiu]|(\\b([bcgps]|ad|ch|depl|enc|expl|ign|impl|rest|sh|sp|st|wh)|sc|sn)o|qui)r")
-se_rules <- capturing_group("((ai|au|ea|ee|oi|oo|((\\b|[^l])[^l]|\\bl)ou)|ui|[lnrw])s")
-te_rules <- capturing_group("(([^eo]|cre|ide)a|(comp|compl|del|excr)e|((\\b|[^abeiou])b|(\\b|[^i])c|ign|ind|inv|sm|sp|qu|un|wh|wr|xc)i|(\\b[cdntv]|m|qu|[^i]v)o|([^aeiou]|\\bro)u|[bhptw]as)t")
-ue_rules <- capturing_group("u")
-ve_rules <- capturing_group("((ai|ea|ee|ei|ie)|[lr])v")
-ye_rules <- capturing_group("(\\b|cross|hawk)ey")
-ze_rules <- capturing_group("[^tz]z")
-che_rules <- capturing_group("((\\b|back|belly|head|stomach|tooth)a|ca)ch")
-e_rules <- capturing_group(any_of(c(general_e_rules, ce_rules, de_rules, ge_rules, le_rules, ne_rules, oe_rules, pe_rules, re_rules, se_rules, te_rules, ue_rules, ve_rules, ye_rules, ze_rules, che_rules)))
+general_e_rules <- non_capturing_group("(\\b|[^aieou]|ll)[aeiouy][bcfgkmsvz]")
+ce_rules <- non_capturing_group("[lnrs]c")
+de_rules <- non_capturing_group("([^aeiou][aeiou]|ui)d")
+ge_rules <- non_capturing_group("([dlr]|((r|ch|str)a|(ll|v)e|(b|h|cr)i|(c|sp)o|(l|p|pl|scro)u)n)g")
+le_rules <- non_capturing_group("((imp|wholes|sc|wh)a|((\\b|de)f|p|\\b[prt]|rev|sm)i|(cond|h|par|\\bp|recons|\\bt)o|(r|sched)u|y|[bcdfgkpstz])l")
+ne_rules <- non_capturing_group("([^aeiou][aiu]|(\\b([bchtz]|cl|dr)|chaper|(de|im|post|pro)p|ph|thr|[as]t)o)n")
+oe_rules <- non_capturing_group("(\\bh|(\\b|tip(py)?)t|(sh))o")
+pe_rules <- non_capturing_group("([^aeiou][aeiuy]|(\\b([cdhmr]|el)|gr|sc)o)p")
+re_rules <- non_capturing_group("([^aeiou][aiu]|(\\b([bcgps]|ad|ch|depl|enc|expl|ign|impl|rest|sh|sp|st|wh)|sc|sn)o|qui)r")
+se_rules <- non_capturing_group("((ai|au|ea|ee|oi|oo|((\\b|[^l])[^l]|\\bl)ou)|ui|[lnrw])s")
+te_rules <- non_capturing_group("(([^eo]|cre|ide)a|(comp|compl|del|excr)e|((\\b|[^abeiou])b|(\\b|[^i])c|ign|ind|inv|sm|sp|qu|un|wh|wr|xc)i|(\\b[cdntv]|m|qu|[^i]v)o|([^aeiou]|\\bro)u|[bhptw]as)t")
+ue_rules <- non_capturing_group("u")
+ve_rules <- non_capturing_group("((ai|ea|ee|ei|ie)|[lr])v")
+ye_rules <- non_capturing_group("(\\b|cross|hawk)ey")
+ze_rules <- non_capturing_group("[^tz]z")
+che_rules <- non_capturing_group("((\\b|back|belly|head|stomach|tooth)a|ca)ch")
+e_rules <- non_capturing_group(any_of(c(general_e_rules, ce_rules, de_rules, ge_rules, le_rules, ne_rules, oe_rules, pe_rules, re_rules, se_rules, te_rules, ue_rules, ve_rules, ye_rules, ze_rules, che_rules)))
 
 digest_words <- function(words) {
   # description:  Used for "stemming" or "lemmatizing" words for Natural Language Processing. 
@@ -148,6 +148,7 @@ digest_words <- function(words) {
   # notes:    as it breaks down words by part of speech-related suffixes. 
   # notes:  In future may separate contractions into component words. 
   # notes:  In future may handle co-, en-, inter-, intra-, semi- prefixes. 
+  # notes:  In future should handle encyclopaedia-like spellings. 
   # 
   results <- character(length(words))
   contains_words <- words != "" & !is.na(words)
