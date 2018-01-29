@@ -233,11 +233,11 @@ English_ly_keepers = list(set(flat_concat([English_ly_nouns, English_ly_verbs, E
 English_ly_to_le_words = ["doubly", "cycly", "muscly", "crackly", "crinkly", "fickly", "knuckly", "sparkly", "tinkly", "wrinkly", "crumply", "dimply", "druply", "riply", "rumply", "simply", "triply", "tuply", "bristly", "gently", "gristly", "rattly", "subtly", "thistly"]
 
 English_anti_keepers = ["anticipat", "antidote", "antilog", "antimony", "anting", "antiquari", "antiquary", "antiquat", "antique", "antiqui", "antiquit", "antistrophe"]
-English_dis_keepers = ["discreet", "discret(e|ion)", "discrepan", "discriminat", "disk", "dish", "display", "dismay", "dismal", "dismiss", "dispel", "discern", "discipl", "dispute", "distribu", "disrupt", "disturb", "discus", "diss", "dispose", "disgust", "dismiss", "distill", "disdain", "distort", "disease", "disco$", "discograph", "discover", "district", "distinct", "distinguish", "distan", "disten", "distress"]
+English_dis_keepers = ["discreet", "discret(?:e|ion)", "discrepan", "discriminat", "disk", "dish", "display", "dismay", "dismal", "dismiss", "dispel", "discern", "discipl", "dispute", "distribu", "disrupt", "disturb", "discus", "diss", "dispose", "disgust", "dismiss", "distill", "disdain", "distort", "disease", "disco$", "discograph", "discover", "district", "distinct", "distinguish", "distan", "disten", "distress"]
 English_imbmp_keepers = ["imbib", "imbitter", "imbolden", "imbecil", "imblaz", "imbroglio", "imbue", "immediat", "imp$", "impair", "impal", "impeach", "imped", "imperitive", "impertinent", "import", "implement", "imply", "implic", "impregnat", "improp", "impuls", "impresario", "impose", "imposit", "impetuous", "imperil", "imperial", "impact", "implod", "implos", "impress", "imprint", "imput", "impel", "impromptu", "implant", "impish", "impound", "impunit", "improv", "implor", "impuls", "imping", "immanenc", "immigrat", "immun", "immur", "immers", "immanent", "immens"]
 English_in_keepers = ["in$", "inside$", "into$", "inane", "inanit", "inaug", "inbound", "inbre", "inch", "incas", "incens", "incentiv", "incept", "incid", "incis", "incit", "inclin", "inclos", "includ", "inclus", "incom", "increas", "increment", "incub", "inculca", "incur", "indeed", "indemn", "indent", "index", "india", "indic", "indie", "indig", "individual", "induc", "indulg", "industr", "indy", "inert", "infant", "inertia", "infatua", "infect", "infer", "infest", "infix", "inflat", "inflect", "inflict", "influen", "info", "infra", "infring", "infus", "ingest", "ingot", "ingrain", "ingrati", "ingredient", "ingroup", "inhabit", "inhal", "inherent", "inherit", "inhibit", "initia", "inject", "injure", "ink", "inlay", "inmate", "inn", "inositol", "input", "inquir", "insert", "insid", "insinuat", "insip", "insist", "insinuat", "inspect", "inspir", "install", "instan", "instat", "instead", "instigat", "instill", "instruct", "instrum", "institut", "insul", "insur", "intact", "integ", "intell", "inten", "inter", "intestin", "intimat", "intomb", "intro", "intru", "intubat", "intuit", "inundat", "inur", "invad", "invas", "invent", "invers", "invert", "invest", "invit", "invok", "invoc", "involv", "inward"]
 English_mis_keepers = ["missile", "mission", "miser", "mischiev", "miscible", "misceg", "miscell", "misses", "miss$", "missed", "missing", "mishap", "mist", "miso", "mississippi"]
-English_sub_keepers = ["sub$", "submit", "submar", "subtl", "subb(ed|ing)", "subject", "suburb", "subdu(e|ing)", "subway", "subsequent", "subvene", "subpena", "subduce", "subvert", "subsidy", "subside", "subsist", "sublime", "subtend", "submer[gs]e", "subtract", "substan[ct]", "subscri[bp]", "substitut", "subsidiar", "substrate"]#***
+English_sub_keepers = ["sub$", "submit", "submar", "subtl", "subb(?:ed|ing)", "subject", "suburb", "subdu(?:e|ing)", "subway", "subsequent", "subvene", "subpena", "subduce", "subvert", "subsidy", "subside", "subsist", "sublime", "subtend", "submer[gs]e", "subtract", "substan[ct]", "subscri[bp]", "substitut", "subsidiar", "substrate"]#***
 English_super_keepers = ["super$", "superfluous", "superior", "superlativ"]
 English_un_keepers = ["uncle", "union", "unif", "univer", "unilat", "uniloc", "unifol", "uniform", "unit", "unival", "univar", "univoc", "unicycl", "uniling", "unilin", "unicam", "uniplan", "unipot", "unicol", "unitar", "unicorn", "uniax", "unique", "unison", "uniface", "unisex", "unless", "until"]
 English_under_keepers = ["under$", "underneath$", "understand", "understood"]
@@ -274,32 +274,32 @@ English_doubled_consonants_ing = [string + "ing" for string in English_ing_doubl
 
 English_eer_keepers = ["beer", "career", "cheer", "deer", "domineer", "engineer", "killdeer", "jeer", "leer", "peer", "pioneer", "queer", "reindeer", "schmeer", "sheer", "sneer", "steer", "veer", "veneer", "volunteer"]
 English_ier_keepers = ["brier", "cashier", "cavalier", "chandelier", "courier", "frontier", "glacier", "\\bpier", "premier", "soldier", "\\bspier", "\\btier"]
-English_er_keepers = flat_concat(["under", "whether", "\\bever", "whenever", "wherever", "whichever", "whoever", "whomever", "however", "whatever", "whatsoever", "forever", "either", "neither", "after", "\\bnever", "\\bher", "differ", "number", "tower", "dinner", "matter", "trouser", "mister", "minister", "amber", "customer", "harbinger", "monger", "\\banger", "manger", "ganger", "\\bother", "another", "paper", "(head)?quarter", "helicopter", "over", "member", "water", "fiber", "wonder", "ancester", "cloister", "confer", "corner", "enter", "per", "luster", "neuter", "scepter", "order", "deliver", "prefer", "defer", "foster", "cluster", "murder", "chamber", "september", "october", "november", "december", "register", "weather", "together", "letter", "newsletter", "chapter", "better", "poker", "further", "farther", "remember", "river", "silver", "rather", "summer", "winter", "super", "cancer", "answer", "transfer", "filter", "consider", "partner", "character", "father", "mother", "brother", "sister", "daughter", "leather", "upper", "lower", "laser", "theater", "gender", "soccer", "proper", "refer", "master", "meter", "rubber", "monster", "mester", "prefer", "latter", "tiger", "finger", "danger", "powder", "integer", "pepper", "cover", "spider", "cyber", "shelter", "suffer", "beaver", "trigger", "fever", "butler", "timber", "gather", "roster", "encounter", "hammer", "cylinder", "boulder", "thunder", "ester", "render", "after", "monomer", "dimer", "trimer", "tetramer", "polymer", "bitter", "usher", "ginger", "carpenter", "clever", "alzheimer", "lavender", "eager", "surrender", "lumber", "diaper", "jupiter", "sweater", "minister", "litter", "panther", "pewter", "clutter", "bladder", "lever", "feather", "burger", "ledger", "lobster", "slaughter", "glitter", "garner", "oyster", "clover", "power", "conquer", "badger", "butcher", "register", "kosher", "viper", "whisper", "flower", "utter", "cater", "doppler", "snooker", "juniper", "cucumber", "deter", "infer", "ether", "caliber", "center", "hooker", "cider", "splinter", "chapter", "batter", "sober", "sinister", "otter", "slender", English_eer_keepers, English_ier_keepers])
+English_er_keepers = flat_concat(["under", "whether", "\\bever", "whenever", "wherever", "whichever", "whoever", "whomever", "however", "whatever", "whatsoever", "forever", "either", "neither", "after", "\\bnever", "\\bher", "differ", "number", "tower", "dinner", "matter", "trouser", "mister", "minister", "amber", "customer", "harbinger", "monger", "\\banger", "manger", "ganger", "\\bother", "another", "paper", "(?:head)?quarter", "helicopter", "over", "member", "water", "fiber", "wonder", "ancester", "cloister", "confer", "corner", "enter", "per", "luster", "neuter", "scepter", "order", "deliver", "prefer", "defer", "foster", "cluster", "murder", "chamber", "september", "october", "november", "december", "register", "weather", "together", "letter", "newsletter", "chapter", "better", "poker", "further", "farther", "remember", "river", "silver", "rather", "summer", "winter", "super", "cancer", "answer", "transfer", "filter", "consider", "partner", "character", "father", "mother", "brother", "sister", "daughter", "leather", "upper", "lower", "laser", "theater", "gender", "soccer", "proper", "refer", "master", "meter", "rubber", "monster", "mester", "prefer", "latter", "tiger", "finger", "danger", "powder", "integer", "pepper", "cover", "spider", "cyber", "shelter", "suffer", "beaver", "trigger", "fever", "butler", "timber", "gather", "roster", "encounter", "hammer", "cylinder", "boulder", "thunder", "ester", "render", "after", "monomer", "dimer", "trimer", "tetramer", "polymer", "bitter", "usher", "ginger", "carpenter", "clever", "alzheimer", "lavender", "eager", "surrender", "lumber", "diaper", "jupiter", "sweater", "minister", "litter", "panther", "pewter", "clutter", "bladder", "lever", "feather", "burger", "ledger", "lobster", "slaughter", "glitter", "garner", "oyster", "clover", "power", "conquer", "badger", "butcher", "register", "kosher", "viper", "whisper", "flower", "utter", "cater", "doppler", "snooker", "juniper", "cucumber", "deter", "infer", "ether", "caliber", "center", "hooker", "cider", "splinter", "chapter", "batter", "sober", "sinister", "otter", "slender", English_eer_keepers, English_ier_keepers])
 English_iest_keepers = ["priest"]
-English_est_keepers = flat_concat(["\\bbest", "digest", "earnest", "(\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(\\b|arm|head)rest", "\\btest", "\\bvest", "(\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(\\b|house)guest", "infest", "invest", "interest", "protest", "(\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers])
+English_est_keepers = flat_concat(["\\bbest", "digest", "earnest", "(?:\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(?:\\b|arm|head)rest", "\\btest", "\\bvest", "(?:\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(?:\\b|house)guest", "infest", "invest", "interest", "protest", "(?:\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers])
 English_ed_keepers = ["\\bbed", "bred", "\\bfed", "hundred", "infrared", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed"]
-English_ing_keepers = ["bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(\\b|any|every|no|some)?thing", "\\bwing", "\\bzing"]
+English_ing_keepers = ["bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(?:\\b|any|every|no|some)?thing", "\\bwing", "\\bzing"]
 
 English_s_keepers = ["always", "perhaps", "whereas", "has", "is", "was"]
 
 # rules for what kinds of word endings require an ultimate "e"
-general_e_rules = "(" + "(\\b|[^aieou]|ll)[aeiouy][bcfgkmsvz]" + ")"
-ce_rules = "(" + "[lnrs]c" + ")"
-de_rules = "(" + "([^aeiou][aeiou]|ui)d" + ")"
-ge_rules = "(" + "([dlr]|((r|ch|str)a|(ll|v)e|(b|h|cr)i|(c|sp)o|(l|p|pl|scro)u)n)g" + ")"
-le_rules = "(" + "((imp|wholes|sc|wh)a|((\\b|de)f|p|\\b[prt]|rev|sm)i|(cond|h|par|\\bp|recons|\\bt)o|(r|sched)u|y|[bcdfgkpstz])l" + ")"
-ne_rules = "(" + "([^aeiou][aiu]|(\\b([bchtz]|cl|dr)|chaper|(de|im|post|pro)p|ph|thr|[as]t)o)n" + ")"
-oe_rules = "(" + "(\\bh|(\\b|tip(py)?)t|(sh))o" + ")"
-pe_rules = "(" + "([^aeiou][aeiuy]|(\\b([cdhmr]|el)|gr|sc)o)p" + ")"
-re_rules = "(" + "([^aeiou][aiu]|(\\b([bcgps]|ad|ch|depl|enc|expl|ign|impl|rest|sh|sp|st|wh)|sc|sn)o|qui)r" + ")"
-se_rules = "(" + "((ai|au|ea|ee|oi|oo|((\\b|[^l])[^l]|\\bl)ou)|ui|[lnrw])s" + ")"
-te_rules = "(" + "(([^eo]|cre|ide)a|(comp|compl|del|excr)e|((\\b|[^abeiou])b|(\\b|[^i])c|ign|ind|inv|sm|sp|qu|un|wh|wr|xc)i|(\\b[cdntv]|m|qu|[^i]v)o|([^aeiou]|\\bro)u|[bhptw]as)t" + ")"
-ue_rules = "(" + "u" + ")"
-ve_rules = "(" + "((ai|ea|ee|ei|ie)|[lr])v" + ")"
-ye_rules = "(" + "(\\b|cross|hawk)ey" + ")"
-ze_rules = "(" + "[^tz]z" + ")"
-che_rules = "(" + "((\\b|back|belly|head|stomach|tooth)a|ca)ch" + ")"
-e_rules = "(" + any_of(flat_concat([general_e_rules, ce_rules, de_rules, ge_rules, le_rules, ne_rules, oe_rules, pe_rules, re_rules, se_rules, te_rules, ue_rules, ve_rules, ye_rules, ze_rules, che_rules])) + ")"
+general_e_rules = "(?:" + "(?:\\b|[^aieou]|ll)[aeiouy][bcfgkmsvz]" + ")"
+ce_rules = "(?:" + "[lnrs]c" + ")"
+de_rules = "(?:" + "(?:[^aeiou][aeiou]|ui)d" + ")"
+ge_rules = "(?:" + "(?:[dlr]|(?:(?:r|ch|str)a|(?:ll|v)e|(?:b|h|cr)i|(?:c|sp)o|(?:l|p|pl|scro)u)n)g" + ")"
+le_rules = "(?:" + "(?:(?:imp|wholes|sc|wh)a|(?:(?:\\b|de)f|p|\\b[prt]|rev|sm)i|(?:cond|h|par|\\bp|recons|\\bt)o|(?:r|sched)u|y|[bcdfgkpstz])l" + ")"
+ne_rules = "(?:" + "(?:[^aeiou][aiu]|(?:\\b(?:[bchtz]|cl|dr)|chaper|(?:de|im|post|pro)p|ph|thr|[as]t)o)n" + ")"
+oe_rules = "(?:" + "(?:\\bh|(?:\\b|tip(py)?)t|sh)o" + ")"
+pe_rules = "(?:" + "(?:[^aeiou][aeiuy]|(?:\\b(?:[cdhmr]|el)|gr|sc)o)p" + ")"
+re_rules = "(?:" + "(?:[^aeiou][aiu]|(?:\\b(?:[bcgps]|ad|ch|depl|enc|expl|ign|impl|rest|sh|sp|st|wh)|sc|sn)o|qui)r" + ")"
+se_rules = "(?:" + "(?:(?:ai|au|ea|ee|oi|oo|(?:(?:\\b|[^l])[^l]|\\bl)ou)|ui|[lnrw])s" + ")"
+te_rules = "(?:" + "(?:(?:[^eo]|cre|ide)a|(?:comp|compl|del|excr)e|(?:(?:\\b|[^abeiou])b|(?:\\b|[^i])c|ign|ind|inv|sm|sp|qu|un|wh|wr|xc)i|(?:\\b[cdntv]|m|qu|[^i]v)o|(?:[^aeiou]|\\bro)u|[bhptw]as)t" + ")"
+ue_rules = "(?:" + "u" + ")"
+ve_rules = "(?:" + "(?:ai|ea|ee|ei|ie|[lr])v" + ")"
+ye_rules = "(?:" + "(?:\\b|cross|hawk)ey" + ")"
+ze_rules = "(?:" + "[^tz]z" + ")"
+che_rules = "(?:" + "(?:(?:\\b|back|belly|head|stomach|tooth)a|ca)ch" + ")"
+e_rules = "(?:" + any_of(flat_concat([general_e_rules, ce_rules, de_rules, ge_rules, le_rules, ne_rules, oe_rules, pe_rules, re_rules, se_rules, te_rules, ue_rules, ve_rules, ye_rules, ze_rules, che_rules])) + ")"
 
 def digest_words(words):
     # description: Used for "stemming" or "lemmatizing" words for Natural Language Processing. 
@@ -397,8 +397,8 @@ def digested_word_dictionary(words):
         subset[is_wont] = [string[:-5] + "will" for string in subset[is_wont]]
         is_mightve = np.array([bool(re.search("\\bmight've$", word)) for word in subset])
         subset[is_mightve] = [string[:-8] + "may" for string in subset[is_mightve]]
-        is_contraction = np.array([bool(re.search("(n't|'ve|'ll|'re|')+$", word)) for word in subset])
-        subset[is_contraction] = [re.sub(string = string, pattern = "(n't|'ve|'ll|'re|')+$", repl = "") for string in subset[is_contraction]]
+        is_contraction = np.array([bool(re.search("(?:n't|'ve|'ll|'re|')+$", word)) for word in subset])
+        subset[is_contraction] = [re.sub(string = string, pattern = "(?:n't|'ve|'ll|'re|')+$", repl = "") for string in subset[is_contraction]]
         words[subset_scope] = subset
   
     ### handle irregular words
