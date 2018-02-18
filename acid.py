@@ -15,7 +15,7 @@ import numpy as np
 
 
 def non_empty_string(string):
-    return type(string) is str and string != ""
+    return type(string) in (str, unicode) and string != ""
 
 def reduce_concat(stuff):
     return functools.reduce(lambda x, y: x + y, stuff)

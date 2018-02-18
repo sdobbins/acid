@@ -193,6 +193,11 @@ digested_word_dictionary <- function(words) {
   reasonable_slice <- endsWithAny(words, c("am", "are", "been", "is", "was", "were"))
   words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("am", "are", "been", "is", "was", "were"))), replacement = "be")
   
+  reasonable_slice <- endsWithAny(words, c("bore", "born", "borne"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("bore", "born", "borne"))), replacement = "bear")
+  
+  
+  
   reasonable_slice <- endsWithAny(words, c("had", "has"))
   words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("had", "has"))), replacement = "have")
   
