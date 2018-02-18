@@ -64,7 +64,7 @@ English_er_keepers <- c("under", "whether", "\\bever", "whenever", "wherever", "
 English_iest_keepers <- c("priest")
 English_est_keepers <- c("\\bbest", "digest", "earnest", "(?:\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(?:\\b|arm|head)rest", "\\btest", "\\bvest", "(?:\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(?:\\b|house)guest", "infest", "invest", "interest", "protest", "(?:\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers)
 English_ed_keepers <- c("\\bbed", "bred", "\\bfed", "hundred", "infrared", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed")
-English_ing_keepers <- c("bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(?:\\b|any|every|no|some)?thing", "\\bwing", "\\bzing")
+English_ing_keepers <- c("bring", "ceiling", "\\bcling", "darling", "\\bding", "\\bduring", "evening", "\\bfling", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "(?:\\b|un|war)sling", "spring", "sterling", "\\bsting", "string", "swing", "(?:\\b|any|every|no|some)?thing", "\\bwing", "\\bwring", "\\bzing")
 
 English_s_keepers <- c("always", "perhaps", "whereas", "has", "is", "was")
 
@@ -184,43 +184,22 @@ digested_word_dictionary <- function(words) {
   }
   
   ### handle irregular words
-  # prevents spurious edits later on
   
-  # common irregular words
-  reasonable_slice <- endsWith(words, "an")
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word("an"), replacement = "a")
-  
-  reasonable_slice <- endsWithAny(words, c("am", "are", "been", "is", "was", "were"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("am", "are", "been", "is", "was", "were"))), replacement = "be")
-  
-  reasonable_slice <- endsWithAny(words, c("bore", "born", "borne"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("bore", "born", "borne"))), replacement = "bear")
-  
-  
-  
-  reasonable_slice <- endsWithAny(words, c("had", "has"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("had", "has"))), replacement = "have")
-  
-  reasonable_slice <- endsWithAny(words, c("went", "gone"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("went", "gone"))), replacement = "go")
-  
-  reasonable_slice <- endsWithAny(words, c("eats", "ate", "eaten", "eating", "edible", "edibly"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("eats", "ate", "eaten", "eating", "edible", "edibly"))), replacement = "eat")
-  
-  reasonable_slice <- endsWithAny(words, c("cannot", "could"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("cannot", "could"))), replacement = "can")
-  
-  reasonable_slice <- endsWith(words, "should")
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word("should"), replacement = "shall")
-  
-  reasonable_slice <- endsWith(words, "might")
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word("might"), replacement = "may")
-  
-  reasonable_slice <- endsWithAny(words, c("better", "best"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("better", "best"))), replacement = "good")
-  
-  reasonable_slice <- endsWithAny(words, c("worse", "worst"))
-  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("worse", "worst"))), replacement = "bad")
+  # irregular past participles ending in "dden"
+  subset_scope <- endsWith(words, "dden")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    # e.g. "downtrodden" -> "downtread"
+    odden_to_ead <- endsWith(subset, "trodden")
+    subset[odden_to_ead] <- replace_last_n_chars_with(subset[odden_to_ead], 5L, "ead")
+    # e.g. "forbidden" -> "forbid"
+    delete_den <- endsWithAny(subset, c("adden", "bidden", "edden"))
+    subset[delete_den] <- remove_last_n_chars(subset[delete_den], 3L)
+    # e.g. "hidden" -> "hide"
+    idden_to_ide <- endsWith(subset, "idden") & !endsWithAny(subset, c("midden", "swidden"))
+    subset[idden_to_ide] <- replace_last_n_chars_with(subset[idden_to_ide], 3L, "e")
+    words[subset_scope] <- subset
+  }
   
   # irregular past participles ending in "tten"
   subset_scope <- endsWith(words, "tten")
@@ -235,40 +214,379 @@ digested_word_dictionary <- function(words) {
     words[subset_scope] <- subset
   }
   
-  # irregular verbs without much pattern
-  ot_to_et <- endsWithAny(words, c("begot", "forgot"))
-  words[ot_to_et] <- replace_last_n_chars_with(words[ot_to_et], 2L, "et")
-  ew_to_ow <- endsWithAny(words, c("blew", "threw"))
-  words[ew_to_ow] <- replace_last_n_chars_with(words[ew_to_ow], 2L, "ow")
-  ung_to_ang <- endsWith(words, "hung")
-  words[ung_to_ang] <- replace_last_n_chars_with(words[ung_to_ang], 3L, "ang")
-  aoung_to_ing <- endsWithAny(words, c("sang", "song", "sung"))
-  words[aoung_to_ing] <- replace_last_n_chars_with(words[aoung_to_ing], 3L, "ing")
-  ung_to_ing <- endsWithAny(words, c("slung", "stung"))
-  words[ung_to_ing] <- replace_last_n_chars_with(words[ung_to_ing], 3L, "ing")
-  aun_to_in <- endsWithAny(words, c("began", "begun"))
-  words[aun_to_in] <- replace_last_n_chars_with(words[aun_to_in], 2L, "in")
-  ame_to_ome <- endsWith(words, "came")
-  words[ame_to_ome] <- replace_last_n_chars_with(words[ame_to_ome], 3L, "ome")
-  
-  # irregular verbs ending in "aught" or "ought"
-  subset_scope <- endsWith(words, "ught")
+  # irregular past participles ending in "en" (and a few adjectives)
+  subset_scope <- endsWith(words, "en")
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
-    ought_to_ing <- endsWith(subset, "brought")
-    subset[ought_to_ing] <- replace_last_n_chars_with(subset[ought_to_ing], 5L, "ing")
-    ought_to_uy <- endsWith(subset, "bought")
-    subset[ought_to_uy] <- replace_last_n_chars_with(subset[ought_to_uy], 5L, "uy")
-    ought_to_eek <- endsWith(subset, "sought")
-    subset[ought_to_eek] <- replace_last_n_chars_with(subset[ought_to_eek], 5L, "eek")
-    aught_to_atch <- endsWith(subset, "caught")
-    subset[aught_to_atch] <- replace_last_n_chars_with(subset[aught_to_atch], 5L, "atch")
-    aught_to_each <- endsWith(subset, "taught")
-    subset[aught_to_each] <- replace_last_n_chars_with(subset[aught_to_each], 5L, "each")
-    aunk_to_ink <- endsWithAny(subset, c("drank", "drunk"))
-    subset[aunk_to_ink] <- replace_last_n_chars_with(subset[aunk_to_ink], 3L, "ink")
+    # e.g. "eaten" -> "eat" (also "been" to "be")
+    delete_en <- endsWithAny(subset, c("ashen", "been", "drunken", "earthen", "eaten", "fallen", "olden", "silken", "swollen", "wooden", "woolen"))
+    subset[delete_en] <- remove_last_n_chars(subset[delete_en], 2L)
+    # e.g. "broken" -> "broke" (later to "break")
+    delete_n <- endsWithAny(subset, c("aken", "chosen", "iven", "oken", "olen", "oven", "risen", "rozen", "seen")) & !endsWith(subset, "kraken") & !ends_with_word(subset, "oven")
+    subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
     words[subset_scope] <- subset
   }
+  
+  # irregular past participles ending in "n"
+  subset_scope <- endsWith(words, "n")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    # e.g. "worn" -> "wore" (later to "wear")
+    n_to_e <- endsWithAny(subset, c("born", "torn", "worn")) & !endsWithAny(subset, c("stubborn", "attorn", "sworn"))
+    subset[n_to_e] <- replace_last_n_chars_with(subset[n_to_e], 1L, "e")
+    # e.g. "lain" -> "lay"
+    ain_to_ay <- endsWith(subset, "lain")
+    subset[ain_to_ay] <- replace_last_n_chars_with(subset[ain_to_ay], 2L, "y")
+    # e.g. "shorn" -> "shear"
+    orn_to_ear <- endsWith(subset, "shorn")
+    subset[orn_to_ear] <- replace_last_n_chars_with(subset[orn_to_ear], 3L, "ear")
+    # e.g. "drawn" -> "draw"
+    delete_n <- ends_with_word(subset, any_of(c("blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown")))
+    subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
+    words[subset_scope] <- subset
+  }
+  
+  # irregular past participles ending in "t"
+  subset_scope <- endsWith(words, "t")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    # e.g. "burnt" -> "burn"
+    delete_t <- endsWithAny(subset, c("burnt", "dealt", "dreamt", "learnt", "meant"))
+    subset[delete_t] <- remove_last_n_chars(subset[delete_t], 1L)
+    # e.g. "built" -> "build"
+    t_to_d <- endsWithAny(subset, c("bent", "built", "lent", "sent", "spent"))
+    subset[t_to_d] <- replace_last_n_chars_with(subset[t_to_d], 1L, "d")
+    # e.g. "lost" -> "lose"
+    t_to_e <- endsWith(subset, "lost")
+    subset[t_to_e] <- replace_last_n_chars_with(subset[t_to_e], 1L, "e")
+    # e.g. "left" -> "leave"
+    eft_to_eave <- endsWithAny(subset, c("bereft", "left"))
+    subset[eft_to_eave] <- replace_last_n_chars_with(subset[eft_to_eave], 2L, "ave")
+    words[subset_scope] <- subset
+  }
+  
+  #*** prevents spurious edits later on
+  #*** make common irregular words get fixed even if not at end of word phrase
+  
+  # common irregular words
+  reasonable_slice <- ends_with_word(words, "an")
+  words[reasonable_slice] <- remove_last_n_chars(words[reasonable_slice], 1L)
+  
+  reasonable_slice <- endsWithAny(words, c("am", "are", "is", "was", "were"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("am", "are", "been", "is", "was", "were"))), replacement = "be")
+  
+  reasonable_slice <- endsWithAny(words, c("did", "done"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("did", "done"))), replacement = "do")
+  
+  reasonable_slice <- ends_with_word(words, any_of(c("had", "has")))
+  words[reasonable_slice] <- replace_last_n_chars_with(words[reasonable_slice], 1L, "ve")
+  
+  reasonable_slice <- endsWithAny(words, c("went", "gone"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("went", "gone"))), replacement = "go")
+  
+  reasonable_slice <- endsWithAny(words, c("ate", "edible", "edibly"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("eats", "ate", "eaten", "eating", "edible", "edibly"))), replacement = "eat")
+  
+  reasonable_slice <- endsWithAny(words, c("cannot", "could"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("cannot", "could"))), replacement = "can")
+  
+  reasonable_slice <- endsWith(words, "should")
+  words[reasonable_slice] <- replace_last_n_chars_with(words[reasonable_slice], 4L, "all")
+  
+  reasonable_slice <- endsWith(words, "might")
+  words[reasonable_slice] <- replace_last_n_chars_with(words[reasonable_slice], 4L, "ay")
+  
+  reasonable_slice <- endsWithAny(words, c("bore", "borne"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("bore", "born", "borne"))), replacement = "bear")
+  
+  reasonable_slice <- endsWithAny(words, c("better", "best"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("better", "best"))), replacement = "good")
+  
+  reasonable_slice <- endsWithAny(words, c("worse", "worst"))
+  words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("worse", "worst"))), replacement = "bad")
+  
+  # irregular verbs without much pattern
+  
+  # handle irregulars ending in "d"
+  subset_scope <- endsWith(words, "d")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    
+    subsubset_scope <- endsWith(subset, "ed")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ed_to_ead <- ends_with_word(subsubset, "led")
+      subsubset[ed_to_ead] <- replace_last_n_chars_with(subsubset[ed_to_ead], 1L, "ad")
+      ed_to_ee <- ends_with_word(subsubset, "fled")
+      subsubset[ed_to_ee] <- replace_last_n_chars_with(subsubset[ed_to_ee], 1L, "e")
+      ed_to_eed <- ends_with_word(subsubset, any_of(c("bled", "bred", "sped")))
+      subsubset[ed_to_eed] <- replace_last_n_chars_with(subsubset[ed_to_eed], 1L, "ed")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    subsubset_scope <- endsWith(subset, "id")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      id_to_ide <- endsWith(subsubset, "slid") | ends_with_word(subsubset, "hid")
+      subsubset[id_to_ide] <- paste0(subsubset[id_to_ide], "e")
+      aid_to_ay <- endsWithAny(subsubset, c("laid", "paid", "said")) & !endsWith(subsubset, "plaid")
+      subsubset[aid_to_ay] <- replace_last_n_chars_with(subsubset[aid_to_ay], 2L, "y")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    subsubset_scope <- endsWith(subset, "ld")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      eld_to_old <- endsWith(subsubset, "held")
+      subsubset[eld_to_old] <- replace_last_n_chars_with(subsubset[eld_to_old], 3L, "old")
+      old_to_ell <- endsWithAny(subsubset, c("sold", "told"))
+      subsubset[old_to_ell] <- replace_last_n_chars_with(subsubset[old_to_ell], 3L, "ell")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    ound_to_ind <- endsWithAny(subset, c("bound", "found", "ground", "wound"))
+    subset[ound_to_ind] <- replace_last_n_chars_with(subset[ound_to_ind], 4L, "ind")
+    
+    subsubset_scope <- endsWith(subset, "od")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      od_to_ead <- endsWith(subsubset, "trod")
+      subsubset[od_to_ead] <- replace_last_n_chars_with(subsubset[od_to_ead], 2L, "ead")
+      ood_to_and <- endsWith(subsubset, "stood")
+      subsubset[ood_to_and] <- replace_last_n_chars_with(subsubset[ood_to_and], 3L, "and")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    eard_to_ear <- endsWith(subset, "heard")
+    subset[eard_to_ear] <- remove_last_n_chars(subset[eard_to_ear], 1L)
+    
+    words[subset_scope] <- subset
+  }
+  
+  # handle irregulars ending in "e"
+  subset_scope <- endsWith(words, "e")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    
+    subsubset_scope <- endsWith(subset, "de")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ade_to_ake <- endsWith(subsubset, "made") & !endsWithAny(subsubset, c("amade", "omade"))
+      subsubset[ade_to_ake] <- replace_last_n_chars_with(subsubset[ade_to_ake], 2L, "ke")
+      ade_to_id <- ends_with_word(subsubset, "(|for)bade")
+      subsubset[ade_to_id] <- replace_last_n_chars_with(subsubset[ade_to_id], 3L, "id")
+      ode_to_ide <- ends_with_word(subsubset, any_of(c("(|joy|out|over)rode", "strode")))
+      subsubset[ode_to_ide] <- replace_last_n_chars_with(subsubset[ode_to_ide], 3L, "ide")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    subsubset_scope <- endsWith(subset, "ke")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      oke_to_ake <- endsWith(subsubset, "woke")
+      subsubset[oke_to_ake] <- replace_last_n_chars_with(subsubset[oke_to_ake], 3L, "ake")
+      oke_to_eak <- endsWithAny(subsubset, c("broke", "spoke"))
+      subsubset[oke_to_eak] <- replace_last_n_chars_with(subsubset[oke_to_eak], 3L, "eak")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    ole_to_eal <- endsWith(subset, "stole")
+    subset[ole_to_eal] <- replace_last_n_chars_with(subset[ole_to_eal], 3L, "eal")
+    
+    ame_to_ome <- endsWith(subset, "came")
+    subset[ame_to_ome] <- replace_last_n_chars_with(subset[ame_to_ome], 3L, "ome")
+    
+    one_to_ine <- endsWith(subset, "shone")
+    subset[one_to_ine] <- replace_last_n_chars_with(subset[one_to_ine], 3L, "ine")
+    
+    ore_to_ear <- endsWithAny(subset, c("tore", "wore")) & !endsWithAny(subset, c("atore", "store"))
+    subset[ore_to_ear] <- replace_last_n_chars_with(subset[ore_to_ear], 3L, "ear")
+    
+    subsubset_scope <- endsWith(subset, "se")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ose_to_ise <- ends_with_word(subsubset, "rose")
+      subsubset[ose_to_ise] <- replace_last_n_chars_with(subsubset[ose_to_ise], 3L, "ise")
+      ose_to_oose <- endsWith(subsubset, "chose")
+      subsubset[ose_to_oose] <- replace_last_n_chars_with(subsubset[ose_to_oose], 2L, "ose")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    ote_to_ite <- endsWithAny(subset, c("smote", "wrote"))
+    subset[ote_to_ite] <- replace_last_n_chars_with(subset[ote_to_ite], 3L, "ite")
+    
+    subsubset_scope <- endsWith(subset, "ve")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ave_to_ive <- endsWith(subsubset, "gave") & !endsWith(subsubset, "agave")
+      subsubset[ave_to_ive] <- replace_last_n_chars_with(subsubset[ave_to_ive], 3L, "ive")
+      ove_to_eave <- endsWith(subsubset, "wove")
+      subsubset[ove_to_eave] <- replace_last_n_chars_with(subsubset[ove_to_eave], 3L, "eave")
+      ove_to_ive <- ends_with_word(subsubset, any_of(c("dove", "drove", "strove", "throve")))
+      subsubset[ove_to_ive] <- replace_last_n_chars_with(subsubset[ove_to_ive], 3L, "ive")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    oze_to_eeze <- endsWith(subset, "froze")
+    subset[oze_to_eeze] <- replace_last_n_chars_with(subset[oze_to_eeze], 3L, "eeze")
+    
+    words[subset_scope] <- subset
+  }
+  
+  # handle irregulars ending in "g"
+  subset_scope <- endsWith(words, "g")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    aong_to_ing <- endsWithAny(subset, c("rang", "sang", "song", "sprang", "strang", "swang", "wrang"))
+    subset[aong_to_ing] <- replace_last_n_chars_with(subset[aong_to_ing], 3L, "ing")
+    
+    # handle "ung" irregulars
+    subsubset_scope <- endsWith(subset, "ung")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ung_to_ang <- endsWith(subsubset, "hung")
+      subsubset[ung_to_ang] <- replace_last_n_chars_with(subsubset[ung_to_ang], 3L, "ang")
+      ung_to_ing <- endsWithAny(subsubset, c("clung", "flung", "rung", "slung", "sprung", "strung", "stung", "sung", "swung", "wrung"))
+      subsubset[ung_to_ing] <- replace_last_n_chars_with(subsubset[ung_to_ing], 3L, "ing")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    ug_to_ig <- endsWith(subset, "dug")
+    subset[ug_to_ig] <- replace_last_n_chars_with(subset[ug_to_ig], 2L, "ig")
+    
+    words[subset_scope] <- subset
+  }
+  
+  # handle irregulars ending in "k"
+  subset_scope <- endsWith(words, "k")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    
+    subsubset_scope <- endsWith(subset, "ve")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      uck_to_ick <- endsWith(subsubset, "stuck")
+      subsubset[uck_to_ick] <- replace_last_n_chars_with(subsubset[uck_to_ick], 3L, "ick")
+      uck_to_ike <- endsWith(subsubset, "struck")
+      subsubset[uck_to_ike] <- replace_last_n_chars_with(subsubset[uck_to_ike], 3L, "ike")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    aunk_to_ink <- endsWithAny(subset, c("drank", "drunk", "sank", "sunk", "slank", "slunk", "stank", "stunk"))
+    subset[aunk_to_ink] <- replace_last_n_chars_with(subset[aunk_to_ink], 3L, "ink")
+    
+    ook_to_ake <- endsWithAny(subset, c("forsook", "shook", "took"))
+    subset[ook_to_ake] <- replace_last_n_chars_with(subset[ook_to_ake], 3L, "ake")
+    
+    words[subset_scope] <- subset
+  }
+  
+  # handle irregulars ending in "ll"
+  subset_scope <- endsWith(words, "ll")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    ell_to_all <- endsWith(subset, "fell")
+    subset[ell_to_all] <- replace_last_n_chars_with(subset[ell_to_all], 3L, "all")
+    oll_to_ell <- endsWith(subset, "swoll")
+    subset[oll_to_ell] <- replace_last_n_chars_with(subset[oll_to_ell], 3L, "ell")
+    words[subset_scope] <- subset
+  }
+  
+  aum_to_im <- endsWithAny(words, c("swam", "swum"))
+  words[aum_to_im] <- replace_last_n_chars_with(words[aum_to_im], 2L, "im")
+  
+  # handle irregulars ending in "n"
+  subset_scope <- endsWith(words, "n")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    an_to_un <- ends_with_word(subset, "(|fore|re|out|over)ran")
+    subset[an_to_un] <- replace_last_n_chars_with(subset[an_to_un], 2L, "un")
+    on_to_in <- endsWith(subset, "won")
+    subset[on_to_in] <- replace_last_n_chars_with(subset[on_to_in], 2L, "in")
+    aun_to_in <- endsWithAny(subset, c("began", "begun", "spun"))
+    subset[aun_to_in] <- replace_last_n_chars_with(subset[aun_to_in], 2L, "in")
+    own_to_y <- endsWith(subset, "flown")
+    subset[own_to_y] <- replace_last_n_chars_with(subset[own_to_y], 3L, "y")
+    words[subset_scope] <- subset
+  }
+  
+  # handle irregulars ending in "t"
+  subset_scope <- endsWith(words, "t")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    at_to_it <- endsWithAny(subset, c("sat", "spat"))
+    subset[at_to_it] <- replace_last_n_chars_with(subset[at_to_it], 2L, "it")
+    
+    et_to_eet <- ends_with_word(subset, "met")
+    subset[et_to_eet] <- replace_last_n_chars_with(subset[et_to_eet], 1L, "et")
+    
+    # irregular verbs ending in "aught" or "ought"
+    subsubset_scope <- endsWith(subset, "ught")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ought_to_ing <- endsWith(subsubset, "brought")
+      subsubset[ought_to_ing] <- replace_last_n_chars_with(subsubset[ought_to_ing], 5L, "ing")
+      ought_to_uy <- endsWith(subsubset, "bought")
+      subsubset[ought_to_uy] <- replace_last_n_chars_with(subsubset[ought_to_uy], 5L, "uy")
+      ought_to_eek <- endsWith(subsubset, "sought")
+      subsubset[ought_to_eek] <- replace_last_n_chars_with(subsubset[ought_to_eek], 5L, "eek")
+      ought_to_ight <- endsWith(subsubset, "fought")
+      subsubset[ought_to_ight] <- replace_last_n_chars_with(subsubset[ought_to_ight], 5L, "ight")
+      ought_to_ink <- endsWith(subsubset, "thought")
+      subsubset[ought_to_ink] <- replace_last_n_chars_with(subsubset[ought_to_ink], 5L, "ink")
+      aught_to_atch <- endsWith(subsubset, "caught")
+      subsubset[aught_to_atch] <- replace_last_n_chars_with(subsubset[aught_to_atch], 5L, "atch")
+      aught_to_each <- endsWith(subsubset, "taught")
+      subsubset[aught_to_each] <- replace_last_n_chars_with(subsubset[aught_to_each], 5L, "each")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    it_to_ight <- endsWith(subset, "lit") & !endsWithAny(subset, c("llit", "slit", "split"))
+    subset[it_to_ight] <- replace_last_n_chars_with(subset[it_to_ight], 1L, "ght")
+    it_to_ite <- ends_with_word(subset, "(|frost|snake)bit")
+    subset[it_to_ite] <- replace_last_n_chars_with(subset[it_to_ite], 2L, "ite")
+    
+    elt_to_eel <- endsWithAny(subset, c("felt", "knelt"))
+    subset[elt_to_eel] <- replace_last_n_chars_with(subset[elt_to_eel], 2L, "el")
+    
+    ept_to_eep <- endsWithAny(subset, c("crept", "kept", "slept", "swept", "wept"))
+    subset[ept_to_eep] <- replace_last_n_chars_with(subset[ept_to_eep], 2L, "ep")
+    
+    ot_to_et <- endsWithAny(subset, c("begot", "forgot")) | ends_with_word(subset, "got")
+    subset[ot_to_et] <- replace_last_n_chars_with(subset[ot_to_et], 2L, "et")
+    ot_to_oot <- ends_with_word(subset, "(|counter|out|over|re|up|trouble)shot")
+    subset[ot_to_oot] <- replace_last_n_chars_with(subset[ot_to_oot], 1L, "ot")
+    
+    words[subset_scope] <- subset
+  }
+  
+  # handle irregulars ending in "w"
+  subset_scope <- endsWith(words, "w")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    aw_to_ee <- ends_with_word(subset, "(|fore|over|re|sight)saw")
+    subset[aw_to_ee] <- replace_last_n_chars_with(subset[aw_to_ee], 2L, "ee")
+    
+    # irregular verbs ending in "ew"
+    subsubset_scope <- endsWith(subset, "ew")
+    subsubset <- subset[subsubset_scope]
+    if (isnt_empty(subsubset)) {
+      ew_to_aw <- endsWith(subsubset, "drew")
+      subsubset[ew_to_aw] <- replace_last_n_chars_with(subsubset[ew_to_aw], 2L, "aw")
+      ew_to_y <- endsWith(subsubset, "flew")
+      subsubset[ew_to_y] <- replace_last_n_chars_with(subsubset[ew_to_y], 2L, "y")
+      ew_to_ay <- endsWith(subsubset, "slew")
+      subsubset[ew_to_ay] <- replace_last_n_chars_with(subsubset[ew_to_ay], 2L, "ay")
+      ew_to_ow <- endsWithAny(subsubset, c("blew", "grew", "knew", "threw"))
+      subsubset[ew_to_ow] <- replace_last_n_chars_with(subsubset[ew_to_ow], 2L, "ow")
+      subset[subsubset_scope] <- subsubset
+    }
+    
+    words[subset_scope] <- subset
+  }
+  
+  ay_to_ie <- ends_with_word(words, "lay")
+  words[ay_to_ie] <- replace_last_n_chars_with(words[ay_to_ie], 2L, "ie")
   
   ### handle prefixes
   
@@ -511,6 +829,10 @@ digested_word_dictionary <- function(words) {
   # e.g. "lawyer" -> "law"
   delete_yer <- endsWithAny(words, c("bowyer", "lawyer", "sawyer"))
   words[delete_yer] <- remove_last_n_chars(words[delete_yer], 3L)
+  
+  # e.g. "western" -> "west"
+  delete_ern <- endsWithAny(words, c("eastern", "northern", "southern", "western"))
+  words[delete_ern] <- remove_last_n_chars(words[delete_ern], 3L)
   
   # e.g. "cowardice" -> "coward"
   delete_ice <- endsWith(words, "cowardice")
@@ -1371,6 +1693,22 @@ digested_word_dictionary <- function(words) {
   
   ity_to_ite <- words %like% "\\bunity$"
   words[ity_to_ite] <- replace_last_n_chars_with(words[ity_to_ite], 2L, "te")
+  
+  # handle "en" suffix
+  subset_scope <- endsWith(words, "en")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    # e.g. "flatten" -> "flat"
+    delete_en_letter <- endsWithAny(subset, c("flatten", "gladden"))
+    subset[delete_en_letter] <- remove_last_n_chars(subset[delete_en_letter], 3L)
+    # e.g. "broaden" -> "broad"
+    delete_en <- endsWithAny(subset, c("blacken", "brighten", "broaden", "cheapen", "deepen", "freshen", "frighten", "harden", "harken", "hearten", "heighten", "lengthen", "lessen", "moisten", "roughen", "sharpen", "shorten", "slacken", "slicken", "smarten", "smoothen", "soften", "steepen", "stiffen", "sweeten", "thicken", "threaten", "tighten", "toughen", "weaken"))
+    subset[delete_en] <- remove_last_n_chars(subset[delete_en], 2L)
+    # e.g. "whiten" -> "white"
+    delete_n <- endsWithAny(subset, c("whiten"))
+    subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
+    words[subset_scope] <- subset
+  }
   
   # handle "ize" suffix
   subset_scope <- endsWith(words, "ize")
