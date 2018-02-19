@@ -278,7 +278,7 @@ English_er_keepers = flat_concat(["under", "whether", "\\bever", "whenever", "wh
 English_iest_keepers = ["priest"]
 English_est_keepers = flat_concat(["\\bbest", "digest", "earnest", "(?:\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(?:\\b|arm|head)rest", "\\btest", "\\bvest", "(?:\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(?:\\b|house)guest", "infest", "invest", "interest", "protest", "(?:\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers])
 English_ed_keepers = ["\\bbed", "bred", "\\bfed", "hundred", "infrared", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed"]
-English_ing_keepers = ["bring", "ceiling", "darling", "\\bding", "\\bduring", "evening", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "spring", "sterling", "\\bsting", "(?:\\b|any|every|no|some)?thing", "\\bwing", "\\bzing"]
+English_ing_keepers = ["bring", "ceiling", "\\bcling", "darling", "\\bding", "\\bduring", "evening", "\\bfling", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "(?:\\b|un|war)sling", "spring", "sterling", "\\bsting", "string", "swing", "(?:\\b|any|every|no|some)?thing", "\\bwing", "\\bwring", "\\bzing"]
 
 English_s_keepers = ["always", "perhaps", "whereas", "has", "is", "was"]
 
