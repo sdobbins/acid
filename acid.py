@@ -989,7 +989,7 @@ def digested_word_dictionary(words):
     subset_scope = words.endswith("ship")
     subset = words[subset_scope]
     if len(subset) != 0:
-        delete_ship = ~bool(re.search("\\b(|air|amid|battle|fire|gun|long|medium|mid|motor|relation|space|steam|tank|trans?|war|wor)ship$", subset))
+        delete_ship = np.array([not(bool(re.search("\\b(|air|amid|battle|fire|gun|long|medium|mid|motor|relation|space|steam|tank|trans?|war|wor)ship$", word))) for word in subset])
         subset[delete_ship] = [string[:-4] for string in subset[delete_ship]]
         words[subset_scope] = subset
     
