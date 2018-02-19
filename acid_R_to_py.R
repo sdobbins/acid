@@ -144,6 +144,9 @@ transcribe_R_lines_to_Python <- function(R_lines) {
   # fix endsWith(x, y) to x.endswith(y)
   lines[containing_code] <- gsub(lines[containing_code], pattern = 'endsWith\\(([a-z]*), *("[^"]+")\\)', replacement = "\\1.endswith(\\2)")
   
+  # fix ends_with_word(x, y) to bool(re.search("\\b + y + $", x))
+  lines[containing_code] <- gsub(lines[containing_code], pattern = 'ends_with_word\\(([a-z]*), *("[^"]+")\\)', replacement = 'bool(re.search("\\\\b" + \\2 + "$", \\1))')
+  
   # fix endsWithAny(x, [y, z]) to np.any([x.endswith(string) for string in (y, z))], axis = 0)
   lines[containing_code] <- gsub(lines[containing_code], pattern = 'endsWithAny\\(([a-z]*), *\\[([^])]+)\\]\\)', replacement = "np.any([\\1.endswith(string) for string in (\\2)], axis = 0)")
   # fix endsWithAny(x, flat_concat([...])) to np.any([x.endswith(string) for string in flat_concat([...])], axis = 0)
