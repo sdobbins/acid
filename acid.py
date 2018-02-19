@@ -378,7 +378,7 @@ def digested_word_dictionary(words):
     ### process only unique non-blank and non-NA values
     # (avoids redundant computation)
     original_words = np.unique(np.char.array(filter(non_empty_string, words)))
-    words = np.char.array(original_words, itemsize = (original_words.itemsize + 1))
+    words = np.char.array(original_words, itemsize = (original_words.itemsize + 2))
   
     ### simplify number (singular/plural) to singular case
     # (obviates checking optional s on some suffixes--avoids unecessary computation)
