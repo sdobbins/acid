@@ -402,35 +402,21 @@ def digested_word_dictionary(words):
         words[subset_scope] = subset
   
     ### handle irregular words
-    # prevents spurious edits later on
-  
-    # common irregular words
-    reasonable_slice = words.endswith("an")
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + "an" + "$", repl = "a") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("am", "are", "been", "is", "was", "were")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["am", "are", "been", "is", "was", "were"]) + "$", repl = "be") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("had", "has")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["had", "has"]) + "$", repl = "have") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("went", "gone")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["went", "gone"]) + "$", repl = "go") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("eats", "ate", "eaten", "eating", "edible", "edibly")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["eats", "ate", "eaten", "eating", "edible", "edibly"]) + "$", repl = "eat") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("cannot", "could")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["cannot", "could"]) + "$", repl = "can") for string in words[reasonable_slice]]
-  
-    reasonable_slice = words.endswith("should")
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + "should" + "$", repl = "shall") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("better", "best")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["better", "best"]) + "$", repl = "good") for string in words[reasonable_slice]]
-  
-    reasonable_slice = np.any([words.endswith(string) for string in ("worse", "worst")], axis = 0)
-    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["worse", "worst"]) + "$", repl = "bad") for string in words[reasonable_slice]]
+    
+    # irregular past participles ending in "dden"
+    subset_scope = words.endswith("dden")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        # e.g. "downtrodden" -> "downtread"
+        odden_to_ead = subset.endswith("trodden")
+        subset[odden_to_ead] = [string[:-5] + "ead" for string in subset[odden_to_ead]]
+        # e.g. "forbidden" -> "forbid"
+        delete_den = np.any([subset.endswith(string) for string in ("adden", "bidden", "edden")], axis = 0)
+        subset[delete_den] = [string[:-3] for string in subset[delete_den]]
+        # e.g. "hidden" -> "hide"
+        idden_to_ide = subset.endswith("idden") & ~np.any([subset.endswith(string) for string in ("midden", "swidden")], axis = 0)
+        subset[idden_to_ide] = [string[:-3] + "e" for string in subset[idden_to_ide]]
+        words[subset_scope] = subset
   
     # irregular past participles ending in "tten"
     subset_scope = words.endswith("tten")
@@ -444,39 +430,353 @@ def digested_word_dictionary(words):
         subset[delete_ten] = [string[:-3] for string in subset[delete_ten]]
         words[subset_scope] = subset
   
-    # irregular verbs without much pattern
-    ot_to_et = np.any([words.endswith(string) for string in ("begot", "forgot")], axis = 0)
-    words[ot_to_et] = [string[:-2] + "et" for string in words[ot_to_et]]
-    ew_to_ow = np.any([words.endswith(string) for string in ("blew", "threw")], axis = 0)
-    words[ew_to_ow] = [string[:-2] + "ow" for string in words[ew_to_ow]]
-    ung_to_ang = words.endswith("hung")
-    words[ung_to_ang] = [string[:-3] + "ang" for string in words[ung_to_ang]]
-    aoung_to_ing = np.any([words.endswith(string) for string in ("sang", "song", "sung")], axis = 0)
-    words[aoung_to_ing] = [string[:-3] + "ing" for string in words[aoung_to_ing]]
-    ung_to_ing = np.any([words.endswith(string) for string in ("slung", "stung")], axis = 0)
-    words[ung_to_ing] = [string[:-3] + "ing" for string in words[ung_to_ing]]
-    aun_to_in = np.any([words.endswith(string) for string in ("began", "begun")], axis = 0)
-    words[aun_to_in] = [string[:-2] + "in" for string in words[aun_to_in]]
-    ame_to_ome = words.endswith("came")
-    words[ame_to_ome] = [string[:-3] + "ome" for string in words[ame_to_ome]]
-  
-    # irregular verbs ending in "aught" or "ought"
-    subset_scope = words.endswith("ught")
+    # irregular past participles ending in "en" (and a few adjectives)
+    subset_scope = words.endswith("en")
     subset = words[subset_scope]
     if len(subset) != 0:
-        ought_to_ing = subset.endswith("brought")
-        subset[ought_to_ing] = [string[:-5] + "ing" for string in subset[ought_to_ing]]
-        ought_to_uy = subset.endswith("bought")
-        subset[ought_to_uy] = [string[:-5] + "uy" for string in subset[ought_to_uy]]
-        ought_to_eek = subset.endswith("sought")
-        subset[ought_to_eek] = [string[:-5] + "eek" for string in subset[ought_to_eek]]
-        aught_to_atch = subset.endswith("caught")
-        subset[aught_to_atch] = [string[:-5] + "atch" for string in subset[aught_to_atch]]
-        aught_to_each = subset.endswith("taught")
-        subset[aught_to_each] = [string[:-5] + "each" for string in subset[aught_to_each]]
-        aunk_to_ink = np.any([subset.endswith(string) for string in ("drank", "drunk")], axis = 0)
-        subset[aunk_to_ink] = [string[:-3] + "ink" for string in subset[aunk_to_ink]]
+        # e.g. "eaten" -> "eat" (also "been" to "be")
+        delete_en = np.any([subset.endswith(string) for string in ("ashen", "been", "drunken", "earthen", "eaten", "fallen", "olden", "silken", "swollen", "wooden", "woolen")], axis = 0)
+        subset[delete_en] = [string[:-2] for string in subset[delete_en]]
+        # e.g. "broken" -> "broke" (later to "break")
+        delete_n = np.any([subset.endswith(string) for string in ("aken", "chosen", "iven", "oken", "olen", "oven", "risen", "rozen", "seen")], axis = 0) & ~subset.endswith("kraken") & ~bool(re.search("\b" + "oven" + "$", subset))
+        subset[delete_n] = [string[:-1] for string in subset[delete_n]]
         words[subset_scope] = subset
+  
+    # irregular past participles ending in "n"
+    subset_scope = words.endswith("n")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        # e.g. "worn" -> "wore" (later to "wear")
+        n_to_e = np.any([subset.endswith(string) for string in ("born", "torn", "worn")], axis = 0) & ~np.any([subset.endswith(string) for string in ("stubborn", "attorn")], axis = 0)
+        subset[n_to_e] = [string[:-1] + "e" for string in subset[n_to_e]]
+        # e.g. "lain" -> "lie"
+        ain_to_ay = subset.endswith("lain")
+        subset[ain_to_ay] = [string[:-3] + "ie" for string in subset[ain_to_ay]]
+        # e.g. "shorn" -> "shear"
+        orn_to_ear = subset.endswith("shorn")
+        subset[orn_to_ear] = [string[:-3] + "ear" for string in subset[orn_to_ear]]
+        # e.g. "drawn" -> "draw"
+        delete_n = bool(re.search("\\b" + any_of(["blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown"]) + "$", subset))
+        subset[delete_n] = [string[:-1] for string in subset[delete_n]]
+        words[subset_scope] = subset
+  
+    # irregular past participles ending in "t"
+    subset_scope = words.endswith("t")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        # e.g. "burnt" -> "burn"
+        delete_t = np.any([subset.endswith(string) for string in ("burnt", "dealt", "dreamt", "learnt", "meant")], axis = 0)
+        subset[delete_t] = [string[:-1] for string in subset[delete_t]]
+        # e.g. "built" -> "build"
+        t_to_d = np.any([subset.endswith(string) for string in ("bent", "built", "lent", "sent", "spent")], axis = 0)
+        subset[t_to_d] = [string[:-1] + "d" for string in subset[t_to_d]]
+        # e.g. "lost" -> "lose"
+        t_to_e = subset.endswith("lost")
+        subset[t_to_e] = [string[:-1] + "e" for string in subset[t_to_e]]
+        # e.g. "left" -> "leave"
+        eft_to_eave = np.any([subset.endswith(string) for string in ("bereft", "left")], axis = 0)
+        subset[eft_to_eave] = [string[:-2] + "ave" for string in subset[eft_to_eave]]
+        words[subset_scope] = subset
+  
+    # common irregular words
+    reasonable_slice = bool(re.search("\\ban$", words))
+    words[reasonable_slice] = [string[:-1] for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("am", "are", "is", "was", "were")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["am", "are", "been", "is", "was", "were"]) + "$", repl = "be") for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("did", "done")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["did", "done"]) + "$", repl = "do") for string in words[reasonable_slice]]
+  
+    reasonable_slice = bool(re.search("\\b" + any_of(["had", "has"]) + "$", words))
+    words[reasonable_slice] = [string[:-1] + "ve" for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("went", "gone")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["went", "gone"]) + "$", repl = "go") for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("ate", "edible", "edibly")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["eats", "ate", "eaten", "eating", "edible", "edibly"]) + "$", repl = "eat") for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("cannot", "could")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["cannot", "could"]) + "$", repl = "can") for string in words[reasonable_slice]]
+  
+    reasonable_slice = words.endswith("should")
+    words[reasonable_slice] = [string[:-4] + "all" for string in words[reasonable_slice]]
+  
+    reasonable_slice = words.endswith("might")
+    words[reasonable_slice] = [string[:-4] + "ay" for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("bore", "borne")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["bore", "born", "borne"]) + "$", repl = "bear") for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("better", "best")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["better", "best"]) + "$", repl = "good") for string in words[reasonable_slice]]
+  
+    reasonable_slice = np.any([words.endswith(string) for string in ("worse", "worst")], axis = 0)
+    words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["worse", "worst"]) + "$", repl = "bad") for string in words[reasonable_slice]]
+  
+    # irregular verbs without much pattern
+  
+    # handle irregulars ending in "d"
+    subset_scope = words.endswith("d")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+    
+        subsubset_scope = subset.endswith("ed")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ed_to_ead = bool(re.search("\\bled$", subsubset))
+            subsubset[ed_to_ead] = [string[:-1] + "ad" for string in subsubset[ed_to_ead]]
+            ed_to_ee = bool(re.search("\\bfled$", subsubset))
+            subsubset[ed_to_ee] = [string[:-1] + "e" for string in subsubset[ed_to_ee]]
+            ed_to_eed = bool(re.search("\\b" + any_of(["bled", "bred", "fed", "sped"]) + "$", subsubset))
+            subsubset[ed_to_eed] = [string[:-1] + "ed" for string in subsubset[ed_to_eed]]
+            subset[subsubset_scope] = subsubset
+    
+        subsubset_scope = subset.endswith("id")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            id_to_ide = subsubset.endswith("slid") | bool(re.search("\b" + "hid" + "$", subsubset))
+            subsubset[id_to_ide] = [string + "e" for string in subsubset[id_to_ide]]
+            aid_to_ay = np.any([subsubset.endswith(string) for string in ("laid", "paid", "said")], axis = 0) & ~subsubset.endswith("plaid")
+            subsubset[aid_to_ay] = [string[:-2] + "y" for string in subsubset[aid_to_ay]]
+            subset[subsubset_scope] = subsubset
+    
+        subsubset_scope = subset.endswith("ld")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            eld_to_old = subsubset.endswith("held")
+            subsubset[eld_to_old] = [string[:-3] + "old" for string in subsubset[eld_to_old]]
+            old_to_ell = np.any([subsubset.endswith(string) for string in ("sold", "told")], axis = 0)
+            subsubset[old_to_ell] = [string[:-3] + "ell" for string in subsubset[old_to_ell]]
+            subset[subsubset_scope] = subsubset
+    
+        ound_to_ind = np.any([subset.endswith(string) for string in ("bound", "found", "ground", "wound")], axis = 0)
+        subset[ound_to_ind] = [string[:-4] + "ind" for string in subset[ound_to_ind]]
+    
+        subsubset_scope = subset.endswith("od")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            od_to_ead = subsubset.endswith("trod")
+            subsubset[od_to_ead] = [string[:-2] + "ead" for string in subsubset[od_to_ead]]
+            ood_to_and = subsubset.endswith("stood")
+            subsubset[ood_to_and] = [string[:-3] + "and" for string in subsubset[ood_to_and]]
+            subset[subsubset_scope] = subsubset
+    
+        eard_to_ear = subset.endswith("heard")
+        subset[eard_to_ear] = [string[:-1] for string in subset[eard_to_ear]]
+    
+        words[subset_scope] = subset
+  
+    # handle irregulars ending in "e"
+    subset_scope = words.endswith("e")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+    
+        subsubset_scope = subset.endswith("de")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ade_to_ake = subsubset.endswith("made") & ~np.any([subsubset.endswith(string) for string in ("amade", "omade")], axis = 0)
+            subsubset[ade_to_ake] = [string[:-2] + "ke" for string in subsubset[ade_to_ake]]
+            ade_to_id = bool(re.search("\\b" + "(|for)bade" + "$", subsubset))
+            subsubset[ade_to_id] = [string[:-3] + "id" for string in subsubset[ade_to_id]]
+            ode_to_ide = bool(re.search("\\b" + any_of(["(|joy|out|over)rode", "strode"]) + "$", subsubset))
+            subsubset[ode_to_ide] = [string[:-3] + "ide" for string in subsubset[ode_to_ide]]
+            subset[subsubset_scope] = subsubset
+    
+        subsubset_scope = subset.endswith("ke")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            oke_to_ake = subsubset.endswith("woke")
+            subsubset[oke_to_ake] = [string[:-3] + "ake" for string in subsubset[oke_to_ake]]
+            oke_to_eak = np.any([subsubset.endswith(string) for string in ("broke", "spoke")], axis = 0)
+            subsubset[oke_to_eak] = [string[:-3] + "eak" for string in subsubset[oke_to_eak]]
+            subset[subsubset_scope] = subsubset
+    
+        ole_to_eal = subset.endswith("stole")
+        subset[ole_to_eal] = [string[:-3] + "eal" for string in subset[ole_to_eal]]
+    
+        ame_to_ome = subset.endswith("came")
+        subset[ame_to_ome] = [string[:-3] + "ome" for string in subset[ame_to_ome]]
+    
+        one_to_ine = subset.endswith("shone")
+        subset[one_to_ine] = [string[:-3] + "ine" for string in subset[one_to_ine]]
+    
+        ore_to_ear = np.any([subset.endswith(string) for string in ("tore", "wore")], axis = 0) & ~np.any([subset.endswith(string) for string in ("atore", "store")], axis = 0)
+        subset[ore_to_ear] = [string[:-3] + "ear" for string in subset[ore_to_ear]]
+    
+        subsubset_scope = subset.endswith("se")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ose_to_ise = bool(re.search("\b" + "rose" + "$", subsubset))
+            subsubset[ose_to_ise] = [string[:-3] + "ise" for string in subsubset[ose_to_ise]]
+            ose_to_oose = subsubset.endswith("chose")
+            subsubset[ose_to_oose] = [string[:-2] + "ose" for string in subsubset[ose_to_oose]]
+            subset[subsubset_scope] = subsubset
+    
+        ote_to_ite = np.any([subset.endswith(string) for string in ("smote", "wrote")], axis = 0)
+        subset[ote_to_ite] = [string[:-3] + "ite" for string in subset[ote_to_ite]]
+    
+        subsubset_scope = subset.endswith("ve")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ave_to_ive = subsubset.endswith("gave") & ~subsubset.endswith("agave")
+            subsubset[ave_to_ive] = [string[:-3] + "ive" for string in subsubset[ave_to_ive]]
+            ove_to_eave = subsubset.endswith("wove")
+            subsubset[ove_to_eave] = [string[:-3] + "eave" for string in subsubset[ove_to_eave]]
+            ove_to_ive = bool(re.search("\\b" + any_of(["dove", "drove", "strove", "throve"]) + "$", subsubset))
+            subsubset[ove_to_ive] = [string[:-3] + "ive" for string in subsubset[ove_to_ive]]
+            subset[subsubset_scope] = subsubset
+    
+        oze_to_eeze = subset.endswith("froze")
+        subset[oze_to_eeze] = [string[:-3] + "eeze" for string in subset[oze_to_eeze]]
+    
+        words[subset_scope] = subset
+  
+    # handle irregulars ending in "g"
+    subset_scope = words.endswith("g")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        aong_to_ing = np.any([subset.endswith(string) for string in ("rang", "sang", "song", "sprang", "strang", "swang", "wrang")], axis = 0)
+        subset[aong_to_ing] = [string[:-3] + "ing" for string in subset[aong_to_ing]]
+    
+        # handle "ung" irregulars
+        subsubset_scope = subset.endswith("ung")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ung_to_ang = subsubset.endswith("hung")
+            subsubset[ung_to_ang] = [string[:-3] + "ang" for string in subsubset[ung_to_ang]]
+            ung_to_ing = np.any([subsubset.endswith(string) for string in ("clung", "flung", "rung", "slung", "sprung", "strung", "stung", "sung", "swung", "wrung")], axis = 0)
+            subsubset[ung_to_ing] = [string[:-3] + "ing" for string in subsubset[ung_to_ing]]
+            subset[subsubset_scope] = subsubset
+    
+        ug_to_ig = subset.endswith("dug")
+        subset[ug_to_ig] = [string[:-2] + "ig" for string in subset[ug_to_ig]]
+    
+        words[subset_scope] = subset
+  
+    # handle irregulars ending in "k"
+    subset_scope = words.endswith("k")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+    
+        subsubset_scope = subset.endswith("ve")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            uck_to_ick = subsubset.endswith("stuck")
+            subsubset[uck_to_ick] = [string[:-3] + "ick" for string in subsubset[uck_to_ick]]
+            uck_to_ike = subsubset.endswith("struck")
+            subsubset[uck_to_ike] = [string[:-3] + "ike" for string in subsubset[uck_to_ike]]
+            subset[subsubset_scope] = subsubset
+    
+        aunk_to_ink = np.any([subset.endswith(string) for string in ("drank", "drunk", "sank", "sunk", "slank", "slunk", "stank", "stunk")], axis = 0)
+        subset[aunk_to_ink] = [string[:-3] + "ink" for string in subset[aunk_to_ink]]
+    
+        ook_to_ake = np.any([subset.endswith(string) for string in ("forsook", "shook", "took")], axis = 0)
+        subset[ook_to_ake] = [string[:-3] + "ake" for string in subset[ook_to_ake]]
+    
+        words[subset_scope] = subset
+  
+    # handle irregulars ending in "ll"
+    subset_scope = words.endswith("ll")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        ell_to_all = subset.endswith("fell")
+        subset[ell_to_all] = [string[:-3] + "all" for string in subset[ell_to_all]]
+        oll_to_ell = subset.endswith("swoll")
+        subset[oll_to_ell] = [string[:-3] + "ell" for string in subset[oll_to_ell]]
+        words[subset_scope] = subset
+  
+    aum_to_im = np.any([words.endswith(string) for string in ("swam", "swum")], axis = 0)
+    words[aum_to_im] = [string[:-2] + "im" for string in words[aum_to_im]]
+  
+    # handle irregulars ending in "n"
+    subset_scope = words.endswith("n")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        an_to_un = bool(re.search("\\b(|fore|re|out|over)ran$", subset))
+        subset[an_to_un] = [string[:-2] + "un" for string in subset[an_to_un]]
+        on_to_in = subset.endswith("won")
+        subset[on_to_in] = [string[:-2] + "in" for string in subset[on_to_in]]
+        aun_to_in = np.any([subset.endswith(string) for string in ("began", "begun", "spun")], axis = 0)
+        subset[aun_to_in] = [string[:-2] + "in" for string in subset[aun_to_in]]
+        own_to_y = subset.endswith("flown")
+        subset[own_to_y] = [string[:-3] + "y" for string in subset[own_to_y]]
+        words[subset_scope] = subset
+  
+    # handle irregulars ending in "t"
+    subset_scope = words.endswith("t")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        at_to_it = np.any([subset.endswith(string) for string in ("sat", "spat")], axis = 0)
+        subset[at_to_it] = [string[:-2] + "it" for string in subset[at_to_it]]
+    
+        et_to_eet = bool(re.search("\b" + "met" + "$", subset))
+        subset[et_to_eet] = [string[:-1] + "et" for string in subset[et_to_eet]]
+    
+        # irregular verbs ending in "aught" or "ought"
+        subsubset_scope = subset.endswith("ught")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ought_to_ing = subsubset.endswith("brought")
+            subsubset[ought_to_ing] = [string[:-5] + "ing" for string in subsubset[ought_to_ing]]
+            ought_to_uy = subsubset.endswith("bought")
+            subsubset[ought_to_uy] = [string[:-5] + "uy" for string in subsubset[ought_to_uy]]
+            ought_to_eek = subsubset.endswith("sought")
+            subsubset[ought_to_eek] = [string[:-5] + "eek" for string in subsubset[ought_to_eek]]
+            ought_to_ight = subsubset.endswith("fought")
+            subsubset[ought_to_ight] = [string[:-5] + "ight" for string in subsubset[ought_to_ight]]
+            ought_to_ink = subsubset.endswith("thought")
+            subsubset[ought_to_ink] = [string[:-5] + "ink" for string in subsubset[ought_to_ink]]
+            aught_to_atch = subsubset.endswith("caught")
+            subsubset[aught_to_atch] = [string[:-5] + "atch" for string in subsubset[aught_to_atch]]
+            aught_to_each = subsubset.endswith("taught")
+            subsubset[aught_to_each] = [string[:-5] + "each" for string in subsubset[aught_to_each]]
+            subset[subsubset_scope] = subsubset
+    
+        it_to_ight = subset.endswith("lit") & ~np.any([subset.endswith(string) for string in ("llit", "slit", "split")], axis = 0)
+        subset[it_to_ight] = [string[:-1] + "ght" for string in subset[it_to_ight]]
+        it_to_ite = bool(re.search("\b" + "(|frost|snake)bit" + "$", subset))
+        subset[it_to_ite] = [string[:-2] + "ite" for string in subset[it_to_ite]]
+    
+        elt_to_eel = np.any([subset.endswith(string) for string in ("felt", "knelt")], axis = 0)
+        subset[elt_to_eel] = [string[:-2] + "el" for string in subset[elt_to_eel]]
+    
+        ept_to_eep = np.any([subset.endswith(string) for string in ("crept", "kept", "slept", "swept", "wept")], axis = 0)
+        subset[ept_to_eep] = [string[:-2] + "ep" for string in subset[ept_to_eep]]
+    
+        ot_to_et = np.any([subset.endswith(string) for string in ("begot", "forgot")], axis = 0) | bool(re.search("\b" + "got" + "$", subset))
+        subset[ot_to_et] = [string[:-2] + "et" for string in subset[ot_to_et]]
+        ot_to_oot = bool(re.search("\b" + "(|counter|out|over|re|up|trouble)shot" + "$", subset))
+        subset[ot_to_oot] = [string[:-1] + "ot" for string in subset[ot_to_oot]]
+    
+        words[subset_scope] = subset
+  
+    # handle irregulars ending in "w"
+    subset_scope = words.endswith("w")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        aw_to_ee = bool(re.search("\b" + "(|fore|over|re|sight)saw" + "$", subset))
+        subset[aw_to_ee] = [string[:-2] + "ee" for string in subset[aw_to_ee]]
+    
+        # irregular verbs ending in "ew"
+        subsubset_scope = subset.endswith("ew")
+        subsubset = subset[subsubset_scope]
+        if len(subsubset) != 0:
+            ew_to_aw = subsubset.endswith("drew")
+            subsubset[ew_to_aw] = [string[:-2] + "aw" for string in subsubset[ew_to_aw]]
+            ew_to_y = subsubset.endswith("flew")
+            subsubset[ew_to_y] = [string[:-2] + "y" for string in subsubset[ew_to_y]]
+            ew_to_ay = subsubset.endswith("slew")
+            subsubset[ew_to_ay] = [string[:-2] + "ay" for string in subsubset[ew_to_ay]]
+            ew_to_ow = np.any([subsubset.endswith(string) for string in ("blew", "grew", "knew", "threw")], axis = 0)
+            subsubset[ew_to_ow] = [string[:-2] + "ow" for string in subsubset[ew_to_ow]]
+            subset[subsubset_scope] = subsubset
+    
+        words[subset_scope] = subset
+  
+    # ay_to_ie <- ends_with_word(words, "lay")
+    # words[ay_to_ie] <- replace_last_n_chars_with(words[ay_to_ie], 2, "ie")
   
     ### handle prefixes
   
@@ -685,6 +985,14 @@ def digested_word_dictionary(words):
         subset[delete_hood] = [string[:-4] for string in subset[delete_hood]]
         words[subset_scope] = subset
   
+    # handle "ship" suffix
+    subset_scope = words.endswith("ship")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        delete_ship = ~bool(re.search("\\b(|air|amid|battle|fire|gun|long|medium|mid|motor|relation|space|steam|tank|trans?|war|wor)ship$", subset))
+        subset[delete_ship] = [string[:-4] for string in subset[delete_ship]]
+        words[subset_scope] = subset
+    
     ### handle other oddities
   
     # e.g. "unison" -> "unity"
@@ -712,6 +1020,10 @@ def digested_word_dictionary(words):
     delete_yer = np.any([words.endswith(string) for string in ("bowyer", "lawyer", "sawyer")], axis = 0)
     words[delete_yer] = [string[:-3] for string in words[delete_yer]]
   
+    # e.g. "western" -> "west"
+    delete_ern = np.any([words.endswith(string) for string in ("eastern", "northern", "southern", "western")], axis = 0)
+    words[delete_ern] = [string[:-3] for string in words[delete_ern]]
+    
     # e.g. "cowardice" -> "coward"
     delete_ice = words.endswith("cowardice")
     words[delete_ice] = [string[:-3] for string in words[delete_ice]]
@@ -1546,6 +1858,21 @@ def digested_word_dictionary(words):
     ity_to_ite = np.array([bool(re.search("\\bunity$", word)) for word in words])
     words[ity_to_ite] = [string[:-2] + "te" for string in words[ity_to_ite]]
   
+    # handle "en" suffix
+    subset_scope = words.endswith("en")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        # e.g. "flatten" -> "flat"
+        delete_en_letter = np.any([subset.endswith(string) for string in ("flatten", "gladden")], axis = 0)
+        subset[delete_en_letter] = [string[:-3] for string in subset[delete_en_letter]]
+        # e.g. "broaden" -> "broad"
+        delete_en = np.any([subset.endswith(string) for string in ("blacken", "brighten", "broaden", "cheapen", "deepen", "freshen", "frighten", "harden", "harken", "hearten", "heighten", "lengthen", "lessen", "moisten", "roughen", "sharpen", "shorten", "slacken", "slicken", "smarten", "smoothen", "soften", "steepen", "stiffen", "sweeten", "thicken", "threaten", "tighten", "toughen", "weaken")], axis = 0)
+        subset[delete_en] = [string[:-2] for string in subset[delete_en]]
+        # e.g. "whiten" -> "white"
+        delete_n = np.any([subset.endswith(string) for string in ("whiten")], axis = 0)
+        subset[delete_n] = [string[:-1] for string in subset[delete_n]]
+        words[subset_scope] = subset
+    
     # handle "ize" suffix
     subset_scope = words.endswith("ize")
     subset = words[subset_scope]
