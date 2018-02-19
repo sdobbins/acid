@@ -232,11 +232,11 @@ digested_word_dictionary <- function(words) {
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
     # e.g. "worn" -> "wore" (later to "wear")
-    n_to_e <- endsWithAny(subset, c("born", "torn", "worn")) & !endsWithAny(subset, c("stubborn", "attorn", "sworn"))
+    n_to_e <- endsWithAny(subset, c("born", "torn", "worn")) & !endsWithAny(subset, c("stubborn", "attorn"))
     subset[n_to_e] <- replace_last_n_chars_with(subset[n_to_e], 1L, "e")
-    # e.g. "lain" -> "lay"
+    # e.g. "lain" -> "lie"
     ain_to_ay <- endsWith(subset, "lain")
-    subset[ain_to_ay] <- replace_last_n_chars_with(subset[ain_to_ay], 2L, "y")
+    subset[ain_to_ay] <- replace_last_n_chars_with(subset[ain_to_ay], 3L, "ie")
     # e.g. "shorn" -> "shear"
     orn_to_ear <- endsWith(subset, "shorn")
     subset[orn_to_ear] <- replace_last_n_chars_with(subset[orn_to_ear], 3L, "ear")
@@ -319,7 +319,7 @@ digested_word_dictionary <- function(words) {
       subsubset[ed_to_ead] <- replace_last_n_chars_with(subsubset[ed_to_ead], 1L, "ad")
       ed_to_ee <- ends_with_word(subsubset, "fled")
       subsubset[ed_to_ee] <- replace_last_n_chars_with(subsubset[ed_to_ee], 1L, "e")
-      ed_to_eed <- ends_with_word(subsubset, any_of(c("bled", "bred", "sped")))
+      ed_to_eed <- ends_with_word(subsubset, any_of(c("bled", "bred", "fed", "sped")))
       subsubset[ed_to_eed] <- replace_last_n_chars_with(subsubset[ed_to_eed], 1L, "ed")
       subset[subsubset_scope] <- subsubset
     }
@@ -585,8 +585,8 @@ digested_word_dictionary <- function(words) {
     words[subset_scope] <- subset
   }
   
-  ay_to_ie <- ends_with_word(words, "lay")
-  words[ay_to_ie] <- replace_last_n_chars_with(words[ay_to_ie], 2L, "ie")
+  # ay_to_ie <- ends_with_word(words, "lay")
+  # words[ay_to_ie] <- replace_last_n_chars_with(words[ay_to_ie], 2L, "ie")
   
   ### handle prefixes
   
