@@ -365,7 +365,7 @@ def digest_words(words):
     # 
     if type(words) is list:
         words = [word if type(word) is str else "" for word in words]
-    results = np.char.array(words, itemsize = (len(max(words, key = len))) + 1)
+    results = np.char.array(words, itemsize = (len(max(words, key = len))) + 2)
     digest_dict = digested_word_dictionary(words)
     valid = results.nonzero()
     results[valid] = [digest_dict[word] for word in results[valid]]
