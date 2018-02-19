@@ -1,6 +1,6 @@
 # @author Scott Dobbins
-# @version 0.5.0.2
-# @date 2018-01-13 14:30
+# @version 0.6.1
+# @date 2018-02-18 22:00
 
 ### ACID
 # contains, pluralizer, singularizer, and lemmatizer
@@ -800,6 +800,15 @@ digested_word_dictionary <- function(words) {
     # general rule--remove suffix
     delete_hood <- endsWith(subset, "hood")
     subset[delete_hood] <- remove_last_n_chars(subset[delete_hood], 4L)
+    words[subset_scope] <- subset
+  }
+  
+  # handle "ship" suffix
+  subset_scope <- endsWith(words, "ship")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    delete_ship <- !ends_with_word(subset, "(|air|amid|battle|fire|gun|long|medium|mid|motor|relation|space|steam|tank|trans?|war|wor)ship")
+    subset[delete_ship] <- remove_last_n_chars(subset[delete_ship], 4L)
     words[subset_scope] <- subset
   }
   
