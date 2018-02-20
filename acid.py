@@ -36,26 +36,34 @@ def flat_concat(ls):
 ### Constants ---------------------------------------------------------------
 
 English_invariant_words = ["bison", "buffalo", "cannon", "carp", "cod", "deer", "fish", "hi", "moose", "pike", "salmon", "sheep", "shrimp", "squid", "swine", "trout"]
-English_invariant_words_s_string = "(((ser|spec)ie)|chassi|preci|rendezvou|chao|molasse)s$"
-English_ie_singulars_string = "(anom|badd|beast|bigg|bird|boog|boot|brown|calor|camarader|charcuter|coll|comm|cook|coot|cowr|dear|dogg|doug|food|gen|goal|good|group|hipp|hood|hott|junk|kidd|kitt|\\bl|magp|mean|mov|newb|(\\b|pot|sweet(ie|y))p|patisser|pix|prar|prem|quick|rever|rook|room|rotisser|smooth|soft|sweet|(\\b|hog|neck)t|talk|tough|town|vegg|wheel|yupp|zomb)ies$"
-English_oe_singulars_string = "(\\bal|\\bob|\\br|\\bsh|\\bt|\\bw)oes$"
-English_zz_singulars_string = "(bu|fi|fri|fu|ja|piza|ra)zz$"
-English_zz_singulars_plurals_string = "(bu|fi|fri|fu|ja|piza|ra)zzes$"
-English_s_singulars_string = "(alia|apparatu|asbesto|atla|bia|bonu|cactu|campu|canva|caucu|citru|ga|ibi|iri|len|lori|mucu|new|octopu|oop|pelvi|porticulli|rucku|statu|trelli|tucku|viru|ye)s$"
-English_s_singulars_plurals_string = "((alia|apparatu|asbesto|atla|bia|bonu|cactu|campu|canva|caucu|citru|ga|ibi|iri|len|lori|mucu|new|octopu|pelvi|porticulli|rucku|statu|trelli|tucku|viru|ye)s)es$"
-English_ves_plurals_singulars_string = "(cal|dwar|el|hal|hoo|lea|loa|scar|sel|shelorthie|wol)f|(kni|li|wi)fe$"
-English_ves_plurals_string = "(cal|dwar|el|hoo|lea|loa|scar|sel|shel|thie|wol)ves$"
-English_ves_plurals_e_string = "(kni|li|wi)ves$"
+English_uncountable_words = ["chaos", "chassis", "molasses", "news", "precis", "rendezvous", "series", "species"]
+English_ie_singulars = ["anomie", "baddie", "beastie", "biggie", "birdie", "boogie", "bootie", "brownie", "calorie", "camaraderie", "charcuterie", "collie", "commie", "cookie", "cootie", "cowrie", "dearie", "doggie", "dougie", "foodie", "genie", "goalie", "goodie", "groupie", "hippie", "hoodie", "hottie", "junkie", "kiddie", "kittie", "magpie", "meanie", "movie", "newbie", "potpie", "sweetiepie", "sweetypie", "patisserie", "pixie", "prarie", "premie", "quickie", "reverie", "rookie", "roomie", "rotisserie", "smoothie", "softie", "sweetie", "hogtie", "necktie", "talkie", "toughie", "townie", "veggie", "wheelie", "yuppie", "zombie"]
+English_ie_singulars_plurals = [string + "s" for string in English_ie_singulars]
+English_oe_singulars_string = "\\b(?:al|ob|r|sh|t|w)oes$"
+English_zz_singulars = ["buzz", "fizz", "frizz", "fuzz", "jazz", "razz"]
+English_zz_singulars_plurals = [string + "es" for string in English_zz_singulars]
+English_s_singulars = ["alias", "apparatus", "asbestos", "atlas", "bias", "bonus", "campus", "canvas", "caucus", "citrus", "loris", "mucus", "octopus", "oops", "pancreas", "pelvis", "porticullis", "ruckus", "status", "trellis", "tuckus", "virus"]
+English_s_singulars_plurals = [string + "es" for string in English_s_singulars]
+English_f_to_ves_singulars = ["calf", "dwarf", "elf", "half", "hoof", "leaf", "loaf", "scarf", "self", "shelf", "thief", "wolf"]
+English_f_to_ves_plurals = [re.sub(string = string, pattern = "f$", repl = "ves") for string in English_f_to_ves_singulars]
+English_fe_to_ves_singulars = ["knife", "life", "wife"]
+English_fe_to_ves_plurals = [re.sub(string = string, pattern = "fe$", repl = "ves") for string in English_fe_to_ves_singulars]
 English_us_plurals = ["bayous", "caribous", "emus", "gnus", "menus", "tiramisus", "tutus"]
 English_is_plurals = ["khakis", "skis", "taxis"]
+English_normal_oses_plurals = ["brownnoses", "bullnoses", "hardnoses", "hooknoses", "shovelnoses", "arabinoses", "flavinoses", "furanoses", "manoses", "pyranoses", "heptoses", "lactoses", "maltoses", "pentoses"]
+English_es_to_e_plurals = ["backaches", "bellyaches", "headaches", "stomachaches", "toothaches", "caches", "moustaches", "panaches", "pistaches", "bastes", "castes", "gestes", "hastes", "mostes", "pastes", "pistes", "tastes", "wastes", "chastes", "trystes", "artistes", "batistes", "ripostes", "langoustes"]
 
-words_with_plain_plurals = ["canto", "hereto", "kimono", "photo", "piano", "portico", "pro", "quarto", "zero"]
+plain_plural_singulars = ["canto", "hereto", "kimono", "photo", "piano", "portico", "pro", "quarto", "zero"]
+plain_plural_plurals = [string + "s" for string in plain_plural_singulars]
+
 Latin_us_to_i_singulars = ["alumnus", "cactus", "focus", "fungus", "succubus", "syllabus", "terminus", "uterus"]
 Latin_us_to_i_plurals = ["alumni", "cacti", "foci", "fungi", "succubi", "syllabi", "termini", "uteri"]
 Latin_us_to_a_plurals = ["addenda", "auditoria", "collisea", "compendia", "media", "memoranda", "millennia", "ova", "referenda", "spectra", "stadia", "strata", "symposia"]
 Latin_a_to_ae_singulars = ["alga", "alumna", "antenna", "fauna", "fistula", "flora", "formula", "fovea", "hernia", "larva", "trachea"]
-Latin_is_singulars_string = "(\\bax|cris|genes|kines|nemes|nos|oas|parenthes|test|thes|tos)is$"
-Latin_es_plurals_string = "(\\bax|cris|genes|kines|nemes|nos|oas|parenthes|test|thes|tos)es$" #* bases could be base or basis (asbestoses could be asbestosis but more likely asbestos)
+Latin_is_to_es_singulars = ["crisis", "genesis", "kinesis", "nemesis", "nosis", "oasis", "testis", "thesis", "tosis"] #* bases could be base or basis (asbestoses could be asbestosis but more likely asbestos)
+Latin_is_to_es_plurals = [re.sub(string = string, pattern = "is$", repl = "es") for string in Latin_is_to_es_singulars]
+
+English_ses_to_s_plurals = flat_concat([English_s_singulars_plurals, [string + "es" for string in Latin_us_to_i_singulars]])
 Japanese_words_in_English = ["bento", "katana", "kimono", "ninja", "otaku", "samurai", "sushi", "tsunami"]
 Maori_words_in_English = ["kakapo", "kiwi", "waka"]
 other_foreign_is_plurals = [string for string in [string + "s" for string in flat_concat([Japanese_words_in_English, Maori_words_in_English])] if string.endswith("is")]
@@ -66,19 +74,19 @@ all_is_plurals = flat_concat([English_is_plurals, other_foreign_is_plurals])
 
 def singularize(words):
     # invariants
-    is_invariant = np.array([bool(re.search(any_of(English_invariant_words) + "$", word)) for word in words]) | \
-        np.array([bool(re.search(English_invariant_words_s_string, word)) for word in words]) | \
-        np.array([bool(re.search(any_of(Japanese_words_in_English) + "$", word)) for word in words]) | \
-        np.array([bool(re.search(any_of(Maori_words_in_English) + "$", word)) for word in words]) | \
+    is_invariant = np.any([words.endswith(string) for string in English_invariant_words], axis = 0) | \
+        np.any([words.endswith(string) for string in English_uncountable_words], axis = 0) | \
+        np.any([words.endswith(string) for string in Japanese_words_in_English], axis = 0) | \
+        np.any([words.endswith(string) for string in Maori_words_in_English], axis = 0) | \
         words.endswith("nese")
   
     # Anglo-Saxon oddities
     is_person = words.endswith("people")
     remove_last3 = words.endswith("children")
     is_brother = words.endswith("brethren")
-    is_man = words.endswith("men") & np.array([not(bool(re.search("(\\b[ao]|abdo|acu|albu|bitu|fora|hy|lu|ra|regi|ru|se|speci|sta)men$", word))) for word in words])
+    is_man = words.endswith("men") & ~(np.any([words.endswith(string) for string in ("abdomen", "acumen", "albumen", "bitumen", "foramen", "hymen", "lumen", "ramen", "regimen", "rumen", "semen", "specimen", "stamen")], axis = 0) | np.array([bool(re.search("\\b[ao]men$", word)) for word in words]))
     is_oo = np.any([words.endswith(string) for string in ("teeth", "feet", "geese")], axis = 0)
-    is_ouse = np.array([bool(re.search("((\\b|book|head)l|(\\b|dor|field|shrew|tit)m)ice$", word)) for word in words])
+    is_ouse = is_ouse = np.any([words.endswith(string) for string in ("booklice", "headlice", "dormice", "fieldmice", "shrewmice", "titmice")], axis = 0) | np.array([bool(re.search("\\b[lm]ice$", word)) for word in words])
     remove_last2 = np.array([bool(re.search("\\boxen$", word)) for word in words])
     is_die = np.array([bool(re.search("\\bdice$", word)) for word in words])
   
@@ -107,32 +115,32 @@ def singularize(words):
     need_um = words.endswith("a") & rule_not_found
     rule_not_found = rule_not_found & ~need_um
   
-    need_is_latin = np.array([bool(re.search(Latin_es_plurals_string, word)) for word in words]) & np.array([not(bool(re.search("((\\b|brown|bull|hard|hook|shovel|arabi|flavi|fura|man|pyra)n|(hep|lac|mal|pen)t)oses$", word))) for word in words]) & rule_not_found
+    need_is_latin = (np.any([words.endswith(string) for string in Latin_is_to_es_plurals], axis = 0) | np.array([bool(re.search("\\baxes$", word)) for word in words])) & (np.any([words.endswith(string) for string in English_normal_oses_plurals], axis = 0) | np.array([bool(re.search("\\bnoses$", word)) for word in words])) & rule_not_found
     rule_not_found = rule_not_found & ~need_is_latin
   
     need_ex = np.any([words.endswith(string) for string in ("codices", "cortices", "indices", "vortices")], axis = 0) & rule_not_found
     need_ix = np.any([words.endswith(string) for string in ("radices", "trices")], axis = 0) & rule_not_found
-    need_is_greek = words.endswith("eis") & np.array([not(bool(re.search("(\\bl|sens)eis$", word))) for word in words]) & rule_not_found
+    need_is_greek = words.endswith("eis") & ~(words.endswith("senseis") | np.array([bool(re.search("\\bleis$", word)) for word in words])) & rule_not_found
     rule_not_found = rule_not_found & np.logical_not(np.any((need_ex, need_ix, need_is_greek), axis = 0))
   
-    need_f = np.array([bool(re.search(English_ves_plurals_string, word)) for word in words]) & rule_not_found
-    need_fe = np.array([bool(re.search(English_ves_plurals_e_string, word)) for word in words]) & rule_not_found
-    need_y = words.endswith("ies") & np.array([not(bool(re.search(English_ie_singulars_string, word))) for word in words]) & rule_not_found
+    need_f = np.any([words.endswith(string) for string in English_f_to_ves_plurals], axis = 0) & rule_not_found
+    need_fe = np.any([words.endswith(string) for string in English_fe_to_ves_plurals], axis = 0) & rule_not_found
+    need_y = words.endswith("ies") & ~(np.any([words.endswith(string) for string in English_ie_singulars_plurals], axis = 0) | np.array([bool(re.search("\\b[lpt]ies$", word)) for word in words])) & rule_not_found
     rule_not_found = rule_not_found & np.logical_not(np.any((need_f, need_fe, need_y), axis = 0))
   
-    remove_last3 = remove_last3 | ((words.endswith("busses") | \
+    remove_last3 = remove_last3 | ((np.any([words.endswith(string) for string in ("busses", "gasses")], axis = 0) | \
                                      (words.endswith("zzes") & \
-                                                                                np.array([not(bool(re.search(English_zz_singulars_plurals_string, word))) for word in words]))) & \
+                                                                                ~np.any([words.endswith(string) for string in English_zz_singulars_plurals], axis = 0))) & \
                                                                         rule_not_found)
     rule_not_found = rule_not_found & ~remove_last3
   
-    remove_last = remove_last | ((np.array([bool(re.search(English_ie_singulars_string, word)) for word in words]) | \
+    remove_last = remove_last | (((np.any([words.endswith(string) for string in English_ie_singulars_plurals], axis = 0) | np.array([bool(re.search("\\b[lpt]ies$", word)) for word in words])) | \
                                    np.array([bool(re.search(English_oe_singulars_string, word)) for word in words]) | \
                                    np.array([bool(re.search("[aeiouy][^aeioux]es$", word)) for word in words]) | \
                                    words.endswith("mmes") | \
-                                   np.array([bool(re.search("(([bcdfglprstz][glr])|(l[csv])|(n[cgrs])|(r[cgsv])|(s[c])|(u)|(((\\b|back|belly|head|stomach|tooth)a|ca|mousta|pana|pista)ch)|(rr)|(tt)|(\\b(ba|ca|ge|ha|mo|pa|pi|ta|wa|cha|try|arti|bati|ripo|langou)st))es$", word)) for word in words])) & \
-                                                                    np.array([not(bool(re.search(English_s_singulars_plurals_string, word))) for word in words]) & \
-                                                                    np.array([not(bool(re.search("\\b" + any_of([string + "es" for string in Latin_us_to_i_singulars]) + "$", word))) for word in words]) & \
+                                   np.any([words.endswith(string) for string in English_es_to_e_plurals], axis = 0) | \
+                                   np.array([bool(re.search("(?:[bcdfglprstz][glr]|l[csv]|n[cgrs]|p[s]|r[cgsv]|s[c]|tt|u|\\bach)es$", word)) for word in words])) & \
+                                                                    ~np.any([words.endswith(string) for string in English_ses_to_s_plurals], axis = 0) & \
                                                                     rule_not_found)
     rule_not_found = rule_not_found & ~remove_last
   
@@ -183,20 +191,20 @@ def make_singular(words):
 ### Number Testers ----------------------------------------------------------
 
 def is_singular(words):
-    is_singular_with_s = np.array([bool(re.search(English_s_singulars_string, word)) for word in words]) | \
+    is_singular_with_s = (np.any([words.endswith(string) for string in English_s_singulars], axis = 0) | np.array([bool(re.search("\\b(?:bu|ga|ibi|len|ye)s$", word)) for word in words])) | \
         (np.array([bool(re.search("[^e]iu?s$", word)) for word in words]) & ~np.any([words.endswith(string) for string in all_is_plurals], axis = 0)) | \
-        np.array([bool(re.search(any_of(Latin_us_to_i_singulars) + "$", word)) for word in words]) | \
+        np.any([words.endswith(string) for string in Latin_us_to_i_singulars], axis = 0) | \
         np.any([words.endswith(string) for string in ("corpus", "genus", "viscus")], axis = 0) | \
-        np.array([bool(re.search(Latin_is_singulars_string, word)) for word in words]) | \
+        (np.any([words.endswith(string) for string in Latin_is_to_es_singulars], axis = 0) | np.array([bool(re.search("\\baxis$", word)) for word in words])) | \
         words.endswith("itis") | \
         words.endswith("ss") | \
-        (words.endswith("us") & np.array([not(bool(re.search(any_of(English_us_plurals) + "$", word))) for word in words]) & ~words.endswith("eaus"))
+        (words.endswith("us") & ~np.any([words.endswith(string) for string in English_us_plurals], axis = 0) & ~words.endswith("eaus"))
   
     is_plural_without_s = words.endswith("people") | \
         np.any([words.endswith(string) for string in ("brethren", "children")], axis = 0) | \
-        (words.endswith("men") & np.array([not(bool(re.search("(\\b[ao]|abdo|acu|albu|bitu|fora|hy|lu|ra|regi|ru|se|speci|sta)men$", word))) for word in words])) | \
+        (words.endswith("men") & ~(np.any([words.endswith(string) for string in ("abdomen", "acumen", "albumen", "bitumen", "foramen", "hymen", "lumen", "ramen", "regimen", "rumen", "semen", "specimen", "stamen")], axis = 0) | np.array([bool(re.search("\\b[ao]men$", word)) for word in words]))) | \
         np.any([words.endswith(string) for string in ("teeth", "feet", "geese")], axis = 0) | \
-        np.array([bool(re.search("((\\b|book|head)l|(\\b|dor|field|shrew|tit)m)ice$", word)) for word in words]) | \
+        (np.any([words.endswith(string) for string in ("booklice", "headlice", "dormice", "fieldmice", "shrewmice", "titmice")], axis = 0) | np.array([bool(re.search("\\b[lm]ice$", word)) for word in words])) | \
         np.array([bool(re.search("\\boxen$", word)) for word in words]) | \
         np.array([bool(re.search("\\bdice$", word)) for word in words]) | \
         np.any([words.endswith(string) for string in ("kobzari", "oblasti")], axis = 0) | \
@@ -208,13 +216,13 @@ def is_singular(words):
         words.endswith("matzot") | \
         np.any([words.endswith(string) for string in ("hedra", "mata", "mena", "ria")], axis = 0) | \
         np.any([words.endswith(string) for string in ("genera", "viscera", "corpora")], axis = 0) | \
-        np.array([bool(re.search(any_of(Latin_us_to_i_plurals) + "$", word)) for word in words]) | \
-        np.array([bool(re.search(any_of(Latin_us_to_a_plurals) + "$", word)) for word in words])
+        np.any([words.endswith(string) for string in Latin_us_to_i_plurals], axis = 0) | \
+        np.any([words.endswith(string) for string in Latin_us_to_a_plurals], axis = 0)
   
-    is_indeterminate = np.array([bool(re.search(any_of(English_invariant_words) + "$", word)) for word in words]) | \
-        np.array([bool(re.search(English_invariant_words_s_string, word)) for word in words]) | \
-        np.array([bool(re.search(any_of(Japanese_words_in_English) + "$", word)) for word in words]) | \
-        np.array([bool(re.search(any_of(Maori_words_in_English) + "$", word)) for word in words]) | \
+    is_indeterminate = np.any([words.endswith(string) for string in English_invariant_words], axis = 0) | \
+        np.any([words.endswith(string) for string in English_uncountable_words], axis = 0) | \
+        np.any([words.endswith(string) for string in Japanese_words_in_English], axis = 0) | \
+        np.any([words.endswith(string) for string in Maori_words_in_English], axis = 0) | \
         words.endswith("nese")
     
     is_singular = is_indeterminate | \
@@ -235,7 +243,7 @@ English_ly_to_le_words = ["doubly", "cycly", "muscly", "crackly", "crinkly", "fi
 English_anti_keepers = ["anticipat", "antidote", "antilog", "antimony", "anting", "antiquari", "antiquary", "antiquat", "antique", "antiqui", "antiquit", "antistrophe"]
 English_dis_keepers = ["discreet", "discret(?:e|ion)", "discrepan", "discriminat", "disk", "dish", "display", "dismay", "dismal", "dismiss", "dispel", "discern", "discipl", "dispute", "distribu", "disrupt", "disturb", "discus", "diss", "dispose", "disgust", "dismiss", "distill", "disdain", "distort", "disease", "disco$", "discograph", "discover", "district", "distinct", "distinguish", "distan", "disten", "distress"]
 English_imbmp_keepers = ["imbib", "imbitter", "imbolden", "imbecil", "imblaz", "imbroglio", "imbue", "immediat", "imp$", "impair", "impal", "impeach", "imped", "imperitive", "impertinent", "import", "implement", "imply", "implic", "impregnat", "improp", "impuls", "impresario", "impose", "imposit", "impetuous", "imperil", "imperial", "impact", "implod", "implos", "impress", "imprint", "imput", "impel", "impromptu", "implant", "impish", "impound", "impunit", "improv", "implor", "impuls", "imping", "immanenc", "immigrat", "immun", "immur", "immers", "immanent", "immens"]
-English_in_keepers = ["in$", "inside$", "into$", "inane", "inanit", "inaug", "inbound", "inbre", "inch", "incas", "incens", "incentiv", "incept", "incid", "incis", "incit", "inclin", "inclos", "includ", "inclus", "incom", "increas", "increment", "incub", "inculca", "incur", "indeed", "indemn", "indent", "index", "india", "indic", "indie", "indig", "individual", "induc", "indulg", "industr", "indy", "inert", "infant", "inertia", "infatua", "infect", "infer", "infest", "infix", "inflat", "inflect", "inflict", "influen", "info", "infra", "infring", "infus", "ingest", "ingot", "ingrain", "ingrati", "ingredient", "ingroup", "inhabit", "inhal", "inherent", "inherit", "inhibit", "initia", "inject", "injure", "ink", "inlay", "inmate", "inn", "inositol", "input", "inquir", "insert", "insid", "insinuat", "insip", "insist", "insinuat", "inspect", "inspir", "install", "instan", "instat", "instead", "instigat", "instill", "instruct", "instrum", "institut", "insul", "insur", "intact", "integ", "intell", "inten", "inter", "intestin", "intimat", "intomb", "intro", "intru", "intubat", "intuit", "inundat", "inur", "invad", "invas", "invent", "invers", "invert", "invest", "invit", "invok", "invoc", "involv", "inward"]
+English_in_keepers = ["in$", "inside$", "into$", "inane", "inanit", "inaug", "inbound", "inbre", "inch", "incas", "incens", "incentiv", "incept", "incid", "incis", "incit", "inclin", "inclos", "includ", "inclus", "incom[ei]", "increas", "increment", "incub", "inculca", "incur", "indeed", "indemn", "indent", "index", "india", "indic", "indie", "indig", "individual", "induc", "indulg", "industr", "indy", "inert", "infant", "inertia", "infatua", "infect", "infer", "infest", "infix", "inflat", "inflect", "inflict", "influen", "info", "infra", "infring", "infus", "ingest", "ingot", "ingrain", "ingrati", "ingredient", "ingroup", "inhabit", "inhal", "inherent", "inherit", "inhibit", "initia", "inject", "injure", "ink", "inlay", "inmate", "inn", "inositol", "input", "inquir", "insert", "insid", "insinuat", "insip", "insist", "insinuat", "inspect", "inspir", "install", "instan", "instat", "instead", "instigat", "instill", "instruct", "instrum", "institut", "insul", "insur", "intact", "integ", "intell", "inten", "inter", "intestin", "intimat", "intomb", "intro", "intru", "intubat", "intuit", "inundat", "inur", "invad", "invas", "invent", "invers", "invert", "invest", "invit", "invok", "invoc", "involv", "inward"]
 English_mis_keepers = ["missile", "mission", "miser", "mischiev", "miscible", "misceg", "miscell", "misses", "miss$", "missed", "missing", "mishap", "mist", "miso", "mississippi"]
 English_sub_keepers = ["sub$", "submit", "submar", "subtl", "subb(?:ed|ing)", "subject", "suburb", "subdu(?:e|ing)", "subway", "subsequent", "subvene", "subpena", "subduce", "subvert", "subsidy", "subside", "subsist", "sublime", "subtend", "submer[gs]e", "subtract", "substan[ct]", "subscri[bp]", "substitut", "subsidiar", "substrate"]#***
 English_super_keepers = ["super$", "superfluous", "superior", "superlativ"]
@@ -250,7 +258,7 @@ English_ible_keepers = ["bible", "compatible", "eligible", "feasible", "horrible
 English_eal_keepers = ["anneal", "appeal", "conceal", "congeal", "deal", "\\bmeal", "ordeal", "\\breal", "repeal", "reveal", "seal", "squeal", "steal"]
 English_ial_keepers = ["artificial", "axial", "colloquial", "congenial", "cordial", "crucial", "jovial", "judicial", "material", "nubial", "social", "special", "superficial", "trial", "trivial", "venial", "vivial"]
 English_ual_keepers = ["actual", "casual", "dual", "equal", "eventual", "individual", "lingual", "manual", "menstrual", "mutual", "ritual", "usual", "victual", "visual"]
-English_al_keepers = flat_concat(["aboriginal", "animal", "arsenal", "capital", "cardinal", "carnival", "cathedral", "charcoal", "chemical", "coal", "crystal", "decimal", "\\bdent", "eternal", "federal", "final", "fiscal", "funeral", "general", "hospital", "integral", "international", "interval", "journal", "lateral", "legal", "liberal", "literal", "local", "loyal", "mammal", "marital", "medieval", "mental", "mineral", "moral", "municipal", "naval", "normal", "\\boval", "primeval", "principal", "radical", "rival", "rural", "scandal", "secular", "several", "spectrum", "spiral", "temporal", "thermal", "total", "vertical", "virtual", "vital", English_eal_keepers, English_ial_keepers, English_ual_keepers]) #*** integral to integrate?
+English_al_keepers = flat_concat(["aboriginal", "animal", "arsenal", "capital", "cardinal", "carnival", "cathedral", "charcoal", "chemical", "coal", "crystal", "decimal", "\\bdent", "eternal", "federal", "final", "fiscal", "funeral", "general", "hospital", "integral", "international", "interval", "journal", "lateral", "legal", "liberal", "literal", "local", "loyal", "mammal", "marital", "medieval", "mental", "mineral", "moral", "municipal", "naval", "normal", "numeral", "\\boval", "primeval", "principal", "radical", "rival", "rural", "scandal", "secular", "several", "spectrum", "spiral", "temporal", "thermal", "total", "vassal", "vertical", "virtual", "vital", English_eal_keepers, English_ial_keepers, English_ual_keepers]) #*** integral to integrate?
 English_ist_keepers = ["assist", "artist", "checklist", "chemist", "cist", "consist", "dentist", "enlist", "exist", "feist", "fist", "foist", "gist", "heist", "hoist", "insist", "list", "joist", "mist", "moist", "persist", "playlist", "protist", "resist", "schist", "shist", "twist", "wishlist", "wrist"] #, "florist"
 English_ism_keepers = ["animism", "atheism", "autism", "baptism", "catechism", "deism", "fascism", "sadism", "sophism", "theism"]
 English_ian_keepers = ["lesbian", "thespian"]
@@ -283,22 +291,22 @@ English_ing_keepers = ["bring", "ceiling", "\\bcling", "darling", "\\bding", "\\
 English_s_keepers = ["always", "perhaps", "whereas", "has", "is", "was"]
 
 # rules for what kinds of word endings require an ultimate "e"
-general_e_rules = "(?:" + "(?:\\b|[^aieou]|ll)[aeiouy][bcfgkmsvz]" + ")"
-ce_rules = "(?:" + "[lnrs]c" + ")"
-de_rules = "(?:" + "(?:[^aeiou][aeiou]|ui)d" + ")"
-ge_rules = "(?:" + "(?:[dlr]|(?:(?:r|ch|str)a|(?:ll|v)e|(?:b|h|cr)i|(?:c|sp)o|(?:l|p|pl|scro)u)n)g" + ")"
-le_rules = "(?:" + "(?:(?:imp|wholes|sc|wh)a|(?:(?:\\b|de)f|p|\\b[prt]|rev|sm)i|(?:cond|h|par|\\bp|recons|\\bt)o|(?:r|sched)u|y|[bcdfgkpstz])l" + ")"
-ne_rules = "(?:" + "(?:[^aeiou][aiu]|(?:\\b(?:[bchtz]|cl|dr)|chaper|(?:de|im|post|pro)p|ph|thr|[as]t)o)n" + ")"
-oe_rules = "(?:" + "(?:\\bh|(?:\\b|tip(py)?)t|sh)o" + ")"
-pe_rules = "(?:" + "(?:[^aeiou][aeiuy]|(?:\\b(?:[cdhmr]|el)|gr|sc)o)p" + ")"
-re_rules = "(?:" + "(?:[^aeiou][aiu]|(?:\\b(?:[bcgps]|ad|ch|depl|enc|expl|ign|impl|rest|sh|sp|st|wh)|sc|sn)o|qui)r" + ")"
-se_rules = "(?:" + "(?:(?:ai|au|ea|ee|oi|oo|(?:(?:\\b|[^l])[^l]|\\bl)ou)|ui|[lnrw])s" + ")"
-te_rules = "(?:" + "(?:(?:[^eo]|cre|ide)a|(?:comp|compl|del|excr)e|(?:(?:\\b|[^abeiou])b|(?:\\b|[^i])c|ign|ind|inv|sm|sp|qu|un|wh|wr|xc)i|(?:\\b[cdntv]|m|qu|[^i]v)o|(?:[^aeiou]|\\bro)u|[bhptw]as)t" + ")"
-ue_rules = "(?:" + "u" + ")"
-ve_rules = "(?:" + "(?:ai|ea|ee|ei|ie|[lr])v" + ")"
-ye_rules = "(?:" + "(?:\\b|cross|hawk)ey" + ")"
-ze_rules = "(?:" + "[^tz]z" + ")"
-che_rules = "(?:" + "(?:(?:\\b|back|belly|head|stomach|tooth)a|ca)ch" + ")"
+general_e_rules = "(?:(?:\\b|[^aieou]|ll)[aeiouy][bcfgkmsvz])"
+ce_rules = "(?:[lnrs]c)"
+de_rules = "(?:(?:[^aeiou][aeiou]|ui)d)"
+ge_rules = "(?:(?:[dlr]|(?:(?:r|ch|str)a|(?:ll|v)e|(?:b|h|cr)i|(?:c|sp)o|(?:l|p|pl|scro)u)n)g)"
+le_rules = "(?:(?:(?:imp|wholes|sc|wh)a|(?:(?:\\b|de)f|p|\\b[prt]|rev|sm)i|(?:cond|h|par|\\bp|recons|\\bt)o|(?:r|sched)u|y|[bcdfgkpstz])l)"
+ne_rules = "(?:(?:[^aeiou][aiu]|(?:\\b(?:[bchtz]|cl|dr)|chaper|(?:de|im|post|pro)p|ph|thr|[as]t)o)n)"
+oe_rules = "(?:(?:\\bh|(?:\\b|tip(py)?)t|sh)o)"
+pe_rules = "(?:(?:[^aeiou][aeiuy]|(?:\\b(?:[cdhmr]|el)|gr|sc)o)p)"
+re_rules = "(?:(?:[^aeiou][aiu]|(?:\\b(?:[bcgps]|ad|ch|depl|enc|expl|ign|impl|rest|sh|sp|st|wh)|sc|sn)o|qui)r)"
+se_rules = "(?:(?:(?:ai|au|ea|ee|oi|oo|(?:(?:\\b|[^l])[^l]|\\bl)ou)|ui|[lnrw])s)"
+te_rules = "(?:(?:(?:[^eo]|cre|ide)a|(?:comp|compl|del|excr)e|(?:(?:\\b|[^abeiou])b|(?:\\b|[^i])c|ign|ind|inv|sm|sp|qu|un|wh|wr|xc)i|(?:\\b[cdntv]|m|qu|[^i]v)o|(?:[^aeiou]|\\bro)u|[bhptw]as)t)"
+ue_rules = "(?:u)"
+ve_rules = "(?:(?:ai|ea|ee|ei|ie|[lr])v)"
+ye_rules = "(?:(?:\\b|cross|hawk)ey)"
+ze_rules = "(?:[^tz]z)"
+che_rules = "(?:(?:(?:\\b|back|belly|head|stomach|tooth)a|ca)ch)"
 e_rules = "(?:" + any_of(flat_concat([general_e_rules, ce_rules, de_rules, ge_rules, le_rules, ne_rules, oe_rules, pe_rules, re_rules, se_rules, te_rules, ue_rules, ve_rules, ye_rules, ze_rules, che_rules])) + ")"
 
 def digest_words(words):
@@ -393,16 +401,13 @@ def digested_word_dictionary(words):
     subset_scope = np.array([bool(re.search("'", word)) for word in words])
     subset = words[subset_scope]
     if len(subset) != 0:
-        is_wont = np.array([bool(re.search("\\bwon't$", word)) for word in subset])
-        subset[is_wont] = [string[:-5] + "will" for string in subset[is_wont]]
-        is_mightve = np.array([bool(re.search("\\bmight've$", word)) for word in subset])
-        subset[is_mightve] = [string[:-8] + "may" for string in subset[is_mightve]]
-        is_contraction = np.array([bool(re.search("(?:n't|'ve|'ll|'re|')+$", word)) for word in subset])
-        subset[is_contraction] = [re.sub(string = string, pattern = "(?:n't|'ve|'ll|'re|')+$", repl = "") for string in subset[is_contraction]]
+        subset = [re.sub(string = string, pattern = "\\bwon't\\b", repl = "will") for string in subset]
+        subset = [re.sub(string = string, pattern = "\\bmight've\\b", repl = "might") for string in subset]
+        subset = [re.sub(string = string, pattern = "(?:n't|'ve|'ll|'re|')+$", repl = "") for string in subset]
         words[subset_scope] = subset
   
     ### handle irregular words
-    
+  
     # irregular past participles ending in "dden"
     subset_scope = words.endswith("dden")
     subset = words[subset_scope]
@@ -438,7 +443,7 @@ def digested_word_dictionary(words):
         delete_en = np.any([subset.endswith(string) for string in ("ashen", "been", "drunken", "earthen", "eaten", "fallen", "olden", "silken", "swollen", "wooden", "woolen")], axis = 0)
         subset[delete_en] = [string[:-2] for string in subset[delete_en]]
         # e.g. "broken" -> "broke" (later to "break")
-        delete_n = np.any([subset.endswith(string) for string in ("aken", "chosen", "iven", "oken", "olen", "oven", "risen", "rozen", "seen")], axis = 0) & ~subset.endswith("kraken") & ~np.array([bool(re.search("\b" + "oven" + "$", word)) for word in subset])
+        delete_n = np.any([subset.endswith(string) for string in ("aken", "chosen", "iven", "oken", "olen", "oven", "risen", "rozen", "seen")], axis = 0) & ~(subset.endswith("kraken") | np.array([bool(re.search("\\boven$", word)) for word in subset]))
         subset[delete_n] = [string[:-1] for string in subset[delete_n]]
         words[subset_scope] = subset
   
@@ -456,7 +461,7 @@ def digested_word_dictionary(words):
         orn_to_ear = subset.endswith("shorn")
         subset[orn_to_ear] = [string[:-3] + "ear" for string in subset[orn_to_ear]]
         # e.g. "drawn" -> "draw"
-        delete_n = np.array([bool(re.search("\\b" + any_of(["blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown"]) + "$", word)) for word in subset])
+        delete_n = np.array([not(bool(re.search("\\b" + any_of(["blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown"]) + "$", word))) for word in subset])
         subset[delete_n] = [string[:-1] for string in subset[delete_n]]
         words[subset_scope] = subset
   
@@ -468,7 +473,7 @@ def digested_word_dictionary(words):
         delete_t = np.any([subset.endswith(string) for string in ("burnt", "dealt", "dreamt", "learnt", "meant")], axis = 0)
         subset[delete_t] = [string[:-1] for string in subset[delete_t]]
         # e.g. "built" -> "build"
-        t_to_d = np.any([subset.endswith(string) for string in ("bent", "built", "lent", "sent", "spent")], axis = 0)
+        t_to_d = np.any([subset.endswith(string) for string in ("built", "spent")], axis = 0) | np.array([bool(re.search("\\b" + any_of(["bent", "lent", "sent"]) + "$", word)) for word in subset])
         subset[t_to_d] = [string[:-1] + "d" for string in subset[t_to_d]]
         # e.g. "lost" -> "lose"
         t_to_e = subset.endswith("lost")
@@ -477,6 +482,9 @@ def digested_word_dictionary(words):
         eft_to_eave = np.any([subset.endswith(string) for string in ("bereft", "left")], axis = 0)
         subset[eft_to_eave] = [string[:-2] + "ave" for string in subset[eft_to_eave]]
         words[subset_scope] = subset
+  
+    #*** prevents spurious edits later on
+    #*** make common irregular words get fixed even if not at end of word phrase
   
     # common irregular words
     reasonable_slice = np.array([bool(re.search("\\ban$", word)) for word in words])
@@ -488,7 +496,7 @@ def digested_word_dictionary(words):
     reasonable_slice = np.any([words.endswith(string) for string in ("did", "done")], axis = 0)
     words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["did", "done"]) + "$", repl = "do") for string in words[reasonable_slice]]
   
-    reasonable_slice = np.array([bool(re.search("\\b" + any_of(["had", "has"]) + "$", word)) for word in words])
+    reasonable_slice = np.array([bool(re.search("\\bha[ds]$", word)) for word in words])
     words[reasonable_slice] = [string[:-1] + "ve" for string in words[reasonable_slice]]
   
     reasonable_slice = np.any([words.endswith(string) for string in ("went", "gone")], axis = 0)
@@ -515,6 +523,12 @@ def digested_word_dictionary(words):
     reasonable_slice = np.any([words.endswith(string) for string in ("worse", "worst")], axis = 0)
     words[reasonable_slice] = [re.sub(string = string, pattern = "\\b" + any_of(["worse", "worst"]) + "$", repl = "bad") for string in words[reasonable_slice]]
   
+    reasonable_slice = words.endswith("these")
+    words[reasonable_slice] = [string[:-3] + "is" for string in words[reasonable_slice]]
+  
+    reasonable_slice = words.endswith("those")
+    words[reasonable_slice] = [string[:-3] + "at" for string in words[reasonable_slice]]
+  
     # irregular verbs without much pattern
   
     # handle irregulars ending in "d"
@@ -536,7 +550,7 @@ def digested_word_dictionary(words):
         subsubset_scope = subset.endswith("id")
         subsubset = subset[subsubset_scope]
         if len(subsubset) != 0:
-            id_to_ide = subsubset.endswith("slid") | np.array([bool(re.search("\b" + "hid" + "$", word)) for word in subsubset])
+            id_to_ide = subsubset.endswith("slid") | np.array([bool(re.search("\\bhid$", word)) for word in subsubset])
             subsubset[id_to_ide] = [string + "e" for string in subsubset[id_to_ide]]
             aid_to_ay = np.any([subsubset.endswith(string) for string in ("laid", "paid", "said")], axis = 0) & ~subsubset.endswith("plaid")
             subsubset[aid_to_ay] = [string[:-2] + "y" for string in subsubset[aid_to_ay]]
@@ -551,7 +565,7 @@ def digested_word_dictionary(words):
             subsubset[old_to_ell] = [string[:-3] + "ell" for string in subsubset[old_to_ell]]
             subset[subsubset_scope] = subsubset
     
-        ound_to_ind = np.any([subset.endswith(string) for string in ("bound", "found", "ground", "wound")], axis = 0)
+        ound_to_ind = np.any([subset.endswith(string) for string in ("bound", "found")], axis = 0) # "ground", "wound" (these are also unrelated nouns)
         subset[ound_to_ind] = [string[:-4] + "ind" for string in subset[ound_to_ind]]
     
         subsubset_scope = subset.endswith("od")
@@ -578,9 +592,9 @@ def digested_word_dictionary(words):
         if len(subsubset) != 0:
             ade_to_ake = subsubset.endswith("made") & ~np.any([subsubset.endswith(string) for string in ("amade", "omade")], axis = 0)
             subsubset[ade_to_ake] = [string[:-2] + "ke" for string in subsubset[ade_to_ake]]
-            ade_to_id = np.array([bool(re.search("\\b" + "(|for)bade" + "$", word)) for word in subsubset])
+            ade_to_id = subsubset.endswith("forbade") | np.array([bool(re.search("\\bbade$", word)) for word in subsubset])
             subsubset[ade_to_id] = [string[:-3] + "id" for string in subsubset[ade_to_id]]
-            ode_to_ide = np.array([bool(re.search("\\b" + any_of(["(|joy|out|over)rode", "strode"]) + "$", word)) for word in subsubset])
+            ode_to_ide = np.any([subsubset.endswith(string) for string in ("joyrode", "outrode", "overrode", "strode")], axis = 0) | np.array([bool(re.search("\\brode$", word)) for word in subsubset])
             subsubset[ode_to_ide] = [string[:-3] + "ide" for string in subsubset[ode_to_ide]]
             subset[subsubset_scope] = subsubset
     
@@ -608,7 +622,7 @@ def digested_word_dictionary(words):
         subsubset_scope = subset.endswith("se")
         subsubset = subset[subsubset_scope]
         if len(subsubset) != 0:
-            ose_to_ise = np.array([bool(re.search("\b" + "rose" + "$", word)) for word in subsubset])
+            ose_to_ise = np.array([bool(re.search("\\brose$", word)) for word in subsubset])
             subsubset[ose_to_ise] = [string[:-3] + "ise" for string in subsubset[ose_to_ise]]
             ose_to_oose = subsubset.endswith("chose")
             subsubset[ose_to_oose] = [string[:-2] + "ose" for string in subsubset[ose_to_oose]]
@@ -624,7 +638,7 @@ def digested_word_dictionary(words):
             subsubset[ave_to_ive] = [string[:-3] + "ive" for string in subsubset[ave_to_ive]]
             ove_to_eave = subsubset.endswith("wove")
             subsubset[ove_to_eave] = [string[:-3] + "eave" for string in subsubset[ove_to_eave]]
-            ove_to_ive = np.array([bool(re.search("\\b" + any_of(["dove", "drove", "strove", "throve"]) + "$", word)) for word in subsubset])
+            ove_to_ive = np.any([subsubset.endswith(string) for string in ("drove", "strove", "throve")], axis = 0) | np.array([bool(re.search("\\bdove$", word)) for word in subsubset])
             subsubset[ove_to_ive] = [string[:-3] + "ive" for string in subsubset[ove_to_ive]]
             subset[subsubset_scope] = subsubset
     
@@ -694,7 +708,7 @@ def digested_word_dictionary(words):
     subset_scope = words.endswith("n")
     subset = words[subset_scope]
     if len(subset) != 0:
-        an_to_un = np.array([bool(re.search("\\b(|fore|re|out|over)ran$", word)) for word in subset])
+        an_to_un = np.any([subset.endswith(string) for string in ("foreran", "reran", "outran", "overran")], axis = 0) | np.array([bool(re.search("\\bran$", word)) for word in subset])
         subset[an_to_un] = [string[:-2] + "un" for string in subset[an_to_un]]
         on_to_in = subset.endswith("won")
         subset[on_to_in] = [string[:-2] + "in" for string in subset[on_to_in]]
@@ -711,7 +725,7 @@ def digested_word_dictionary(words):
         at_to_it = np.any([subset.endswith(string) for string in ("sat", "spat")], axis = 0)
         subset[at_to_it] = [string[:-2] + "it" for string in subset[at_to_it]]
     
-        et_to_eet = np.array([bool(re.search("\b" + "met" + "$", word)) for word in subset])
+        et_to_eet = np.array([bool(re.search("\\bmet$", word)) for word in subset])
         subset[et_to_eet] = [string[:-1] + "et" for string in subset[et_to_eet]]
     
         # irregular verbs ending in "aught" or "ought"
@@ -736,7 +750,7 @@ def digested_word_dictionary(words):
     
         it_to_ight = subset.endswith("lit") & ~np.any([subset.endswith(string) for string in ("llit", "slit", "split")], axis = 0)
         subset[it_to_ight] = [string[:-1] + "ght" for string in subset[it_to_ight]]
-        it_to_ite = np.array([bool(re.search("\b" + "(|frost|snake)bit" + "$", word)) for word in subset])
+        it_to_ite = np.any([subset.endswith(string) for string in ("frostbit", "snakebit")], axis = 0) | np.array([bool(re.search("\\bbit$", word)) for word in subset])
         subset[it_to_ite] = [string[:-2] + "ite" for string in subset[it_to_ite]]
     
         elt_to_eel = np.any([subset.endswith(string) for string in ("felt", "knelt")], axis = 0)
@@ -745,9 +759,9 @@ def digested_word_dictionary(words):
         ept_to_eep = np.any([subset.endswith(string) for string in ("crept", "kept", "slept", "swept", "wept")], axis = 0)
         subset[ept_to_eep] = [string[:-2] + "ep" for string in subset[ept_to_eep]]
     
-        ot_to_et = np.any([subset.endswith(string) for string in ("begot", "forgot")], axis = 0) | np.array([bool(re.search("\b" + "got" + "$", word)) for word in subset])
+        ot_to_et = np.any([subset.endswith(string) for string in ("begot", "forgot")], axis = 0) | np.array([bool(re.search("\\bgot$", word)) for word in subset])
         subset[ot_to_et] = [string[:-2] + "et" for string in subset[ot_to_et]]
-        ot_to_oot = np.array([bool(re.search("\b" + "(|counter|out|over|re|up|trouble)shot" + "$", word)) for word in subset])
+        ot_to_oot = np.any([subset.endswith(string) for string in ("countershot", "outshot", "overshot", "reshot", "upshot", "troubleshot")], axis = 0) | np.array([bool(re.search("\\bshot$", word)) for word in subset])
         subset[ot_to_oot] = [string[:-1] + "ot" for string in subset[ot_to_oot]]
     
         words[subset_scope] = subset
@@ -756,7 +770,7 @@ def digested_word_dictionary(words):
     subset_scope = words.endswith("w")
     subset = words[subset_scope]
     if len(subset) != 0:
-        aw_to_ee = np.array([bool(re.search("\b" + "(|fore|over|re|sight)saw" + "$", word)) for word in subset])
+        aw_to_ee = np.any([subset.endswith(string) for string in ("foresaw", "oversaw", "resaw", "sightsaw")], axis = 0) | np.array([bool(re.search("\\bsaw$", word)) for word in subset])
         subset[aw_to_ee] = [string[:-2] + "ee" for string in subset[aw_to_ee]]
     
         # irregular verbs ending in "ew"
@@ -775,7 +789,7 @@ def digested_word_dictionary(words):
     
         words[subset_scope] = subset
   
-    # ay_to_ie <- ends_with_word(words, "lay")
+    # ay_to_ie <- words %like% "\\blay$"
     # words[ay_to_ie] <- replace_last_n_chars_with(words[ay_to_ie], 2, "ie")
   
     ### handle prefixes
@@ -791,11 +805,11 @@ def digested_word_dictionary(words):
     has_keepable_prefix = np.array([bool(re.search("^" + any_of(English_prefix_keepers), word)) for word in words])
     # removes multiple (nested) prefixes
     # excludes a few difficult cases for further processing below
-    delete_prefix = ~has_keepable_prefix & np.array([bool(re.search("\\b(((a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|un|under)-?))", word)) for word in words]) & np.array([not(bool(re.search("\\b(none($|theless)|im(migra|pov|prop))", word))) for word in words])
-    words[delete_prefix] = [re.sub(string = string, pattern = "\\b(((a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|un|under)-?))(((a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|un|under)-?))*", repl = "") for string in words[delete_prefix]]
+    delete_prefix = ~has_keepable_prefix & np.array([bool(re.search("\\b(?:(?:(?:a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|under|un)-?))", word)) for word in words]) & np.array([not(bool(re.search("\\b(?:none($|theless)|im(?:migra|pov|prop))", word))) for word in words])
+    words[delete_prefix] = [re.sub(string = string, pattern = "\\b(?:(?:a|de|ex|post|pre|re|semi|un|well)-|(?:anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|under|un)-?)(?:(?:a|de|ex|post|pre|re|semi|un|well)-|(?:anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|under|un)-?)*", repl = "") for string in words[delete_prefix]]
   
     # needs to be separate because the above rule would have taken immigrate/improper to igrate/roper
-    delete_im_prefix = np.array([bool(re.search("\\bim(migra|pov|prop)", word)) for word in words])
+    delete_im_prefix = np.array([bool(re.search("\\bim(?:migra|pov|prop)", word)) for word in words])
     words[delete_im_prefix] = [re.sub(string = string, pattern = "\\bim", repl = "") for string in words[delete_im_prefix]]
   
     #* could add "ir" to normal prefix set above if a list of English_ir_keepers is made and used
@@ -807,7 +821,7 @@ def digested_word_dictionary(words):
     words[delete_ab_prefix] = [re.sub(string = string, pattern = "\\bab", repl = "") for string in words[delete_ab_prefix]]
   
     #* could add "mal" to normal prefix set above if a list of English_mal_keepers is made and used
-    delete_mal_prefix = np.array([bool(re.search("\\bmal", word)) for word in words]) & np.array([not(bool(re.search("\\bmal(ady|ari|ark|e($|s|ness)|efa|efi|evo|ici|ign|ing|l($|[aeiou])|m|($|t[aeiou]))", word))) for word in words])
+    delete_mal_prefix = np.array([bool(re.search("\\bmal", word)) for word in words]) & np.array([not(bool(re.search("\\bmal(?:ady|ari|ark|e(?:$|s|ness)|efa|efi|evo|ici|ign|ing|l(?:$|[aeiou])|m|(?:$|t[aeiou]))", word))) for word in words])
     words[delete_mal_prefix] = [re.sub(string = string, pattern = "\\bmal", repl = "") for string in words[delete_mal_prefix]]
   
     ### handle first batch of generic noun and adjective suffixes
@@ -817,7 +831,7 @@ def digested_word_dictionary(words):
     subset = words[subset_scope]
     if len(subset) != 0:
         # sometimes "lly" -> "ly"
-        ly_to_l = np.array([bool(re.search("(bi|hi|fri|\\bfu)lly$", word)) for word in subset])
+        ly_to_l = np.any([subset.endswith(string) for string in ("billy", "hilly", "frilly")], axis = 0) | np.array([bool(re.search("\\bfully$", word)) for word in subset])
         subset[ly_to_l] = [string[:-1] for string in subset[ly_to_l]]
         # e.g. "ably" -> "able"
         bly_to_ble = subset.endswith("bly")
@@ -861,7 +875,7 @@ def digested_word_dictionary(words):
     subset = words[subset_scope]
     if len(subset) != 0:
         # e.g. "mobility" -> "mobile"
-        bility_to_bile = np.array([bool(re.search("(\\bla|mo|nu)bility$", word)) for word in subset])
+        bility_to_bile = np.array([bool(re.search("(?:\\bla|mo|nu)bility$", word)) for word in subset])
         subset[bility_to_bile] = [string[:-3] + "e" for string in subset[bility_to_bile]]
         # e.g. "ability" -> "able"
         bility_to_ble = subset.endswith("bility")
@@ -989,10 +1003,10 @@ def digested_word_dictionary(words):
     subset_scope = words.endswith("ship")
     subset = words[subset_scope]
     if len(subset) != 0:
-        delete_ship = np.array([not(bool(re.search("\\b(|air|amid|battle|fire|gun|long|medium|mid|motor|relation|space|steam|tank|trans?|war|wor)ship$", word))) for word in subset])
+        delete_ship = ~(np.any([subset.endswith(string) for string in ("airship", "battleship", "fireship", "gunship", "longship", "mediumship", "midship", "motorship", "relationship", "spaceship", "steamship", "tankship", "tranship", "transship", "warship", "worship")], axis = 0) | np.array([bool(re.search("\\bship$", word)) for word in subset]))
         subset[delete_ship] = [string[:-4] for string in subset[delete_ship]]
         words[subset_scope] = subset
-    
+  
     ### handle other oddities
   
     # e.g. "unison" -> "unity"
@@ -1023,7 +1037,7 @@ def digested_word_dictionary(words):
     # e.g. "western" -> "west"
     delete_ern = np.any([words.endswith(string) for string in ("eastern", "northern", "southern", "western")], axis = 0)
     words[delete_ern] = [string[:-3] for string in words[delete_ern]]
-    
+  
     # e.g. "cowardice" -> "coward"
     delete_ice = words.endswith("cowardice")
     words[delete_ice] = [string[:-3] for string in words[delete_ice]]
@@ -1033,8 +1047,8 @@ def digested_word_dictionary(words):
     words[red_to_e] = [string[:-3] + "e" for string in words[red_to_e]]
   
     # e.g. "elder" -> "old"
-    eld_to_old = np.array([bool(re.search("\\beld(er|est)?$", word)) for word in words])
-    words[eld_to_old] = [re.sub(string = string, pattern = "\\beld(er|est)?$", repl = "old") for string in words[eld_to_old]]
+    eld_to_old = np.array([bool(re.search("\\beld(?:er|est)?$", word)) for word in words])
+    words[eld_to_old] = [re.sub(string = string, pattern = "\\beld(?:er|est)?$", repl = "old") for string in words[eld_to_old]]
   
     # handle "estry" and "istry" suffixes
     subset_scope = words.endswith("stry")
@@ -1119,7 +1133,7 @@ def digested_word_dictionary(words):
         tial_to_ce = np.any([subset.endswith(string) for string in ("essential", "influential", "spatial")], axis = 0)
         subset[tial_to_ce] = [string[:-4] + "ce" for string in subset[tial_to_ce]]
         # e.g. "financial" -> "finance"
-        ial_to_e = np.array([bool(re.search("([aeiou][bcs]|[nr]c)ial$", word)) for word in subset]) & np.array([not(bool(re.search(any_of(English_ial_keepers) + "$", word))) for word in subset])
+        ial_to_e = np.array([bool(re.search("(?:[aeiou][bcs]|[nr]c)ial$", word)) for word in subset]) & np.array([not(bool(re.search(any_of(English_ial_keepers) + "$", word))) for word in subset])
         subset[ial_to_e] = [string[:-3] + "e" for string in subset[ial_to_e]]
         # general "ial" rule--remove suffix
         delete_ial = subset.endswith("ial") & np.array([not(bool(re.search(any_of(English_ial_keepers) + "$", word))) for word in subset])
@@ -1201,7 +1215,7 @@ def digested_word_dictionary(words):
         al_to_us = np.any([subset.endswith(string) for string in ("colossal", "focal", "terminal", "viral")], axis = 0)
         subset[al_to_us] = [string[:-2] + "us" for string in subset[al_to_us]]
         # e.g. "global" -> "globe"
-        al_to_e = np.any([subset.endswith(string) for string in ("communal", "global", "tribal", "practical", "bridal", "tribunal", "brutal", "ral", "sal", "val")], axis = 0) & np.array([not(bool(re.search("(((behavi|doct|elect)o)r|(medie|na|\\bo|flor|prime|\\bri)v)al$", word))) for word in subset]) & np.array([not(bool(re.search(any_of(English_al_keepers) + "$", word))) for word in subset])
+        al_to_e = np.any([subset.endswith(string) for string in ("communal", "global", "tribal", "practical", "bridal", "tribunal", "brutal", "ral", "sal", "val")], axis = 0) & ~(np.any([subset.endswith(string) for string in ("behavioral", "doctoral", "electoral", "medieval", "naval", "floral", "primeval")], axis = 0) | np.array([bool(re.search("\\b(?:o|ri)val$", word)) for word in subset])) & np.array([not(bool(re.search(any_of(English_al_keepers) + "$", word))) for word in subset])
         subset[al_to_e] = [string[:-2] + "e" for string in subset[al_to_e]]
         # e.g. "reciprocal" -> "reciprocate"
         al_to_ate = subset.endswith("reciprocal")
@@ -1319,11 +1333,17 @@ def digested_word_dictionary(words):
     subset_scope = words.endswith("ous")
     subset = words[subset_scope]
     if len(subset) != 0:
-        # e.g. "hazardous" -> "hazard"
-        delete_ous = np.array([bool(re.search("((amor|circuit|fever|hazard|joy|nym|ponder|solicit|sulfur|tuber|ulcer|valor|vapor|vermin|viper|vomit|zeal)|((advanta|coura)ge)|((censor|tort)i)|((extra)ne)|((incest)u))ous$", word)) for word in subset]) #*** assume delete all but use ous keepers instead
-        subset[delete_ous] = [string[:-3] for string in subset[delete_ous]]
+        # e.g. "multitudinous" -> "multitude"
+        inous_to_e = np.any([subset.endswith(string) for string in ("multitudinous", "vicissitudinous")], axis = 0)
+        subset[inous_to_e] = [string[:-5] + "e" for string in subset[inous_to_e]]
+        # e.g. "extraneous" -> "extra"
+        delete_ous_letters = subset.endswith("extraneous")
+        subset[delete_ous_letters] = [string[:-5] for string in subset[delete_ous_letters]]
+        # e.g. "incestuous" -> "incest"
+        delete_ous_letter = np.any([subset.endswith(string) for string in ("censorious", "incestuous", "tortious")], axis = 0)
+        subset[delete_ous_letter] = [string[:-4] for string in subset[delete_ous_letter]]
         # e.g. "famous" -> "fame"
-        ous_to_e = np.array([bool(re.search("((fam|nerv|por)|((presti)gi)|((multitu|vicissitu)din)|((auspi|avari|capri|conscien|gra|office|mali|spa|vi)ci)|((raptu)r))ous$", word)) for word in subset])
+        ous_to_e = np.any([subset.endswith(string) for string in ("famous", "nervous", "porous", "prestigious", "rapturous")], axis = 0)
         subset[ous_to_e] = [re.sub(string = string, pattern = "(i|in)?ous$", repl = "e") for string in subset[ous_to_e]]
         # e.g. "monstrous" -> "monster"
         trous_to_ter = np.any([subset.endswith(string) for string in ("brous", "strous", "xtrous")], axis = 0)
@@ -1348,9 +1368,15 @@ def digested_word_dictionary(words):
         # e.g. "envious" -> "envy"
         ious_to_y = np.any([subset.endswith(string) for string in ("efficacious", "envious", "fallacious", "furious", "glorious", "luxurious", "melodious", "onious", "prodigious", "various")], axis = 0)
         subset[ious_to_y] = [string[:-4] + "y" for string in subset[ious_to_y]]
+        # e.g. "gracious" -> "grace"
+        cious_to_ce = subset.endswith("cious")
+        subset[cious_to_ce] = [string[:-4] + "e" for string in subset[cious_to_ce]]
         # e.g. "felonous" -> "felony"
         ous_to_y = np.any([subset.endswith(string) for string in ("adulterous", "felonous", "gamous", "lecherous", "usurous")], axis = 0)
         subset[ous_to_y] = [string[:-3] + "y" for string in subset[ous_to_y]]
+        # e.g. "hazardous" -> "hazard"
+        delete_ous = np.any([subset.endswith(string) for string in ("advantageous", "amorous", "circuitous", "courageous", "feverous", "hazardous", "joyous", "nymous", "ponderous", "solicitous", "sulfurous", "tuberous", "ulcerous", "valorous", "vaporous", "verminous", "viperous", "vomitous", "zealous")], axis = 0) #*** assume delete all but use ous keepers instead
+        subset[delete_ous] = [string[:-3] for string in subset[delete_ous]]
         # general "ous" rule is to leave it
         words[subset_scope] = subset
   
@@ -1362,7 +1388,7 @@ def digested_word_dictionary(words):
         iful_to_y = subset.endswith("iful")
         subset[iful_to_y] = [string[:-4] + "y" for string in subset[iful_to_y]]
         # general rule--remove suffix
-        delete_ful = subset.endswith("ful") & np.array([not(bool(re.search("\\b(aw|grate)ful$", word))) for word in subset])
+        delete_ful = subset.endswith("ful") & np.array([not(bool(re.search("\\b(?:aw|grate)ful$", word))) for word in subset])
         subset[delete_ful] = [string[:-3] for string in subset[delete_ful]]
         words[subset_scope] = subset
   
@@ -1374,7 +1400,7 @@ def digested_word_dictionary(words):
         iless_to_y = subset.endswith("iless")
         subset[iless_to_y] = [string[:-5] + "y" for string in subset[iless_to_y]]
         # general rule--remove suffix
-        delete_less = subset.endswith("less") & np.array([not(bool(re.search("(\\b(b|hap|(never|none)the|un)?l)ess$", word))) for word in subset])
+        delete_less = subset.endswith("less") & np.array([not(bool(re.search("\\b(?:b|hap|(?:never|none)the|un)?less$", word))) for word in subset])
         subset[delete_less] = [string[:-4] for string in subset[delete_less]]
         words[subset_scope] = subset
   
@@ -1412,7 +1438,7 @@ def digested_word_dictionary(words):
         words[subset_scope] = subset
   
     # e.g. "congruence" -> "congruent"
-    ence_to_ent = words.endswith("ence") & np.array([not(bool(re.search("(\\b(h|sci|sp|th|wh)|[fp]|audi|ess|experi|influ|lic|sent)ence$", word))) for word in words]) # np.any([words.endswith(string) for string in ("abhorrence", "absence", "accidence", "congruence", "diligence", "evidence", "immanence", "indolence", "inherence", "insistence", "nascence", "opulence", "patience", "permanence", "potence", "presence", "prudence", "quence", "residence", "reticence", "reverence", "salience", "tangence", "transcience", "valence", "violence")], axis = 0)
+    ence_to_ent = words.endswith("ence") & ~(np.any([words.endswith(string) for string in ("audience", "essence", "experience", "influence", "license", "sentence")], axis = 0) | np.array([bool(re.search("\\b(?:[fhp]|sci|sp|th|wh)ence$", word)) for word in words])) # np.any([words.endswith(string) for string in ("abhorrence", "absence", "accidence", "congruence", "diligence", "evidence", "immanence", "indolence", "inherence", "insistence", "nascence", "opulence", "patience", "permanence", "potence", "presence", "prudence", "quence", "residence", "reticence", "reverence", "salience", "tangence", "transcience", "valence", "violence")], axis = 0)
     words[ence_to_ent] = [string[:-2] + "t" for string in words[ence_to_ent]]
     # e.g. "abundance" -> "abundant"
     ance_to_ant = np.any([words.endswith(string) for string in ("abundance", "clairvoyance", "distance", "ificance", "malignance", "norance", "performance", "pursuance", "resistance")], axis = 0)
@@ -1476,7 +1502,7 @@ def digested_word_dictionary(words):
         ative_to_e = np.any([subset.endswith(string) for string in ("comparative", "curative")], axis = 0) 
         subset[ative_to_e] = [string[:-5] + "e" for string in subset[ative_to_e]]
         # e.g. "relative" -> "relate"
-        ative_to_ate = subset.endswith("ative") & np.array([not(bool(re.search("(\\b[dn]|put)ative$", word))) for word in subset])
+        ative_to_ate = subset.endswith("ative") & ~(subset.endswith("putative") | np.array([bool(re.search("\\b[dn]ative$", word)) for word in subset]))
         subset[ative_to_ate] = [string[:-3] + "e" for string in subset[ative_to_ate]]
     
         # handle "itive" suffix
@@ -1485,8 +1511,20 @@ def digested_word_dictionary(words):
         itive_to_ate = subset.endswith("sensitive")
         subset[itive_to_ate] = [string[:-5] + "ate" for string in subset[itive_to_ate]]
     
+        # handle "ctive" suffix
+    
+        # e.g. "deductive" -> "deduce"
+        ctive_to_ce = subset.endswith("ductive")
+        subset[ctive_to_ce] = [string[:-4] + "e" for string in subset[ctive_to_ce]]
+        # general "ctive" rule--remove suffix (e.g. "detective" -> "detect")
+        delete_ive = subset.endswith("ctive") & ~np.any([subset.endswith(string) for string in ("adjective", "objective", "subjective")], axis = 0)
+        subset[delete_ive] = [string[:-3] for string in subset[delete_ive]]
+    
         # handle "ptive" suffix
     
+        # e.g. "captive" -> "capture"
+        ptive_to_pture = subset.endswith("captive")
+        subset[ptive_to_pture] = [string[:-3] + "ure" for string in subset[ptive_to_pture]]
         # e.g. "presumptive" -> "presume"
         mptive_to_me = subset.endswith("mptive")
         subset[mptive_to_me] = [string[:-5] + "e" for string in subset[mptive_to_me]]
@@ -1512,7 +1550,7 @@ def digested_word_dictionary(words):
         ive_to_e = np.any([subset.endswith(string) for string in ("decorative", "defensive", "iterative", "locative", "offensive")], axis = 0)
         subset[ive_to_e] = [string[:-3] + "e" for string in subset[ive_to_e]]
         # e.g. "assertive" -> "assert"
-        delete_ive = np.any([subset.endswith(string) for string in ("adoptive", "adventive", "appointive", "assertive", "attractive", "deductive", "detective", "ejective", "erective", "eruptive", "excessive", "exeptive", "exertive", "preventive", "reactive", "reflective", "selective", "transitive", "vomitive")], axis = 0)
+        delete_ive = np.any([subset.endswith(string) for string in ("adoptive", "adventive", "appointive", "assertive", "attractive", "detective", "ejective", "erective", "eruptive", "excessive", "exeptive", "exertive", "preventive", "reactive", "reflective", "selective", "transitive", "vomitive")], axis = 0)
         subset[delete_ive] = [string[:-3] for string in subset[delete_ive]]
         # general "ive" rule is to leave it
         words[subset_scope] = subset
@@ -1599,8 +1637,8 @@ def digested_word_dictionary(words):
         # handle "ition" and "ution" suffixes
     
         # e.g. "practicioner" -> "practice"
-        ition_to_ice = np.array([bool(re.search("practition(er)?s?$", word)) for word in subset])
-        subset[ition_to_ice] = [re.sub(string = string, pattern = "tion(er)?s?$", repl = "ce") for string in subset[ition_to_ice]]
+        ition_to_ice = np.any([subset.endswith(string) for string in ("practition", "practitioner")], axis = 0)
+        subset[ition_to_ice] = [re.sub(string = string, pattern = "tion(er)?$", repl = "ce") for string in subset[ition_to_ice]]
         # e.g. "solution" -> "solve"
         ution_to_ve = subset.endswith("olution")
         subset[ution_to_ve] = [string[:-5] + "ve" for string in subset[ution_to_ve]]
@@ -1737,7 +1775,7 @@ def digested_word_dictionary(words):
         delete_er_letter = ((np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_er, "awfuller", "compeller", "controller", "traveller", "quizzer", "frolicker", "mimicker", "mosaicker", "panicker", "picnicker", "politicker", "trafficker", "laughter", "remainder"])], axis = 0) & np.array([not(bool(re.search("((([aiu]|\\b([fhjstwy]|bests|dw|kn|kv|qu|sh|sm|sp|sw)e|((\\b|en)r)o)ll)|(\\bodd))er$", word))) for word in subset])) | (subset.endswith("eer") & np.array([not(bool(re.search(any_of(English_eer_keepers) + "$", word))) for word in subset]) & ~np.any([subset.endswith(string) for string in ("decreer", "fleer", "freer", "seer")], axis = 0))) & er_keeper_mask
         subset[delete_er_letter] = [string[:-3] for string in subset[delete_er_letter]]
         # e.g. "carrier" -> "carry"
-        ier_to_y = subset.endswith("ier") & np.array([not(bool(re.search(any_of(English_ier_keepers) + "$", word))) for word in subset]) & np.array([not(bool(re.search("((\\b|water)sk|tax)ier$", word))) for word in subset])
+        ier_to_y = subset.endswith("ier") & np.array([not(bool(re.search(any_of(English_ier_keepers) + "$", word))) for word in subset]) & ~(np.any([subset.endswith(string) for string in ("taxier", "waterskier")], axis = 0) | np.array([bool(re.search("\\bskier$", word)) for word in subset]))
         subset[ier_to_y] = [string[:-3] + "y" for string in subset[ier_to_y]]
         er_keeper_mask = ~delete_er_letter & np.array([not(bool(re.search(any_of(English_er_keepers) + "$", word))) for word in subset])
         # e.g. "(over)seer" -> "see"
@@ -1754,7 +1792,7 @@ def digested_word_dictionary(words):
     if len(subset) != 0:
         est_keeper_mask = np.array([not(bool(re.search(any_of(English_est_keepers) + "$", word))) for word in subset])
         # e.g. "biggest" -> "big"
-        delete_est_letter = np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_est, "awfullest"])], axis = 0) & np.array([not(bool(re.search("(([aiu]ll)|(\\bodd))est$", word))) for word in subset]) & est_keeper_mask
+        delete_est_letter = np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_est, "awfullest"])], axis = 0) & np.array([not(bool(re.search("(?:[aiu]ll|\\bodd)est$", word))) for word in subset]) & est_keeper_mask
         subset[delete_est_letter] = [string[:-4] for string in subset[delete_est_letter]]
         # e.g. "earliest" -> "early"
         iest_to_y = subset.endswith("iest") & np.array([not(bool(re.search(any_of(English_iest_keepers) + "$", word))) for word in subset])
@@ -1777,13 +1815,13 @@ def digested_word_dictionary(words):
         tred_to_ter = subset.endswith("tred") & ~subset.endswith("hatred")
         subset[tred_to_ter] = [string[:-3] + "er" for string in subset[tred_to_ter]]
         # e.g. "travelled" -> "travel"
-        delete_ed_letter = np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_ed, "compelled", "controlled", "travelled", "quizzed", "frolicked", "mimicked", "mosaicked", "panicked", "picnicked", "politicked", "trafficked"])], axis = 0) & np.array([not(bool(re.search("(([aiu]|\\b([fhjtwy]|dw|kn|kv|qu|sh|sm|sp|sw)e|((\\b|en)r)o)ll)ed$", word))) for word in subset]) & ed_keeper_mask
+        delete_ed_letter = np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_ed, "compelled", "controlled", "travelled", "quizzed", "frolicked", "mimicked", "mosaicked", "panicked", "picnicked", "politicked", "trafficked"])], axis = 0) & np.array([not(bool(re.search("(?:[aiu]|\\b(?:[fhjtwy]|dw|kn|kv|qu|sh|sm|sp|sw)e|(?:\\b|en)ro)lled$", word))) for word in subset]) & ed_keeper_mask
         subset[delete_ed_letter] = [string[:-3] for string in subset[delete_ed_letter]]
         # e.g. "tied" -> "tie"
         delete_d = np.array([bool(re.search("\\b" + any_of(["died", "lied", "tied", "hogtied"]) + "$", word)) for word in subset])
         subset[delete_d] = [string[:-1] for string in subset[delete_d]]
         # e.g. "carried" -> "carry"
-        ied_to_y = subset.endswith("ied") & np.array([not(bool(re.search("((\\b|water)sk|tax)ied$", word))) for word in subset])
+        ied_to_y = subset.endswith("ied") & ~(np.any([subset.endswith(string) for string in ("taxied", "waterskied")], axis = 0) | np.array([bool(re.search("\\bskied$", word)) for word in subset]))
         subset[ied_to_y] = [string[:-3] + "y" for string in subset[ied_to_y]]
         ed_keeper_mask = ~delete_ed_letter & np.array([not(bool(re.search(any_of(English_ed_keepers) + "$", word))) for word in subset])
         # e.g. "wasted" -> "waste"
@@ -1803,7 +1841,7 @@ def digested_word_dictionary(words):
         tring_to_ter = subset.endswith("tring") & (~subset.endswith("string") | subset.endswith("lustring"))
         subset[tring_to_ter] = [string[:-4] + "er" for string in subset[tring_to_ter]]
         # e.g. "trafficking" -> "traffic"
-        delete_ing_letter = np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_ing, "compelling", "controlling", "travelling", "quizzing", "frolicking", "mimick", "mosaicking", "panicking", "picnicking", "politicking", "trafficking"])], axis = 0) & np.array([not(bool(re.search("(([aiu]|\\b([fhjstwy]|bests|dw|kn|kv|qu|sh|sm|sp|sw)e|((\\b|en)r)o)ll)ing$", word))) for word in subset]) & ing_keeper_mask
+        delete_ing_letter = np.any([subset.endswith(string) for string in flat_concat([English_doubled_consonants_ing, "compelling", "controlling", "travelling", "quizzing", "frolicking", "mimick", "mosaicking", "panicking", "picnicking", "politicking", "trafficking"])], axis = 0) & np.array([not(bool(re.search("(?:[aiu]|\\b(?:[fhjstwy]|bests|dw|kn|kv|qu|sh|sm|sp|sw)e|(?:\\b|en)ro)lling$", word))) for word in subset]) & ing_keeper_mask
         subset[delete_ing_letter] = [string[:-4] for string in subset[delete_ing_letter]]
         ing_keeper_mask = ~delete_ing_letter & np.array([not(bool(re.search(any_of(English_ing_keepers) + "$", word))) for word in subset])
         # e.g. "waving" -> "wave"
@@ -1851,7 +1889,7 @@ def digested_word_dictionary(words):
         ify_to_e = np.any([subset.endswith(string) for string in ("arify", "asify", "atify", "codify", "ilify", "ivify", "lsify", "notify", "nsify", "orify", "plify", "urify", "utify", "ypify")], axis = 0) & ~np.any([subset.endswith(string) for string in ("amplify", "gasify")], axis = 0)
         subset[ify_to_e] = [string[:-3] + "e" for string in subset[ify_to_e]]
         # general rule--remove suffix (e.g. "solidify" -> "solid")
-        delete_ify = subset.endswith("ify") & np.array([not(bool(re.search("(cert|\\bed|gn|mod|myst|rat|spec|test)ify$", word))) for word in subset])
+        delete_ify = subset.endswith("ify") & ~(np.any([subset.endswith(string) for string in ("certify", "gnify", "modify", "mystify", "ratify", "specify", "testify")], axis = 0) | np.array([bool(re.search("\\bedify$", word)) for word in subset]))
         subset[delete_ify] = [string[:-3] for string in subset[delete_ify]]
         words[subset_scope] = subset
   
@@ -1869,10 +1907,10 @@ def digested_word_dictionary(words):
         delete_en = np.any([subset.endswith(string) for string in ("blacken", "brighten", "broaden", "cheapen", "deepen", "freshen", "frighten", "harden", "harken", "hearten", "heighten", "lengthen", "lessen", "moisten", "roughen", "sharpen", "shorten", "slacken", "slicken", "smarten", "smoothen", "soften", "steepen", "stiffen", "sweeten", "thicken", "threaten", "tighten", "toughen", "weaken")], axis = 0)
         subset[delete_en] = [string[:-2] for string in subset[delete_en]]
         # e.g. "whiten" -> "white"
-        delete_n = np.any([subset.endswith(string) for string in ("whiten")], axis = 0)
+        delete_n = np.any([subset.endswith(string) for string in ("hasten", "whiten")], axis = 0)
         subset[delete_n] = [string[:-1] for string in subset[delete_n]]
         words[subset_scope] = subset
-    
+  
     # handle "ize" suffix
     subset_scope = words.endswith("ize")
     subset = words[subset_scope]
@@ -1890,7 +1928,7 @@ def digested_word_dictionary(words):
         size_to_sis = np.any([subset.endswith(string) for string in ("emphasize", "hypothesize", "metastasize", "parenthesize", "synthesize")], axis = 0)
         subset[size_to_sis] = [string[:-2] + "s" for string in subset[size_to_sis]]
         # e.g. "categorize" -> "category"
-        ize_to_y = np.any([subset.endswith(string) for string in ("anatomize", "apologize", "categorize", "chronize", "colonize", "ectomize", "eulogize", "fantasize", "otomize", "summarize")], axis = 0)
+        ize_to_y = np.any([subset.endswith(string) for string in ("anatomize", "apologize", "categorize", "chronize", "colonize", "ectomize", "eulogize", "fantasize", "otomize", "prioritize", "summarize")], axis = 0)
         subset[ize_to_y] = [string[:-3] + "y" for string in subset[ize_to_y]]
         # e.g. "iodize" -> "iodine"
         ize_to_ine = subset.endswith("iodize")
@@ -1916,13 +1954,19 @@ def digested_word_dictionary(words):
         words[subset_scope] = subset
   
     # e.g. "aviator" -> "aviate"
-    ator_to_ate = words.endswith("ator")
+    ator_to_ate = words.endswith("ator") & ~np.any([words.endswith(string) for string in ("alligator", "equator")], axis = 0)
     words[ator_to_ate] = [string[:-2] + "e" for string in words[ator_to_ate]]
   
     # handle "ate" suffix
     subset_scope = words.endswith("ate")
     subset = words[subset_scope]
     if len(subset) != 0:
+        # e.g. "activate" -> "act"
+        delete_ivate = subset.endswith("activate")
+        subset[delete_ivate] = [string[:-5] for string in subset[delete_ivate]]
+        # e.g. "captivate" -> "capture"
+        ivate_to_ure = np.any([subset.endswith(string) for string in ("activate", "cultivate")], axis = 0)
+        subset[ivate_to_ure] = [string[:-5] + "ure" for string in subset[ivate_to_ure]]
         # e.g. "administrate" -> "administer"
         strate_to_ster = np.any([subset.endswith(string) for string in ("administrate", "sequestrate")], axis = 0)
         subset[strate_to_ster] = [string[:-4] + "er" for string in subset[strate_to_ster]]
@@ -1959,12 +2003,24 @@ def digested_word_dictionary(words):
         # e.g. "stimulate" -> "stimulus"
         ate_to_us = subset.endswith("stimulate")
         subset[ate_to_us] = [string[:-3] + "us" for string in subset[ate_to_us]]
+        # e.g. "salivate" -> "saliva"
+        ate_to_a = subset.endswith("salivate")
+        subset[ate_to_a] = [string[:-2] for string in subset[ate_to_a]]
         # e.g. "activate" -> "active"
         ate_to_e = np.any([subset.endswith(string) for string in ("activate", "brominate", "causate", "chlorinate", "citate", "combinate", "computate", "condensate", "continuate", "conversate", "degradate", "derivate", "destinate", "determinate", "divinate", "durate", "electorate", "examinate", "excitate", "explorate", "figurate", "fluorinate", "imaginate", "iodinate", "limitate", "notate", "oxidate", "preparate", "pristinate", "quotate", "reputate", "respirate", "restorate", "sensate", "vaccinate", "rvate")], axis = 0)
         subset[ate_to_e] = [string[:-3] + "e" for string in subset[ate_to_e]]
         words[subset_scope] = subset
   
-    ### connect a few verb forms to their noun forms
+    ### connect a few verb forms to their noun forms (and vice versa)
+  
+    # handle "duct" suffix
+    subset_scope = words.endswith("duct")
+    subset = words[subset_scope]
+    if len(subset) != 0:
+        # e.g. "product" -> "produce"
+        duct_to_duce = np.any([subset.endswith(string) for string in ("educt", "nduct", "oduct")], axis = 0)
+        subset[duct_to_duce] = [string[:-1] + "e" for string in subset[duct_to_duce]]
+        words[subset_scope] = subset
   
     # handle "y" suffix
     subset_scope = words.endswith("y")
