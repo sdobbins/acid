@@ -21,7 +21,7 @@ English_ly_to_le_words <- c("doubly", "cycly", "muscly", "crackly", "crinkly", "
 English_anti_keepers <- c("anticipat", "antidote", "antilog", "antimony", "anting", "antiquari", "antiquary", "antiquat", "antique", "antiqui", "antiquit", "antistrophe")
 English_dis_keepers <- c("discreet", "discret(?:e|ion)", "discrepan", "discriminat", "disk", "dish", "display", "dismay", "dismal", "dismiss", "dispel", "discern", "discipl", "dispute", "distribu", "disrupt", "disturb", "discus", "diss", "dispose", "disgust", "dismiss", "distill", "disdain", "distort", "disease", "disco$", "discograph", "discover", "district", "distinct", "distinguish", "distan", "disten", "distress")
 English_imbmp_keepers <- c("imbib", "imbitter", "imbolden", "imbecil", "imblaz", "imbroglio", "imbue", "immediat", "imp$", "impair", "impal", "impeach", "imped", "imperitive", "impertinent", "import", "implement", "imply", "implic", "impregnat", "improp", "impuls", "impresario", "impose", "imposit", "impetuous", "imperil", "imperial", "impact", "implod", "implos", "impress", "imprint", "imput", "impel", "impromptu", "implant", "impish", "impound", "impunit", "improv", "implor", "impuls", "imping", "immanenc", "immigrat", "immun", "immur", "immers", "immanent", "immens")
-English_in_keepers <- c("in$", "inside$", "into$", "inane", "inanit", "inaug", "inbound", "inbre", "inch", "incas", "incens", "incentiv", "incept", "incid", "incis", "incit", "inclin", "inclos", "includ", "inclus", "incom", "increas", "increment", "incub", "inculca", "incur", "indeed", "indemn", "indent", "index", "india", "indic", "indie", "indig", "individual", "induc", "indulg", "industr", "indy", "inert", "infant", "inertia", "infatua", "infect", "infer", "infest", "infix", "inflat", "inflect", "inflict", "influen", "info", "infra", "infring", "infus", "ingest", "ingot", "ingrain", "ingrati", "ingredient", "ingroup", "inhabit", "inhal", "inherent", "inherit", "inhibit", "initia", "inject", "injure", "ink", "inlay", "inmate", "inn", "inositol", "input", "inquir", "insert", "insid", "insinuat", "insip", "insist", "insinuat", "inspect", "inspir", "install", "instan", "instat", "instead", "instigat", "instill", "instruct", "instrum", "institut", "insul", "insur", "intact", "integ", "intell", "inten", "inter", "intestin", "intimat", "intomb", "intro", "intru", "intubat", "intuit", "inundat", "inur", "invad", "invas", "invent", "invers", "invert", "invest", "invit", "invok", "invoc", "involv", "inward")
+English_in_keepers <- c("in$", "inside$", "into$", "inane", "inanit", "inaug", "inbound", "inbre", "inch", "incas", "incens", "incentiv", "incept", "incid", "incis", "incit", "inclin", "inclos", "includ", "inclus", "incom[ei]", "increas", "increment", "incub", "inculca", "incur", "indeed", "indemn", "indent", "index", "india", "indic", "indie", "indig", "individual", "induc", "indulg", "industr", "indy", "inert", "infant", "inertia", "infatua", "infect", "infer", "infest", "infix", "inflat", "inflect", "inflict", "influen", "info", "infra", "infring", "infus", "ingest", "ingot", "ingrain", "ingrati", "ingredient", "ingroup", "inhabit", "inhal", "inherent", "inherit", "inhibit", "initia", "inject", "injure", "ink", "inlay", "inmate", "inn", "inositol", "input", "inquir", "insert", "insid", "insinuat", "insip", "insist", "insinuat", "inspect", "inspir", "install", "instan", "instat", "instead", "instigat", "instill", "instruct", "instrum", "institut", "insul", "insur", "intact", "integ", "intell", "inten", "inter", "intestin", "intimat", "intomb", "intro", "intru", "intubat", "intuit", "inundat", "inur", "invad", "invas", "invent", "invers", "invert", "invest", "invit", "invok", "invoc", "involv", "inward")
 English_mis_keepers <- c("missile", "mission", "miser", "mischiev", "miscible", "misceg", "miscell", "misses", "miss$", "missed", "missing", "mishap", "mist", "miso", "mississippi")
 English_sub_keepers <- c("sub$", "submit", "submar", "subtl", "subb(?:ed|ing)", "subject", "suburb", "subdu(?:e|ing)", "subway", "subsequent", "subvene", "subpena", "subduce", "subvert", "subsidy", "subside", "subsist", "sublime", "subtend", "submer[gs]e", "subtract", "substan[ct]", "subscri[bp]", "substitut", "subsidiar", "substrate")#***
 English_super_keepers <- c("super$", "superfluous", "superior", "superlativ")
@@ -36,7 +36,7 @@ English_ible_keepers <- c("bible", "compatible", "eligible", "feasible", "horrib
 English_eal_keepers <- c("anneal", "appeal", "conceal", "congeal", "deal", "\\bmeal", "ordeal", "\\breal", "repeal", "reveal", "seal", "squeal", "steal")
 English_ial_keepers <- c("artificial", "axial", "colloquial", "congenial", "cordial", "crucial", "jovial", "judicial", "material", "nubial", "social", "special", "superficial", "trial", "trivial", "venial", "vivial")
 English_ual_keepers <- c("actual", "casual", "dual", "equal", "eventual", "individual", "lingual", "manual", "menstrual", "mutual", "ritual", "usual", "victual", "visual")
-English_al_keepers <- c("aboriginal", "animal", "arsenal", "capital", "cardinal", "carnival", "cathedral", "charcoal", "chemical", "coal", "crystal", "decimal", "\\bdent", "eternal", "federal", "final", "fiscal", "funeral", "general", "hospital", "integral", "international", "interval", "journal", "lateral", "legal", "liberal", "literal", "local", "loyal", "mammal", "marital", "medieval", "mental", "mineral", "moral", "municipal", "naval", "normal", "\\boval", "primeval", "principal", "radical", "rival", "rural", "scandal", "secular", "several", "spectrum", "spiral", "temporal", "thermal", "total", "vertical", "virtual", "vital", English_eal_keepers, English_ial_keepers, English_ual_keepers) #*** integral to integrate?
+English_al_keepers <- c("aboriginal", "animal", "arsenal", "capital", "cardinal", "carnival", "cathedral", "charcoal", "chemical", "coal", "crystal", "decimal", "\\bdent", "eternal", "federal", "final", "fiscal", "funeral", "general", "hospital", "integral", "international", "interval", "journal", "lateral", "legal", "liberal", "literal", "local", "loyal", "mammal", "marital", "medieval", "mental", "mineral", "moral", "municipal", "naval", "normal", "numeral", "\\boval", "primeval", "principal", "radical", "rival", "rural", "scandal", "secular", "several", "spectrum", "spiral", "temporal", "thermal", "total", "vassal", "vertical", "virtual", "vital", English_eal_keepers, English_ial_keepers, English_ual_keepers) #*** integral to integrate?
 English_ist_keepers <- c("assist", "artist", "checklist", "chemist", "cist", "consist", "dentist", "enlist", "exist", "feist", "fist", "foist", "gist", "heist", "hoist", "insist", "list", "joist", "mist", "moist", "persist", "playlist", "protist", "resist", "schist", "shist", "twist", "wishlist", "wrist") #, "florist"
 English_ism_keepers <- c("animism", "atheism", "autism", "baptism", "catechism", "deism", "fascism", "sadism", "sophism", "theism")
 English_ian_keepers <- c("lesbian", "thespian")
@@ -63,8 +63,8 @@ English_ier_keepers <- c("brier", "cashier", "cavalier", "chandelier", "courier"
 English_er_keepers <- c("under", "whether", "\\bever", "whenever", "wherever", "whichever", "whoever", "whomever", "however", "whatever", "whatsoever", "forever", "either", "neither", "after", "\\bnever", "\\bher", "differ", "number", "tower", "dinner", "matter", "trouser", "mister", "minister", "amber", "customer", "harbinger", "monger", "\\banger", "manger", "ganger", "\\bother", "another", "paper", "(head)?quarter", "helicopter", "over", "member", "water", "fiber", "wonder", "ancester", "cloister", "confer", "corner", "enter", "per", "luster", "neuter", "scepter", "order", "deliver", "prefer", "defer", "foster", "cluster", "murder", "chamber", "september", "october", "november", "december", "register", "weather", "together", "letter", "newsletter", "chapter", "better", "poker", "further", "farther", "remember", "river", "silver", "rather", "summer", "winter", "super", "cancer", "answer", "transfer", "filter", "consider", "partner", "character", "father", "mother", "brother", "sister", "daughter", "leather", "upper", "lower", "laser", "theater", "gender", "soccer", "proper", "refer", "master", "meter", "rubber", "monster", "mester", "prefer", "latter", "tiger", "finger", "danger", "powder", "integer", "pepper", "cover", "spider", "cyber", "shelter", "suffer", "beaver", "trigger", "fever", "butler", "timber", "gather", "roster", "encounter", "hammer", "cylinder", "boulder", "thunder", "ester", "render", "after", "monomer", "dimer", "trimer", "tetramer", "polymer", "bitter", "usher", "ginger", "carpenter", "clever", "alzheimer", "lavender", "eager", "surrender", "lumber", "diaper", "jupiter", "sweater", "minister", "litter", "panther", "pewter", "clutter", "bladder", "lever", "feather", "burger", "ledger", "lobster", "slaughter", "glitter", "garner", "oyster", "clover", "power", "conquer", "badger", "butcher", "register", "kosher", "viper", "whisper", "flower", "utter", "cater", "doppler", "snooker", "juniper", "cucumber", "deter", "infer", "ether", "caliber", "center", "hooker", "cider", "splinter", "chapter", "batter", "sober", "sinister", "otter", "slender", English_eer_keepers, English_ier_keepers)
 English_iest_keepers <- c("priest")
 English_est_keepers <- c("\\bbest", "digest", "earnest", "(?:\\b|gab|love|slug|song)fest", "harvest", "honest", "\\bjest", "\\blest", "manifest", "\\bnest", "\\bpest", "(?:\\b|arm|head)rest", "\\btest", "\\bvest", "(?:\\b|mid|north|south)west", "\\bzest", "arbalest", "arrest", "attest", "\\bchest", "contest", "crest", "forest", "(?:\\b|house)guest", "infest", "invest", "interest", "protest", "(?:\\b|ac|be|con|in|re)quest", "suggest", "tempest", English_iest_keepers)
-English_ed_keepers <- c("\\bbed", "bred", "\\bfed", "hundred", "infrared", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed")
-English_ing_keepers <- c("bring", "ceiling", "\\bcling", "darling", "\\bding", "\\bduring", "evening", "\\bfling", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "(?:\\b|un|war)sling", "spring", "sterling", "\\bsting", "string", "swing", "(?:\\b|any|every|no|some)?thing", "\\bwing", "\\bwring", "\\bzing")
+English_ed_keepers <- c("\\bbed", "bred", "\\bfed", "hundred", "infrared", "kindred", "naked", "need", "\\bred", "sacred", "\\bshed", "watershed", "\\bwed", "\\bzed")
+English_ing_keepers <- c("bring", "ceiling", "\\bcling", "darling", "\\bding", "\\bduring", "evening", "\\bfling", "\\bking", "lightning", "morning", "\\bpending", "\\bping", "\\bring", "\\bsing", "(?:\\b|un|war)sling", "spring", "sterling", "\\bsting", "string", "swing", "(?:\\b|any|every|no|some)?thing", "(?:\\b|hind)wing", "\\bwring", "\\bzing")
 
 English_s_keepers <- c("always", "perhaps", "whereas", "has", "is", "was")
 
@@ -147,7 +147,7 @@ digest_words <- function(words) {
   # notes:  This could be used in the future for grammatical approaches, 
   # notes:    as it breaks down words by part of speech-related suffixes. 
   # notes:  In future may separate contractions into component words. 
-  # notes:  In future may handle co-, en-, inter-, intra-, semi- prefixes. 
+  # notes:  In future may handle co-, en-, inter-, intra-, re-, semi- prefixes. 
   # notes:  In future should handle encyclopaedia-like spellings. 
   # 
   results <- character(length(words))
@@ -171,15 +171,12 @@ digested_word_dictionary <- function(words) {
   
   ### handle contractions
   # contractions block the ending of words (hiding endings in endsWith() checks), so they must be removed
-  subset_scope <- words %like% "'"
+  subset_scope <- words %exactlylike% "'"
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
-    is_wont <- subset %like% "\\bwon't$"
-    subset[is_wont] <- replace_last_n_chars_with(subset[is_wont], 5L, "will")
-    is_mightve <- subset %like% "\\bmight've$"
-    subset[is_mightve] <- replace_last_n_chars_with(subset[is_mightve], 8L, "might")
-    is_contraction <- subset %like% "(?:n't|'ve|'ll|'re|')+$"
-    subset[is_contraction] <- grem(subset[is_contraction], "(?:n't|'ve|'ll|'re|')+$")
+    subset <- gsub(subset, pattern = "\\bwon't\\b", replacement = "will")
+    subset <- gsub(subset, pattern = "\\bmight've\\b", replacement = "might")
+    subset <- grem(subset, "(?:n't|'ve|'ll|'re|')+$")
     words[subset_scope] <- subset
   }
   
@@ -254,7 +251,7 @@ digested_word_dictionary <- function(words) {
     delete_t <- endsWithAny(subset, c("burnt", "dealt", "dreamt", "learnt", "meant"))
     subset[delete_t] <- remove_last_n_chars(subset[delete_t], 1L)
     # e.g. "built" -> "build"
-    t_to_d <- endsWithAny(subset, c("bent", "built", "lent", "sent", "spent"))
+    t_to_d <- endsWithAny(subset, c("built", "spent")) | ends_with_word(subset, c("bent", "lent", "sent"))
     subset[t_to_d] <- replace_last_n_chars_with(subset[t_to_d], 1L, "d")
     # e.g. "lost" -> "lose"
     t_to_e <- endsWith(subset, "lost")
@@ -305,6 +302,12 @@ digested_word_dictionary <- function(words) {
   reasonable_slice <- endsWithAny(words, c("worse", "worst"))
   words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("worse", "worst"))), replacement = "bad")
   
+  reasonable_slice <- endsWith(words, "these")
+  words[reasonable_slice] <- replace_last_n_chars_with(words[reasonable_slice], 3L, "is")
+  
+  reasonable_slice <- endsWith(words, "those")
+  words[reasonable_slice] <- replace_last_n_chars_with(words[reasonable_slice], 3L, "at")
+  
   # irregular verbs without much pattern
   
   # handle irregulars ending in "d"
@@ -344,7 +347,7 @@ digested_word_dictionary <- function(words) {
       subset[subsubset_scope] <- subsubset
     }
     
-    ound_to_ind <- endsWithAny(subset, c("bound", "found", "ground", "wound"))
+    ound_to_ind <- endsWithAny(subset, c("bound", "found")) # "ground", "wound" (these are also unrelated nouns)
     subset[ound_to_ind] <- replace_last_n_chars_with(subset[ound_to_ind], 4L, "ind")
     
     subsubset_scope <- endsWith(subset, "od")
@@ -499,7 +502,7 @@ digested_word_dictionary <- function(words) {
   subset_scope <- endsWith(words, "n")
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
-    an_to_un <- ends_with_word(subset, "(|fore|re|out|over)ran")
+    an_to_un <- endsWithAny(subset, c("foreran", "reran", "outran", "overran")) | subset %like% "\\bran$"
     subset[an_to_un] <- replace_last_n_chars_with(subset[an_to_un], 2L, "un")
     on_to_in <- endsWith(subset, "won")
     subset[on_to_in] <- replace_last_n_chars_with(subset[on_to_in], 2L, "in")
@@ -543,7 +546,7 @@ digested_word_dictionary <- function(words) {
     
     it_to_ight <- endsWith(subset, "lit") & !endsWithAny(subset, c("llit", "slit", "split"))
     subset[it_to_ight] <- replace_last_n_chars_with(subset[it_to_ight], 1L, "ght")
-    it_to_ite <- ends_with_word(subset, "(|frost|snake)bit")
+    it_to_ite <- endsWithAny(subset, c("frostbit", "snakebit")) | subset %like% "\\bbit$"
     subset[it_to_ite] <- replace_last_n_chars_with(subset[it_to_ite], 2L, "ite")
     
     elt_to_eel <- endsWithAny(subset, c("felt", "knelt"))
@@ -554,7 +557,7 @@ digested_word_dictionary <- function(words) {
     
     ot_to_et <- endsWithAny(subset, c("begot", "forgot")) | ends_with_word(subset, "got")
     subset[ot_to_et] <- replace_last_n_chars_with(subset[ot_to_et], 2L, "et")
-    ot_to_oot <- ends_with_word(subset, "(|counter|out|over|re|up|trouble)shot")
+    ot_to_oot <- endsWithAny(subset, c("countershot", "outshot", "overshot", "reshot", "upshot", "troubleshot")) | subset %like% "\\bshot$"
     subset[ot_to_oot] <- replace_last_n_chars_with(subset[ot_to_oot], 1L, "ot")
     
     words[subset_scope] <- subset
@@ -564,7 +567,7 @@ digested_word_dictionary <- function(words) {
   subset_scope <- endsWith(words, "w")
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
-    aw_to_ee <- ends_with_word(subset, "(|fore|over|re|sight)saw")
+    aw_to_ee <- endsWithAny(subset, c("foresaw", "oversaw", "resaw", "sightsaw")) | subset %like% "\\bsaw$"
     subset[aw_to_ee] <- replace_last_n_chars_with(subset[aw_to_ee], 2L, "ee")
     
     # irregular verbs ending in "ew"
@@ -601,11 +604,11 @@ digested_word_dictionary <- function(words) {
   has_keepable_prefix <- words %like% beginning_with(any_of(English_prefix_keepers))
   # removes multiple (nested) prefixes
   # excludes a few difficult cases for further processing below
-  delete_prefix <- !has_keepable_prefix & words %like% "\\b(((a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|un|under)-?))" & words %!like% "\\b(none($|theless)|im(migra|pov|prop))"
-  words[delete_prefix] <- grem(words[delete_prefix], "\\b(((a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|un|under)-?))(((a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|un|under)-?))*")
+  delete_prefix <- !has_keepable_prefix & words %like% "\\b(?:(?:(?:a|de|ex|post|pre|re|semi|un|well)-)|((anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|under|un)-?))" & words %!like% "\\b(?:none($|theless)|im(?:migra|pov|prop))"
+  words[delete_prefix] <- grem(words[delete_prefix], "\\b(?:(?:a|de|ex|post|pre|re|semi|un|well)-|(?:anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|under|un)-?)(?:(?:a|de|ex|post|pre|re|semi|un|well)-|(?:anti|dis|im[bmp]|hyper|hypo|in|mis|non|over|sub|super|under|un)-?)*")
   
   # needs to be separate because the above rule would have taken immigrate/improper to igrate/roper
-  delete_im_prefix <- words %like% "\\bim(migra|pov|prop)"
+  delete_im_prefix <- words %like% "\\bim(?:migra|pov|prop)"
   words[delete_im_prefix] <- grem(words[delete_im_prefix], "\\bim")
   
   #* could add "ir" to normal prefix set above if a list of English_ir_keepers is made and used
@@ -617,7 +620,7 @@ digested_word_dictionary <- function(words) {
   words[delete_ab_prefix] <- grem(words[delete_ab_prefix], "\\bab")
   
   #* could add "mal" to normal prefix set above if a list of English_mal_keepers is made and used
-  delete_mal_prefix <- words %like% "\\bmal" & words %!like% "\\bmal(ady|ari|ark|e($|s|ness)|efa|efi|evo|ici|ign|ing|l($|[aeiou])|m|($|t[aeiou]))"
+  delete_mal_prefix <- words %like% "\\bmal" & words %!like% "\\bmal(?:ady|ari|ark|e(?:$|s|ness)|efa|efi|evo|ici|ign|ing|l(?:$|[aeiou])|m|(?:$|t[aeiou]))"
   words[delete_mal_prefix] <- grem(words[delete_mal_prefix], "\\bmal")
   
   ### handle first batch of generic noun and adjective suffixes
@@ -627,7 +630,7 @@ digested_word_dictionary <- function(words) {
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
     # sometimes "lly" -> "ly"
-    ly_to_l <- subset %like% "(bi|hi|fri|\\bfu)lly$"
+    ly_to_l <- endsWithAny(subset, c("billy", "hilly", "frilly")) | subset %like% "\\bfully$"
     subset[ly_to_l] <- remove_last_n_chars(subset[ly_to_l], 1L)
     # e.g. "ably" -> "able"
     bly_to_ble <- endsWith(subset, "bly")
@@ -673,7 +676,7 @@ digested_word_dictionary <- function(words) {
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
     # e.g. "mobility" -> "mobile"
-    bility_to_bile <- subset %like% "(\\bla|mo|nu)bility$"
+    bility_to_bile <- subset %like% "(?:\\bla|mo|nu)bility$"
     subset[bility_to_bile] <- replace_last_n_chars_with(subset[bility_to_bile], 3L, "e")
     # e.g. "ability" -> "able"
     bility_to_ble <- endsWith(subset, "bility")
@@ -807,7 +810,7 @@ digested_word_dictionary <- function(words) {
   subset_scope <- endsWith(words, "ship")
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
-    delete_ship <- !ends_with_word(subset, "(|air|amid|battle|fire|gun|long|medium|mid|motor|relation|space|steam|tank|trans?|war|wor)ship")
+    delete_ship <- !(endsWithAny(subset, c("airship", "battleship", "fireship", "gunship", "longship", "mediumship", "midship", "motorship", "relationship", "spaceship", "steamship", "tankship", "tranship", "transship", "warship", "worship")) | subset %like% "\\bship$")
     subset[delete_ship] <- remove_last_n_chars(subset[delete_ship], 4L)
     words[subset_scope] <- subset
   }
@@ -852,8 +855,8 @@ digested_word_dictionary <- function(words) {
   words[red_to_e] <- replace_last_n_chars_with(words[red_to_e], 3L, "e")
   
   # e.g. "elder" -> "old"
-  eld_to_old <- words %like% "\\beld(er|est)?$"
-  words[eld_to_old] <- gsub(words[eld_to_old], pattern = "\\beld(er|est)?$", replacement = "old")
+  eld_to_old <- words %like% "\\beld(?:er|est)?$"
+  words[eld_to_old] <- gsub(words[eld_to_old], pattern = "\\beld(?:er|est)?$", replacement = "old")
   
   # handle "estry" and "istry" suffixes
   subset_scope <- endsWith(words, "stry")
@@ -940,7 +943,7 @@ digested_word_dictionary <- function(words) {
     tial_to_ce <- endsWithAny(subset, c("essential", "influential", "spatial"))
     subset[tial_to_ce] <- replace_last_n_chars_with(subset[tial_to_ce], 4L, "ce")
     # e.g. "financial" -> "finance"
-    ial_to_e <- subset %like% "([aeiou][bcs]|[nr]c)ial$" & subset %!like% ending_with(any_of(English_ial_keepers))
+    ial_to_e <- subset %like% "(?:[aeiou][bcs]|[nr]c)ial$" & subset %!like% ending_with(any_of(English_ial_keepers))
     subset[ial_to_e] <- replace_last_n_chars_with(subset[ial_to_e], 3L, "e")
     # general "ial" rule--remove suffix
     delete_ial <- endsWith(subset, "ial") & subset %!like% ending_with(any_of(English_ial_keepers))
@@ -1022,7 +1025,7 @@ digested_word_dictionary <- function(words) {
     al_to_us <- endsWithAny(subset, c("colossal", "focal", "terminal", "viral"))
     subset[al_to_us] <- replace_last_n_chars_with(subset[al_to_us], 2L, "us")
     # e.g. "global" -> "globe"
-    al_to_e <- endsWithAny(subset, c("communal", "global", "tribal", "practical", "bridal", "tribunal", "brutal", "ral", "sal", "val")) & subset %!like% "(((behavi|doct|elect)o)r|(medie|na|\\bo|flor|prime|\\bri)v)al$" & subset %!like% ending_with(any_of(English_al_keepers))
+    al_to_e <- endsWithAny(subset, c("communal", "global", "tribal", "practical", "bridal", "tribunal", "brutal", "ral", "sal", "val")) & !(endsWithAny(subset, c("behavioral", "doctoral", "electoral", "medieval", "naval", "floral", "primeval")) | subset %like% "\\b(?:o|ri)val$") & subset %!like% ending_with(any_of(English_al_keepers))
     subset[al_to_e] <- replace_last_n_chars_with(subset[al_to_e], 2L, "e")
     # e.g. "reciprocal" -> "reciprocate"
     al_to_ate <- endsWith(subset, "reciprocal")
@@ -1145,11 +1148,17 @@ digested_word_dictionary <- function(words) {
   subset_scope <- endsWith(words, "ous")
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
-    # e.g. "hazardous" -> "hazard"
-    delete_ous <- subset %like% "((amor|circuit|fever|hazard|joy|nym|ponder|solicit|sulfur|tuber|ulcer|valor|vapor|vermin|viper|vomit|zeal)|((advanta|coura)ge)|((censor|tort)i)|((extra)ne)|((incest)u))ous$" #*** assume delete all but use ous keepers instead
-    subset[delete_ous] <- remove_last_n_chars(subset[delete_ous], 3L)
+    # e.g. "multitudinous" -> "multitude"
+    inous_to_e <- endsWithAny(subset, c("multitudinous", "vicissitudinous"))
+    subset[inous_to_e] <- replace_last_n_chars_with(subset[inous_to_e], 5L, "e")
+    # e.g. "extraneous" -> "extra"
+    delete_ous_letters <- endsWith(subset, "extraneous")
+    subset[delete_ous_letters] <- remove_last_n_chars(subset[delete_ous_letters], 5L)
+    # e.g. "incestuous" -> "incest"
+    delete_out_letter <- endsWithAny(subset, c("censorious", "incestuous", "tortious"))
+    subset[delete_ous_letter] <- remove_last_n_chars(subset[delete_ous_letter], 4L)
     # e.g. "famous" -> "fame"
-    ous_to_e <- subset %like% "((fam|nerv|por)|((presti)gi)|((multitu|vicissitu)din)|((auspi|avari|capri|conscien|gra|office|mali|spa|vi)ci)|((raptu)r))ous$"
+    ous_to_e <- endsWithAny(subset, c("famous", "nervous", "porous", "prestigious", "rapturous"))
     subset[ous_to_e] <- gsub(subset[ous_to_e], pattern = "(i|in)?ous$", replacement = "e")
     # e.g. "monstrous" -> "monster"
     trous_to_ter <- endsWithAny(subset, c("brous", "strous", "xtrous"))
@@ -1174,9 +1183,15 @@ digested_word_dictionary <- function(words) {
     # e.g. "envious" -> "envy"
     ious_to_y <- endsWithAny(subset, c("efficacious", "envious", "fallacious", "furious", "glorious", "luxurious", "melodious", "onious", "prodigious", "various"))
     subset[ious_to_y] <- replace_last_n_chars_with(subset[ious_to_y], 4L, "y")
+    # e.g. "gracious" -> "grace"
+    cious_to_ce <- endsWith(subset, "cious")
+    subset[cious_to_ce] <- replace_last_n_chars_with(subset[cious_to_ce], 4L, "e")
     # e.g. "felonous" -> "felony"
     ous_to_y <- endsWithAny(subset, c("adulterous", "felonous", "gamous", "lecherous", "usurous"))
     subset[ous_to_y] <- replace_last_n_chars_with(subset[ous_to_y], 3L, "y")
+    # e.g. "hazardous" -> "hazard"
+    delete_ous <- endsWithAny(subset, c("advantageous", "amorous", "circuitous", "courageous", "feverous", "hazardous", "joyous", "nymous", "ponderous", "solicitous", "sulfurous", "tuberous", "ulcerous", "valorous", "vaporous", "verminous", "viperous", "vomitous", "zealous")) #*** assume delete all but use ous keepers instead
+    subset[delete_ous] <- remove_last_n_chars(subset[delete_ous], 3L)
     # general "ous" rule is to leave it
     words[subset_scope] <- subset
   }
@@ -1189,7 +1204,7 @@ digested_word_dictionary <- function(words) {
     iful_to_y <- endsWith(subset, "iful")
     subset[iful_to_y] <- replace_last_n_chars_with(subset[iful_to_y], 4L, "y")
     # general rule--remove suffix
-    delete_ful <- endsWith(subset, "ful") & subset %!like% "\\b(aw|grate)ful$"
+    delete_ful <- endsWith(subset, "ful") & subset %!like% "\\b(?:aw|grate)ful$"
     subset[delete_ful] <- remove_last_n_chars(subset[delete_ful], 3L)
     words[subset_scope] <- subset
   }
@@ -1202,7 +1217,7 @@ digested_word_dictionary <- function(words) {
     iless_to_y <- endsWith(subset, "iless")
     subset[iless_to_y] <- replace_last_n_chars_with(subset[iless_to_y], 5L, "y")
     # general rule--remove suffix
-    delete_less <- endsWith(subset, "less") & subset %!like% "(\\b(b|hap|(never|none)the|un)?l)ess$"
+    delete_less <- endsWith(subset, "less") & subset %!like% "\\b(?:b|hap|(?:never|none)the|un)?less$"
     subset[delete_less] <- remove_last_n_chars(subset[delete_less], 4L)
     words[subset_scope] <- subset
   }
@@ -1242,7 +1257,7 @@ digested_word_dictionary <- function(words) {
   }
   
   # e.g. "congruence" -> "congruent"
-  ence_to_ent <- endsWith(words, "ence") & words %!like% "(\\b(h|sci|sp|th|wh)|[fp]|audi|ess|experi|influ|lic|sent)ence$" # endsWithAny(words, c("abhorrence", "absence", "accidence", "congruence", "diligence", "evidence", "immanence", "indolence", "inherence", "insistence", "nascence", "opulence", "patience", "permanence", "potence", "presence", "prudence", "quence", "residence", "reticence", "reverence", "salience", "tangence", "transcience", "valence", "violence"))
+  ence_to_ent <- endsWith(words, "ence") & !(endsWithAny(words, c("audience", "essence", "experience", "influence", "license", "sentence")) | words %like% "\\b(?:[fhp]|sci|sp|th|wh)ence$") # endsWithAny(words, c("abhorrence", "absence", "accidence", "congruence", "diligence", "evidence", "immanence", "indolence", "inherence", "insistence", "nascence", "opulence", "patience", "permanence", "potence", "presence", "prudence", "quence", "residence", "reticence", "reverence", "salience", "tangence", "transcience", "valence", "violence"))
   words[ence_to_ent] <- replace_last_n_chars_with(words[ence_to_ent], 2L, "t")
   # e.g. "abundance" -> "abundant"
   ance_to_ant <- endsWithAny(words, c("abundance", "clairvoyance", "distance", "ificance", "malignance", "norance", "performance", "pursuance", "resistance"))
@@ -1308,7 +1323,7 @@ digested_word_dictionary <- function(words) {
     ative_to_e <- endsWithAny(subset, c("comparative", "curative")) 
     subset[ative_to_e] <- replace_last_n_chars_with(subset[ative_to_e], 5L, "e")
     # e.g. "relative" -> "relate"
-    ative_to_ate <- endsWith(subset, "ative") & subset %!like% "(\\b[dn]|put)ative$"
+    ative_to_ate <- endsWith(subset, "ative") & !(endsWith(subset, "putative") | subset %like% "\\b[dn]ative$")
     subset[ative_to_ate] <- replace_last_n_chars_with(subset[ative_to_ate], 3L, "e")
     
     # handle "itive" suffix
@@ -1317,8 +1332,20 @@ digested_word_dictionary <- function(words) {
     itive_to_ate <- endsWith(subset, "sensitive")
     subset[itive_to_ate] <- replace_last_n_chars_with(subset[itive_to_ate], 5L, "ate")
     
+    # handle "ctive" suffix
+    
+    # e.g. "deductive" -> "deduce"
+    ctive_to_ce <- endsWith(subset, "ductive")
+    subset[ctive_to_ce] <- replace_last_n_chars_with(subset[ctive_to_ce], 4L, "e")
+    # general "ctive" rule--remove suffix (e.g. "detective" -> "detect")
+    delete_ive <- endsWith(subset, "ctive") & !endsWithAny(subset, c("adjective", "objective", "subjective"))
+    subset[delete_ive] <- remove_last_n_chars(subset[delete_ive], 3L)
+    
     # handle "ptive" suffix
     
+    # e.g. "captive" -> "capture"
+    ptive_to_pture <- endsWith(subset, "captive")
+    subset[ptive_to_pture] <- replace_last_n_chars_with(subset[ptive_to_pture], 3L, "ure")
     # e.g. "presumptive" -> "presume"
     mptive_to_me <- endsWith(subset, "mptive")
     subset[mptive_to_me] <- replace_last_n_chars_with(subset[mptive_to_me], 5L, "e")
@@ -1344,7 +1371,7 @@ digested_word_dictionary <- function(words) {
     ive_to_e <- endsWithAny(subset, c("decorative", "defensive", "iterative", "locative", "offensive"))
     subset[ive_to_e] <- replace_last_n_chars_with(subset[ive_to_e], 3L, "e")
     # e.g. "assertive" -> "assert"
-    delete_ive <- endsWithAny(subset, c("adoptive", "adventive", "appointive", "assertive", "attractive", "deductive", "detective", "ejective", "erective", "eruptive", "excessive", "exeptive", "exertive", "preventive", "reactive", "reflective", "selective", "transitive", "vomitive"))
+    delete_ive <- endsWithAny(subset, c("adoptive", "adventive", "appointive", "assertive", "attractive", "detective", "ejective", "erective", "eruptive", "excessive", "exeptive", "exertive", "preventive", "reactive", "reflective", "selective", "transitive", "vomitive"))
     subset[delete_ive] <- remove_last_n_chars(subset[delete_ive], 3L)
     # general "ive" rule is to leave it
     words[subset_scope] <- subset
@@ -1433,8 +1460,8 @@ digested_word_dictionary <- function(words) {
     # handle "ition" and "ution" suffixes
     
     # e.g. "practicioner" -> "practice"
-    ition_to_ice <- subset %like% "practition(er)?s?$"
-    subset[ition_to_ice] <- gsub(subset[ition_to_ice], pattern = "tion(er)?s?$", replacement = "ce")
+    ition_to_ice <- endsWithAny(subset, c("practition", "practitioner"))
+    subset[ition_to_ice] <- gsub(subset[ition_to_ice], pattern = "tion(er)?$", replacement = "ce")
     # e.g. "solution" -> "solve"
     ution_to_ve <- endsWith(subset, "olution")
     subset[ution_to_ve] <- replace_last_n_chars_with(subset[ution_to_ve], 5L, "ve")
@@ -1577,7 +1604,7 @@ digested_word_dictionary <- function(words) {
     delete_er_letter <- ((endsWithAny(subset, c(English_doubled_consonants_er, "awfuller", "compeller", "controller", "traveller", "quizzer", "frolicker", "mimicker", "mosaicker", "panicker", "picnicker", "politicker", "trafficker", "laughter", "remainder")) & subset %!like% "((([aiu]|\\b([fhjstwy]|bests|dw|kn|kv|qu|sh|sm|sp|sw)e|((\\b|en)r)o)ll)|(\\bodd))er$") | (endsWith(subset, "eer") & subset %!like% ending_with(any_of(English_eer_keepers)) & !endsWithAny(subset, c("decreer", "fleer", "freer", "seer")))) & er_keeper_mask
     subset[delete_er_letter] <- remove_last_n_chars(subset[delete_er_letter], 3L)
     # e.g. "carrier" -> "carry"
-    ier_to_y <- endsWith(subset, "ier") & subset %!like% ending_with(any_of(English_ier_keepers)) & subset %!like% "((\\b|water)sk|tax)ier$"
+    ier_to_y <- endsWith(subset, "ier") & subset %!like% ending_with(any_of(English_ier_keepers)) & !(endsWithAny(subset, c("taxier", "waterskier")) | subset %like% "\\bskier$")
     subset[ier_to_y] <- replace_last_n_chars_with(subset[ier_to_y], 3L, "y")
     er_keeper_mask <- !delete_er_letter & subset %!like% ending_with(any_of(English_er_keepers))
     # e.g. "(over)seer" -> "see"
@@ -1595,7 +1622,7 @@ digested_word_dictionary <- function(words) {
   if (isnt_empty(subset)) {
     est_keeper_mask <- subset %!like% ending_with(any_of(English_est_keepers))
     # e.g. "biggest" -> "big"
-    delete_est_letter <- endsWithAny(subset, c(English_doubled_consonants_est, "awfullest")) & subset %!like% "(([aiu]ll)|(\\bodd))est$" & est_keeper_mask
+    delete_est_letter <- endsWithAny(subset, c(English_doubled_consonants_est, "awfullest")) & subset %!like% "(?:[aiu]ll|\\bodd)est$" & est_keeper_mask
     subset[delete_est_letter] <- remove_last_n_chars(subset[delete_est_letter], 4L)
     # e.g. "earliest" -> "early"
     iest_to_y <- endsWith(subset, "iest") & subset %!like% ending_with(any_of(English_iest_keepers))
@@ -1619,13 +1646,13 @@ digested_word_dictionary <- function(words) {
     tred_to_ter <- endsWith(subset, "tred") & !endsWith(subset, "hatred")
     subset[tred_to_ter] <- replace_last_n_chars_with(subset[tred_to_ter], 3L, "er")
     # e.g. "travelled" -> "travel"
-    delete_ed_letter <- endsWithAny(subset, c(English_doubled_consonants_ed, "compelled", "controlled", "travelled", "quizzed", "frolicked", "mimicked", "mosaicked", "panicked", "picnicked", "politicked", "trafficked")) & subset %!like% "(([aiu]|\\b([fhjtwy]|dw|kn|kv|qu|sh|sm|sp|sw)e|((\\b|en)r)o)ll)ed$" & ed_keeper_mask
+    delete_ed_letter <- endsWithAny(subset, c(English_doubled_consonants_ed, "compelled", "controlled", "travelled", "quizzed", "frolicked", "mimicked", "mosaicked", "panicked", "picnicked", "politicked", "trafficked")) & subset %!like% "(?:[aiu]|\\b(?:[fhjtwy]|dw|kn|kv|qu|sh|sm|sp|sw)e|(?:\\b|en)ro)lled$" & ed_keeper_mask
     subset[delete_ed_letter] <- remove_last_n_chars(subset[delete_ed_letter], 3L)
     # e.g. "tied" -> "tie"
     delete_d <- subset %like% ending_with_word(any_of(c("died", "lied", "tied", "hogtied")))
     subset[delete_d] <- remove_last_n_chars(subset[delete_d], 1L)
     # e.g. "carried" -> "carry"
-    ied_to_y <- endsWith(subset, "ied") & subset %!like% "((\\b|water)sk|tax)ied$"
+    ied_to_y <- endsWith(subset, "ied") & !(endsWithAny(subset, c("taxied", "waterskied")) | subset %like% "\\bskied$")
     subset[ied_to_y] <- replace_last_n_chars_with(subset[ied_to_y], 3L, "y")
     ed_keeper_mask <- !delete_ed_letter & subset %!like% ending_with(any_of(English_ed_keepers))
     # e.g. "wasted" -> "waste"
@@ -1646,7 +1673,7 @@ digested_word_dictionary <- function(words) {
     tring_to_ter <- endsWith(subset, "tring") & (!endsWith(subset, "string") | endsWith(subset, "lustring"))
     subset[tring_to_ter] <- replace_last_n_chars_with(subset[tring_to_ter], 4L, "er")
     # e.g. "trafficking" -> "traffic"
-    delete_ing_letter <- endsWithAny(subset, c(English_doubled_consonants_ing, "compelling", "controlling", "travelling", "quizzing", "frolicking", "mimick", "mosaicking", "panicking", "picnicking", "politicking", "trafficking")) & subset %!like% "(([aiu]|\\b([fhjstwy]|bests|dw|kn|kv|qu|sh|sm|sp|sw)e|((\\b|en)r)o)ll)ing$" & ing_keeper_mask
+    delete_ing_letter <- endsWithAny(subset, c(English_doubled_consonants_ing, "compelling", "controlling", "travelling", "quizzing", "frolicking", "mimick", "mosaicking", "panicking", "picnicking", "politicking", "trafficking")) & subset %!like% "(?:[aiu]|\\b(?:[fhjstwy]|bests|dw|kn|kv|qu|sh|sm|sp|sw)e|(?:\\b|en)ro)lling$" & ing_keeper_mask
     subset[delete_ing_letter] <- remove_last_n_chars(subset[delete_ing_letter], 4L)
     ing_keeper_mask <- !delete_ing_letter & subset %!like% ending_with(any_of(English_ing_keepers))
     # e.g. "waving" -> "wave"
@@ -1695,7 +1722,7 @@ digested_word_dictionary <- function(words) {
     ify_to_e <- endsWithAny(subset, c("arify", "asify", "atify", "codify", "ilify", "ivify", "lsify", "notify", "nsify", "orify", "plify", "urify", "utify", "ypify")) & !endsWithAny(subset, c("amplify", "gasify"))
     subset[ify_to_e] <- replace_last_n_chars_with(subset[ify_to_e], 3L, "e")
     # general rule--remove suffix (e.g. "solidify" -> "solid")
-    delete_ify <- endsWith(subset, "ify") & subset %!like% "(cert|\\bed|gn|mod|myst|rat|spec|test)ify$"
+    delete_ify <- endsWith(subset, "ify") & !(endsWithAny(subset, c("certify", "gnify", "modify", "mystify", "ratify", "specify", "testify")) | subset %like% "\\bedify$")
     subset[delete_ify] <- remove_last_n_chars(subset[delete_ify], 3L)
     words[subset_scope] <- subset
   }
@@ -1714,7 +1741,7 @@ digested_word_dictionary <- function(words) {
     delete_en <- endsWithAny(subset, c("blacken", "brighten", "broaden", "cheapen", "deepen", "freshen", "frighten", "harden", "harken", "hearten", "heighten", "lengthen", "lessen", "moisten", "roughen", "sharpen", "shorten", "slacken", "slicken", "smarten", "smoothen", "soften", "steepen", "stiffen", "sweeten", "thicken", "threaten", "tighten", "toughen", "weaken"))
     subset[delete_en] <- remove_last_n_chars(subset[delete_en], 2L)
     # e.g. "whiten" -> "white"
-    delete_n <- endsWithAny(subset, c("whiten"))
+    delete_n <- endsWithAny(subset, c("hasten", "whiten"))
     subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
     words[subset_scope] <- subset
   }
@@ -1736,7 +1763,7 @@ digested_word_dictionary <- function(words) {
     size_to_sis <- endsWithAny(subset, c("emphasize", "hypothesize", "metastasize", "parenthesize", "synthesize"))
     subset[size_to_sis] <- replace_last_n_chars_with(subset[size_to_sis], 2L, "s")
     # e.g. "categorize" -> "category"
-    ize_to_y <- endsWithAny(subset, c("anatomize", "apologize", "categorize", "chronize", "colonize", "ectomize", "eulogize", "fantasize", "otomize", "summarize"))
+    ize_to_y <- endsWithAny(subset, c("anatomize", "apologize", "categorize", "chronize", "colonize", "ectomize", "eulogize", "fantasize", "otomize", "prioritize", "summarize"))
     subset[ize_to_y] <- replace_last_n_chars_with(subset[ize_to_y], 3L, "y")
     # e.g. "iodize" -> "iodine"
     ize_to_ine <- endsWith(subset, "iodize")
@@ -1763,13 +1790,19 @@ digested_word_dictionary <- function(words) {
   }
   
   # e.g. "aviator" -> "aviate"
-  ator_to_ate <- endsWith(words, "ator")
+  ator_to_ate <- endsWith(words, "ator") & !endsWithAny(words, c("alligator", "equator"))
   words[ator_to_ate] <- replace_last_n_chars_with(words[ator_to_ate], 2L, "e")
   
   # handle "ate" suffix
   subset_scope <- endsWith(words, "ate")
   subset <- words[subset_scope]
   if (isnt_empty(subset)) {
+    # e.g. "activate" -> "act"
+    delete_ivate <- endsWith(subset, "activate")
+    subset[delete_ivate] <- remove_last_n_chars(subset[delete_ivate], 5L)
+    # e.g. "captivate" -> "capture"
+    ivate_to_ure <- endsWithAny(subset, c("activate", "cultivate"))
+    subset[ivate_to_ure] <- replace_last_n_chars_with(subset[ivate_to_ure], 5L, "ure")
     # e.g. "administrate" -> "administer"
     strate_to_ster <- endsWithAny(subset, c("administrate", "sequestrate"))
     subset[strate_to_ster] <- replace_last_n_chars_with(subset[strate_to_ster], 4L, "er")
@@ -1806,13 +1839,26 @@ digested_word_dictionary <- function(words) {
     # e.g. "stimulate" -> "stimulus"
     ate_to_us <- endsWith(subset, "stimulate")
     subset[ate_to_us] <- replace_last_n_chars_with(subset[ate_to_us], 3L, "us")
+    # e.g. "salivate" -> "saliva"
+    ate_to_a <- endsWith(subset, "salivate")
+    subset[ate_to_a] <- remove_last_n_chars(subset[ate_to_a], 2L)
     # e.g. "activate" -> "active"
     ate_to_e <- endsWithAny(subset, c("activate", "brominate", "causate", "chlorinate", "citate", "combinate", "computate", "condensate", "continuate", "conversate", "degradate", "derivate", "destinate", "determinate", "divinate", "durate", "electorate", "examinate", "excitate", "explorate", "figurate", "fluorinate", "imaginate", "iodinate", "limitate", "notate", "oxidate", "preparate", "pristinate", "quotate", "reputate", "respirate", "restorate", "sensate", "vaccinate", "rvate"))
     subset[ate_to_e] <- replace_last_n_chars_with(subset[ate_to_e], 3L, "e")
     words[subset_scope] <- subset
   }
   
-  ### connect a few verb forms to their noun forms
+  ### connect a few verb forms to their noun forms (and vice versa)
+  
+  # handle "duct" suffix
+  subset_scope <- endsWith(words, "duct")
+  subset <- words[subset_scope]
+  if (isnt_empty(subset)) {
+    # e.g. "product" -> "produce"
+    duct_to_duce <- endsWithAny(subset, c("educt", "nduct", "oduct"))
+    subset[duct_to_duce] <- replace_last_n_chars_with(subset[duct_to_duce], 1L, "e")
+    words[subset_scope] <- subset
+  }
   
   # handle "y" suffix
   subset_scope <- endsWith(words, "y")
