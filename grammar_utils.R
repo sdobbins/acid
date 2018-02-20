@@ -23,6 +23,9 @@ if (is_package_loaded("rlang") | is_package_loaded("purrr")) {
     return (!is_empty(thing))
   }
 } else {
+  is_empty <- function(thing) {
+    return (length(thing) == 0L)
+  }
   isnt_empty <- function(thing) {
     return (length(thing) != 0L)
   }
@@ -33,7 +36,9 @@ if (is_package_loaded("data.table")) {
   }
 } else {
   re_name <- function(vec, new_names) {
+    global_vec_name <- deparse(substitute(vec))
     names(vec) <- new_names
+    assign(global_vec_name, vec, envir = parent.frame())
     invisible(vec)
   }
 }
@@ -44,14 +49,15 @@ if (is_package_loaded("data.table")) {
 }
 `%like%` <- function(a, b) grepl(pattern = b, a)
 `%!like%` <- function(a, b) !grepl(pattern = b, a)
+`%exactlylike%` <- function(a, b) grepl(pattern = b, a, fixed = TRUE)
 `%whichlike%` <- function(a, b) a[a %like% b]
 
 # regex helpers
-capturing_group <- function(strings) {
-  return (paste0("(", strings, ")"))
+non_capturing_group <- function(strings) {
+  return (paste0("(?:", strings, ")"))
 }
 any_of <- function(strings) {
-  return (capturing_group(paste0(strings, collapse = "|")))
+  return (non_capturing_group(paste0(strings, collapse = "|")))
 }
 beginning_with <- function(strings) {
   return (paste0("^", strings))
@@ -75,6 +81,9 @@ endsWithAny <- function(strings, endings) {
 grem <- function(strings, pattern, exact = FALSE) {
   return (gsub(pattern = pattern, replacement = "", x = strings, fixed = exact))
 }
+remove_quotes <- function(strings) {
+  return (grem(pattern = "\"", strings))
+}
 
 # slicing
 `%[==]%` <- function(a, b) a[a == b]
@@ -85,9 +94,10 @@ grem <- function(strings, pattern, exact = FALSE) {
 `%[<=]%` <- function(a, b) a[a <= b]
 
 # mapped logic
-map_not <- function(a) sapply(a, `!`)
+map_not_vec <- function(a) sapply(a, `!`)
 map_or  <- function(a, b) Map(`|`, a, b)
-reduce_nor <- function(...) unlist(map_not(Reduce(map_or, list(...))), use.names = FALSE)
+reduce_or <- function(...) unlist(Reduce(map_or, list(...)), use.names = FALSE)
+reduce_nor <- function(...) map_not_vec(Reduce(map_or, list(...)))
 
 # string handling
 if (is_package_loaded("stringi")) {
