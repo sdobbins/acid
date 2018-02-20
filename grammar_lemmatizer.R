@@ -219,7 +219,7 @@ digested_word_dictionary <- function(words) {
     delete_en <- endsWithAny(subset, c("ashen", "been", "drunken", "earthen", "eaten", "fallen", "olden", "silken", "swollen", "wooden", "woolen"))
     subset[delete_en] <- remove_last_n_chars(subset[delete_en], 2L)
     # e.g. "broken" -> "broke" (later to "break")
-    delete_n <- endsWithAny(subset, c("aken", "chosen", "iven", "oken", "olen", "oven", "risen", "rozen", "seen")) & !endsWith(subset, "kraken") & !ends_with_word(subset, "oven")
+    delete_n <- endsWithAny(subset, c("aken", "chosen", "iven", "oken", "olen", "oven", "risen", "rozen", "seen")) & !(endsWith(subset, "kraken") | subset %like% "\\boven$")
     subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
     words[subset_scope] <- subset
   }
@@ -238,7 +238,7 @@ digested_word_dictionary <- function(words) {
     orn_to_ear <- endsWith(subset, "shorn")
     subset[orn_to_ear] <- replace_last_n_chars_with(subset[orn_to_ear], 3L, "ear")
     # e.g. "drawn" -> "draw"
-    delete_n <- ends_with_word(subset, any_of(c("blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown")))
+    delete_n <- subset %!like% ending_with_word(any_of(c("blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown")))
     subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
     words[subset_scope] <- subset
   }
@@ -251,7 +251,7 @@ digested_word_dictionary <- function(words) {
     delete_t <- endsWithAny(subset, c("burnt", "dealt", "dreamt", "learnt", "meant"))
     subset[delete_t] <- remove_last_n_chars(subset[delete_t], 1L)
     # e.g. "built" -> "build"
-    t_to_d <- endsWithAny(subset, c("built", "spent")) | ends_with_word(subset, c("bent", "lent", "sent"))
+    t_to_d <- endsWithAny(subset, c("built", "spent")) | subset %like% ending_with_word(any_of(c("bent", "lent", "sent")))
     subset[t_to_d] <- replace_last_n_chars_with(subset[t_to_d], 1L, "d")
     # e.g. "lost" -> "lose"
     t_to_e <- endsWith(subset, "lost")
@@ -266,7 +266,7 @@ digested_word_dictionary <- function(words) {
   #*** make common irregular words get fixed even if not at end of word phrase
   
   # common irregular words
-  reasonable_slice <- ends_with_word(words, "an")
+  reasonable_slice <- words %like% "\\ban$"
   words[reasonable_slice] <- remove_last_n_chars(words[reasonable_slice], 1L)
   
   reasonable_slice <- endsWithAny(words, c("am", "are", "is", "was", "were"))
@@ -275,7 +275,7 @@ digested_word_dictionary <- function(words) {
   reasonable_slice <- endsWithAny(words, c("did", "done"))
   words[reasonable_slice] <- gsub(words[reasonable_slice], pattern = ending_with_word(any_of(c("did", "done"))), replacement = "do")
   
-  reasonable_slice <- ends_with_word(words, any_of(c("had", "has")))
+  reasonable_slice <- words %like% "\\bha[ds]$"
   words[reasonable_slice] <- replace_last_n_chars_with(words[reasonable_slice], 1L, "ve")
   
   reasonable_slice <- endsWithAny(words, c("went", "gone"))
@@ -318,11 +318,11 @@ digested_word_dictionary <- function(words) {
     subsubset_scope <- endsWith(subset, "ed")
     subsubset <- subset[subsubset_scope]
     if (isnt_empty(subsubset)) {
-      ed_to_ead <- ends_with_word(subsubset, "led")
+      ed_to_ead <- subsubset %like% "\\bled$"
       subsubset[ed_to_ead] <- replace_last_n_chars_with(subsubset[ed_to_ead], 1L, "ad")
-      ed_to_ee <- ends_with_word(subsubset, "fled")
+      ed_to_ee <- subsubset %like% "\\bfled$"
       subsubset[ed_to_ee] <- replace_last_n_chars_with(subsubset[ed_to_ee], 1L, "e")
-      ed_to_eed <- ends_with_word(subsubset, any_of(c("bled", "bred", "fed", "sped")))
+      ed_to_eed <- subsubset %like% ending_with_word(any_of(c("bled", "bred", "fed", "sped")))
       subsubset[ed_to_eed] <- replace_last_n_chars_with(subsubset[ed_to_eed], 1L, "ed")
       subset[subsubset_scope] <- subsubset
     }
@@ -330,7 +330,7 @@ digested_word_dictionary <- function(words) {
     subsubset_scope <- endsWith(subset, "id")
     subsubset <- subset[subsubset_scope]
     if (isnt_empty(subsubset)) {
-      id_to_ide <- endsWith(subsubset, "slid") | ends_with_word(subsubset, "hid")
+      id_to_ide <- endsWith(subsubset, "slid") | subsubset %like% "\\bhid$"
       subsubset[id_to_ide] <- paste0(subsubset[id_to_ide], "e")
       aid_to_ay <- endsWithAny(subsubset, c("laid", "paid", "said")) & !endsWith(subsubset, "plaid")
       subsubset[aid_to_ay] <- replace_last_n_chars_with(subsubset[aid_to_ay], 2L, "y")
@@ -376,9 +376,9 @@ digested_word_dictionary <- function(words) {
     if (isnt_empty(subsubset)) {
       ade_to_ake <- endsWith(subsubset, "made") & !endsWithAny(subsubset, c("amade", "omade"))
       subsubset[ade_to_ake] <- replace_last_n_chars_with(subsubset[ade_to_ake], 2L, "ke")
-      ade_to_id <- ends_with_word(subsubset, "(|for)bade")
+      ade_to_id <- endsWith(subsubset, "forbade") | subsubset %like% "\\bbade$"
       subsubset[ade_to_id] <- replace_last_n_chars_with(subsubset[ade_to_id], 3L, "id")
-      ode_to_ide <- ends_with_word(subsubset, any_of(c("(|joy|out|over)rode", "strode")))
+      ode_to_ide <- endsWithAny(subsubset, c("joyrode", "outrode", "overrode", "strode")) | subsubset %like% "\\brode$"
       subsubset[ode_to_ide] <- replace_last_n_chars_with(subsubset[ode_to_ide], 3L, "ide")
       subset[subsubset_scope] <- subsubset
     }
@@ -408,7 +408,7 @@ digested_word_dictionary <- function(words) {
     subsubset_scope <- endsWith(subset, "se")
     subsubset <- subset[subsubset_scope]
     if (isnt_empty(subsubset)) {
-      ose_to_ise <- ends_with_word(subsubset, "rose")
+      ose_to_ise <- subsubset %like% "\\brose$"
       subsubset[ose_to_ise] <- replace_last_n_chars_with(subsubset[ose_to_ise], 3L, "ise")
       ose_to_oose <- endsWith(subsubset, "chose")
       subsubset[ose_to_oose] <- replace_last_n_chars_with(subsubset[ose_to_oose], 2L, "ose")
@@ -425,7 +425,7 @@ digested_word_dictionary <- function(words) {
       subsubset[ave_to_ive] <- replace_last_n_chars_with(subsubset[ave_to_ive], 3L, "ive")
       ove_to_eave <- endsWith(subsubset, "wove")
       subsubset[ove_to_eave] <- replace_last_n_chars_with(subsubset[ove_to_eave], 3L, "eave")
-      ove_to_ive <- ends_with_word(subsubset, any_of(c("dove", "drove", "strove", "throve")))
+      ove_to_ive <- endsWithAny(subsubset, c("drove", "strove", "throve")) | subsubset %like% "\\bdove$"
       subsubset[ove_to_ive] <- replace_last_n_chars_with(subsubset[ove_to_ive], 3L, "ive")
       subset[subsubset_scope] <- subsubset
     }
@@ -520,7 +520,7 @@ digested_word_dictionary <- function(words) {
     at_to_it <- endsWithAny(subset, c("sat", "spat"))
     subset[at_to_it] <- replace_last_n_chars_with(subset[at_to_it], 2L, "it")
     
-    et_to_eet <- ends_with_word(subset, "met")
+    et_to_eet <- subset %like% "\\bmet$"
     subset[et_to_eet] <- replace_last_n_chars_with(subset[et_to_eet], 1L, "et")
     
     # irregular verbs ending in "aught" or "ought"
@@ -555,7 +555,7 @@ digested_word_dictionary <- function(words) {
     ept_to_eep <- endsWithAny(subset, c("crept", "kept", "slept", "swept", "wept"))
     subset[ept_to_eep] <- replace_last_n_chars_with(subset[ept_to_eep], 2L, "ep")
     
-    ot_to_et <- endsWithAny(subset, c("begot", "forgot")) | ends_with_word(subset, "got")
+    ot_to_et <- endsWithAny(subset, c("begot", "forgot")) | subset %like% "\\bgot$"
     subset[ot_to_et] <- replace_last_n_chars_with(subset[ot_to_et], 2L, "et")
     ot_to_oot <- endsWithAny(subset, c("countershot", "outshot", "overshot", "reshot", "upshot", "troubleshot")) | subset %like% "\\bshot$"
     subset[ot_to_oot] <- replace_last_n_chars_with(subset[ot_to_oot], 1L, "ot")
@@ -588,7 +588,7 @@ digested_word_dictionary <- function(words) {
     words[subset_scope] <- subset
   }
   
-  # ay_to_ie <- ends_with_word(words, "lay")
+  # ay_to_ie <- words %like% "\\blay$"
   # words[ay_to_ie] <- replace_last_n_chars_with(words[ay_to_ie], 2L, "ie")
   
   ### handle prefixes
@@ -1155,7 +1155,7 @@ digested_word_dictionary <- function(words) {
     delete_ous_letters <- endsWith(subset, "extraneous")
     subset[delete_ous_letters] <- remove_last_n_chars(subset[delete_ous_letters], 5L)
     # e.g. "incestuous" -> "incest"
-    delete_out_letter <- endsWithAny(subset, c("censorious", "incestuous", "tortious"))
+    delete_ous_letter <- endsWithAny(subset, c("censorious", "incestuous", "tortious"))
     subset[delete_ous_letter] <- remove_last_n_chars(subset[delete_ous_letter], 4L)
     # e.g. "famous" -> "fame"
     ous_to_e <- endsWithAny(subset, c("famous", "nervous", "porous", "prestigious", "rapturous"))
