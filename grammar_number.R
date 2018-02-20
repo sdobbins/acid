@@ -16,26 +16,34 @@ languages_supported <- c("Latin", "Greek", "French", "Italian", "Hebrew", "Slavi
 num_languages_supported <- length(languages_supported)
 
 English_invariant_words <- c("bison", "buffalo", "cannon", "carp", "cod", "deer", "fish", "hi", "moose", "pike", "salmon", "sheep", "shrimp", "squid", "swine", "trout")
-English_invariant_words_s_string <- "(((ser|spec)ie)|chassi|preci|rendezvou|chao|molasse)s$"
-English_ie_singulars_string <- "(anom|badd|beast|bigg|bird|boog|boot|brown|calor|camarader|charcuter|coll|comm|cook|coot|cowr|dear|dogg|doug|food|gen|goal|good|group|hipp|hood|hott|junk|kidd|kitt|\\bl|magp|mean|mov|newb|(\\b|pot|sweet(ie|y))p|patisser|pix|prar|prem|quick|rever|rook|room|rotisser|smooth|soft|sweet|(\\b|hog|neck)t|talk|tough|town|vegg|wheel|yupp|zomb)ies$"
-English_oe_singulars_string <- "(\\bal|\\bob|\\br|\\bsh|\\bt|\\bw)oes$"
-English_zz_singulars_string <- "(bu|fi|fri|fu|ja|piza|ra)zz$"
-English_zz_singulars_plurals_string <- "(bu|fi|fri|fu|ja|piza|ra)zzes$"
-English_s_singulars_string <- "(alia|apparatu|asbesto|atla|bia|bonu|cactu|campu|canva|caucu|citru|ga|ibi|iri|len|lori|mucu|new|octopu|oop|pelvi|porticulli|rucku|statu|trelli|tucku|viru|ye)s$"
-English_s_singulars_plurals_string <- "((alia|apparatu|asbesto|atla|bia|bonu|cactu|campu|canva|caucu|citru|ga|ibi|iri|len|lori|mucu|new|octopu|pelvi|porticulli|rucku|statu|trelli|tucku|viru|ye)s)es$"
-English_ves_plurals_singulars_string <- "(cal|dwar|el|hal|hoo|lea|loa|scar|sel|shel||thie|wol)f|(kni|li|wi)fe$"
-English_ves_plurals_string <- "(cal|dwar|el|hoo|lea|loa|scar|sel|shel|thie|wol)ves$"
-English_ves_plurals_e_string <- "(kni|li|wi)ves$"
+English_uncountable_words <- c("chaos", "chassis", "molasses", "news", "precis", "rendezvous", "series", "species")
+English_ie_singulars <- c("anomie", "baddie", "beastie", "biggie", "birdie", "boogie", "bootie", "brownie", "calorie", "camaraderie", "charcuterie", "collie", "commie", "cookie", "cootie", "cowrie", "dearie", "doggie", "dougie", "foodie", "genie", "goalie", "goodie", "groupie", "hippie", "hoodie", "hottie", "junkie", "kiddie", "kittie", "magpie", "meanie", "movie", "newbie", "potpie", "sweetiepie", "sweetypie", "patisserie", "pixie", "prarie", "premie", "quickie", "reverie", "rookie", "roomie", "rotisserie", "smoothie", "softie", "sweetie", "hogtie", "necktie", "talkie", "toughie", "townie", "veggie", "wheelie", "yuppie", "zombie")
+English_ie_singulars_plurals <- paste0(English_ie_singulars, "s")
+English_oe_singulars_string <- "\\b(?:al|ob|r|sh|t|w)oes$"
+English_zz_singulars <- c("buzz", "fizz", "frizz", "fuzz", "jazz", "razz")
+English_zz_singulars_plurals <- paste0(English_zz_singulars, "es")
+English_s_singulars <- c("alias", "apparatus", "asbestos", "atlas", "bias", "bonus", "campus", "canvas", "caucus", "citrus", "loris", "mucus", "octopus", "oops", "pancreas", "pelvis", "porticullis", "ruckus", "status", "trellis", "tuckus", "virus")
+English_s_singulars_plurals <- paste0(English_s_singulars, "es")
+English_f_to_ves_singulars <- c("calf", "dwarf", "elf", "half", "hoof", "leaf", "loaf", "scarf", "self", "shelf", "thief", "wolf")
+English_f_to_ves_plurals <- gsub(English_f_to_ves_singulars, pattern = "f$", replacement = "ves")
+English_fe_to_ves_singulars <- c("knife", "life", "wife")
+English_fe_to_ves_plurals <- gsub(English_fe_to_ves_singulars, pattern = "fe$", replacement = "ves")
 English_us_plurals <- c("bayous", "caribous", "emus", "gnus", "menus", "tiramisus", "tutus")
 English_is_plurals <- c("khakis", "skis", "taxis")
+English_normal_oses_plurals <- c("brownnoses", "bullnoses", "hardnoses", "hooknoses", "shovelnoses", "arabinoses", "flavinoses", "furanoses", "manoses", "pyranoses", "heptoses", "lactoses", "maltoses", "pentoses")
+English_es_to_e_plurals <- c("backaches", "bellyaches", "headaches", "stomachaches", "toothaches", "caches", "moustaches", "panaches", "pistaches", "bastes", "castes", "gestes", "hastes", "mostes", "pastes", "pistes", "tastes", "wastes", "chastes", "trystes", "artistes", "batistes", "ripostes", "langoustes")
 
-words_with_plain_plurals <- c("canto", "hereto", "kimono", "photo", "piano", "portico", "pro", "quarto", "zero")
+plain_plural_singulars <- c("canto", "hereto", "kimono", "photo", "piano", "portico", "pro", "quarto", "zero")
+plain_plural_plurals <- paste0(plain_plural_singulars, "s")
+
 Latin_us_to_i_singulars <- c("alumnus", "cactus", "focus", "fungus", "succubus", "syllabus", "terminus", "uterus")
 Latin_us_to_i_plurals <- c("alumni", "cacti", "foci", "fungi", "succubi", "syllabi", "termini", "uteri")
 Latin_us_to_a_plurals <- c("addenda", "auditoria", "collisea", "compendia", "media", "memoranda", "millennia", "ova", "referenda", "spectra", "stadia", "strata", "symposia")
 Latin_a_to_ae_singulars <- c("alga", "alumna", "antenna", "fauna", "fistula", "flora", "formula", "fovea", "hernia", "larva", "trachea")
-Latin_is_singulars_string <- "(\\bax|cris|genes|kines|nemes|nos|oas|parenthes|test|thes|tos)is$"
-Latin_es_plurals_string <- "(\\bax|cris|genes|kines|nemes|nos|oas|parenthes|test|thes|tos)es$" #* bases could be base or basis (asbestoses could be asbestosis but more likely asbestos)
+Latin_is_to_es_singulars <- c("crisis", "genesis", "kinesis", "nemesis", "nosis", "oasis", "testis", "thesis", "tosis") #* bases could be base or basis (asbestoses could be asbestosis but more likely asbestos)
+Latin_is_to_es_plurals <- gsub(Latin_is_to_es_singulars, pattern = "is$", replacement = "es")
+
+English_ses_to_s_plurals <- c(English_s_singulars_plurals, paste0(Latin_us_to_i_singulars, "es"))
 Japanese_words_in_English <- c("bento", "katana", "kimono", "ninja", "otaku", "samurai", "sushi", "tsunami")
 Maori_words_in_English <- c("kakapo", "kiwi", "waka")
 other_foreign_is_plurals <- paste0(c(Japanese_words_in_English, Maori_words_in_English), "s") %whichlike% "is$"
@@ -90,31 +98,31 @@ pluralize_ <- function(words, ...) {
   }
   
   # invariants
-  is_invariant <- words %like% ending_with(any_of(English_invariant_words)) | 
-    words %like% English_invariant_words_s_string | 
-    words %endswith% "nese"
+  is_invariant <- endsWithAny(words, English_invariant_words) | 
+    endsWithAny(words, English_uncountable_words) | 
+    endsWith(words, "nese")
   
   # Anglo-Saxon oddities
   is_person <- endsWith(words, "person")
   is_child <- endsWith(words, "child")
   is_brother <- endsWith(words, "brother")
   is_man <- endsWith(words, "man") & !endsWith(words, "human")
-  is_oo <- words %like% "(tooth|foot|\\bgoose)$"
-  is_ouse <- words %like% "((\\b|book|head)l|(\\b|dor|field|shrew|tit)m)ouse$"
+  is_oo <- endsWithAny(words, c("foot", "tooth")) | words %like% "\\bgoose$"
+  is_ouse <- endsWithAny(words, c("booklouse", "headlouse", "dormouse", "fieldmouse", "shrewmouse", "titmouse")) | words %like% "\\b[lm]ouse$"
   is_ox <- words %like% "\\box$"
   is_die <- words %like% "\\bdie$"
   
-  rule_not_applied <- reduce_nor(is_invariant, is_person, is_child, is_brother, is_man, is_oo, is_ouse, is_ox, is_die)
+  rule_not_applied <- !(is_invariant | is_person | is_child | is_brother | is_man | is_oo | is_ouse | is_ox | is_die)
   
   # Japanese
   if (use_language[["Japanese"]]) {
-    is_japanese_invariant <- words %like% ending_with(any_of(Japanese_words_in_English)) & rule_not_applied
+    is_japanese_invariant <- endsWithAny(words, Japanese_words_in_English) & rule_not_applied
     rule_not_applied <- rule_not_applied & !is_japanese_invariant
   }
   
   # Maori
   if (use_language[["Maori"]]) {
-    is_maori_invariant <- words %like% ending_with(any_of(Maori_words_in_English)) & rule_not_applied
+    is_maori_invariant <- endsWithAny(words, Maori_words_in_English) & rule_not_applied
     rule_not_applied <- rule_not_applied & !is_maori_invariant
   }
   
@@ -122,19 +130,15 @@ pluralize_ <- function(words, ...) {
   if (use_language[["Hebrew"]]) {
     need_im <- endsWithAny(words, c("cherub", "kibbutz", "seraph")) & rule_not_applied
     need_ot <- endsWith(words, "matzah") & rule_not_applied
-    
-    hebrew_rule_applies <- reduce_or(need_im, 
-                                     need_ot)
-    rule_not_applied <- rule_not_applied & !hebrew_rule_applies
+    rule_not_applied <- rule_not_applied & !(need_im | need_ot)
   }
   
   # Slavic
   if (use_language[["Slavic"]]) {
     need_a_slavic <- endsWith(words, "kniazhestvo") & rule_not_applied
-    need_i_slavic <- words %like% "\\b(kobzar|oblast)$" & rule_not_applied
+    need_i_slavic <- words %like% "\\b(?:kobzar|oblast)$" & rule_not_applied
     
-    slavic_rule_applies <- reduce_or(need_a_slavic, 
-                                     need_i_slavic)
+    slavic_rule_applies <- need_a_slavic | need_i_slavic
     rule_not_applied <- rule_not_applied & !slavic_rule_applies
   }
   
@@ -144,12 +148,7 @@ pluralize_ <- function(words, ...) {
     need_a_greek <- endsWithAny(words, c("automaton", "criterion", "hedron", "menon")) & rule_not_applied
     need_ides <- endsWith(words, "itis") & rule_not_applied
     need_eis <- endsWith(words, "polis") & rule_not_applied
-    
-    greek_rule_applies <- reduce_or(need_ta, 
-                                    need_a_greek, 
-                                    need_ides, 
-                                    need_eis)
-    rule_not_applied <- rule_not_applied & !greek_rule_applies
+    rule_not_applied <- rule_not_applied & !(need_ta | need_a_greek | need_ides | need_eis)
   }
   
   # Italian
@@ -167,36 +166,22 @@ pluralize_ <- function(words, ...) {
   # Latin
   if (use_language[["Latin"]]) {
     need_a <- endsWith(words, "um") & rule_not_applied
-    need_e <- words %like% ending_with(any_of(Latin_a_to_ae_singulars)) & rule_not_applied
-    need_i <- (endsWith(words, "ius") | words %like% ending_with(any_of(Latin_us_to_i_singulars))) & rule_not_applied
+    need_e <- endsWithAny(words, Latin_a_to_ae_singulars) & rule_not_applied
+    need_i <- (endsWith(words, "ius") | endsWithAny(words, Latin_us_to_i_singulars)) & rule_not_applied
     need_era <- endsWithAny(words, c("genus", "viscus")) & rule_not_applied
     need_ora <- endsWith(words, "corpus") & rule_not_applied
     need_ices <- endsWithAny(words, c("dex", "dix", "tex", "tix", "trex", "trix")) & rule_not_applied
     need_es_latin <- endsWithAny(words, c("testis", "sis", "xis")) & rule_not_applied
-    
-    latin_rule_applies <- reduce_or(need_a, 
-                                    need_e, 
-                                    need_i, 
-                                    need_era, 
-                                    need_ora, 
-                                    need_ices, 
-                                    need_es_latin)
-    rule_not_applied <- rule_not_applied & !latin_rule_applies
+    rule_not_applied <- rule_not_applied & !(need_a | need_e | need_i | need_era | need_ora | need_ices | need_es_latin)
   }
   
   # English leftovers
-  need_zes <- words %like% "[aeiou]z$"
-  need_ses <- ((words %like% "[aeio]s$" & words %!like% English_s_singulars_string & !endsWithAny(words, c("itis", "polis", "testis", "sis", "xis"))) | endsWith(words, "bus")) & rule_not_applied
-  need_es <- ((words %like% "([sxz]|[cs]h|[^aeiouy]o)$" | words %like% English_s_singulars_string) & !need_zes & !need_ses & words %!like% ending_with(any_of(words_with_plain_plurals))) & rule_not_applied
+  #need_zes <- rule_not_applied
+  need_zes <- words %like% "[aeiou]z$" & rule_not_applied
+  need_es <- (words %like% "(?:[sx]|[cs]h|[^aeiouy]o)$" & endsWithAny(words, plain_plural_singulars)) & rule_not_applied
   need_ies <- words %like% "[^aeiou]y$" & rule_not_applied
   need_ves <- words %like% "[ailr]fe?$" & rule_not_applied
-  
-  english_rule_applies <- reduce_or(need_es, 
-                                    need_ies, 
-                                    need_ses, 
-                                    need_ves, 
-                                    need_zes)
-  rule_not_applied <- rule_not_applied & !english_rule_applies
+  rule_not_applied <- rule_not_applied & !(need_es | need_ies | need_ves | need_zes)
   
   # catch-all generic English plural
   need_s <- rule_not_applied
@@ -254,7 +239,6 @@ pluralize_ <- function(words, ...) {
   
   # fix English leftovers
   words[need_zes] <- paste0(words[need_zes], "zes")
-  words[need_ses] <- paste0(words[need_ses], "ses")
   words[need_es] <- paste0(words[need_es], "es")
   words[need_ies] <- replace_last_n_chars_with(words[need_ies], 1L, "ies")
   words[need_ves] <- gsub(words[need_ves], pattern ="fe?$", replacement = "ves")
@@ -267,19 +251,19 @@ pluralize_ <- function(words, ...) {
 
 singularize <- function(words) {
   # invariants
-  is_invariant <- words %like% ending_with(any_of(English_invariant_words)) | 
-    words %like% English_invariant_words_s_string | 
-    words %like% ending_with(any_of(Japanese_words_in_English)) | 
-    words %like% ending_with(any_of(Maori_words_in_English)) | 
+  is_invariant <- endsWithAny(words, English_invariant_words) | 
+    endsWithAny(words, English_uncountable_words) | 
+    endsWithAny(words, Japanese_words_in_English) | 
+    endsWithAny(words, Maori_words_in_English) | 
     endsWith(words, "nese")
   
   # Anglo-Saxon oddities
   is_person <- endsWith(words, "people")
   remove_last3 <- endsWith(words, "children")
   is_brother <- endsWith(words, "brethren")
-  is_man <- endsWith(words, "men") & words %!like% "(\\b[ao]|abdo|acu|albu|bitu|fora|hy|lu|ra|regi|ru|se|speci|sta)men$"
+  is_man <- endsWith(words, "men") & !(endsWithAny(words, c("abdomen", "acumen", "albumen", "bitumen", "foramen", "hymen", "lumen", "ramen", "regimen", "rumen", "semen", "specimen", "stamen")) | words %like% "\\b[ao]men$")
   is_oo <- endsWithAny(words, c("teeth", "feet", "geese"))
-  is_ouse <- words %like% "((\\b|book|head)l|(\\b|dor|field|shrew|tit)m)ice$"
+  is_ouse <- is_ouse <- endsWithAny(words, c("booklice", "headlice", "dormice", "fieldmice", "shrewmice", "titmice")) | words %like% "\\b[lm]ice$"
   remove_last2 <- words %like% "\\boxen$"
   is_die <- words %like% "\\bdice$"
   
@@ -308,32 +292,32 @@ singularize <- function(words) {
   need_um <- endsWith(words, "a") & rule_not_found
   rule_not_found <- rule_not_found & !need_um
   
-  need_is_latin <- words %like% Latin_es_plurals_string & words %!like% "((\\b|brown|bull|hard|hook|shovel|arabi|flavi|fura|man|pyra)n|(hep|lac|mal|pen)t)oses$" & rule_not_found
+  need_is_latin <- (endsWithAny(words, Latin_is_to_es_plurals) | words %like% "\\baxes$") & (endsWithAny(words, English_normal_oses_plurals) | words %like% "\\bnoses$") & rule_not_found
   rule_not_found <- rule_not_found & !need_is_latin
   
   need_ex <- endsWithAny(words, c("codices", "cortices", "indices", "vortices")) & rule_not_found
   need_ix <- endsWithAny(words, c("radices", "trices")) & rule_not_found
-  need_is_greek <- endsWith(words, "eis") & words %!like% "(\\bl|sens)eis$" & rule_not_found
+  need_is_greek <- endsWith(words, "eis") & !(endsWith(words, "senseis") | words %like% "\\bleis$") & rule_not_found
   rule_not_found <- rule_not_found & reduce_nor(need_ex, need_ix, need_is_greek)
   
-  need_f <- words %like% English_ves_plurals_string & rule_not_found
-  need_fe <- words %like% English_ves_plurals_e_string & rule_not_found
-  need_y <- endsWith(words, "ies") & words %!like% English_ie_singulars_string & rule_not_found
+  need_f <- endsWithAny(words, English_f_to_ves_plurals) & rule_not_found
+  need_fe <- endsWithAny(words, English_fe_to_ves_plurals) & rule_not_found
+  need_y <- endsWith(words, "ies") & !(endsWithAny(words, English_ie_singulars_plurals) | words %like% "\\b[lpt]ies$") & rule_not_found
   rule_not_found <- rule_not_found & reduce_nor(need_f, need_fe, need_y)
   
-  remove_last3 <- remove_last3 | ((endsWith(words, "busses") | 
+  remove_last3 <- remove_last3 | ((endsWithAny(words, c("busses", "gasses")) | 
                                      (endsWith(words, "zzes") & 
-                                        words %!like% English_zz_singulars_plurals_string)) & 
+                                        !endsWithAny(words, English_zz_singulars_plurals))) & 
                                     rule_not_found)
   rule_not_found <- rule_not_found & !remove_last3
   
-  remove_last <- remove_last | ((words %like% English_ie_singulars_string | 
+  remove_last <- remove_last | (((endsWithAny(words, English_ie_singulars_plurals) | words %like% "\\b[lpt]ies$") | 
                                    words %like% English_oe_singulars_string | 
                                    words %like% "[aeiouy][^aeioux]es$" | 
                                    endsWith(words, "mmes") | 
-                                   words %like% "(([bcdfglprstz][glr])|(l[csv])|(n[cgrs])|(r[cgsv])|(s[c])|(u)|(((\\b|back|belly|head|stomach|tooth)a|ca|mousta|pana|pista)ch)|(rr)|(tt)|(\\b(ba|ca|ge|ha|mo|pa|pi|ta|wa|cha|try|arti|bati|ripo|langou)st))es$") & 
-                                  words %!like% English_s_singulars_plurals_string & 
-                                  words %!like% ending_with_word(any_of(paste0(Latin_us_to_i_singulars, "es"))) & 
+                                   endsWithAny(words, English_es_to_e_plurals) | 
+                                   words %like% "(?:[bcdfglprstz][glr]|l[csv]|n[cgrs]|p[s]|r[cgsv]|s[c]|tt|u|\\bach)es$") & 
+                                  !endsWithAny(words, English_ses_to_s_plurals) & 
                                   rule_not_found)
   rule_not_found <- rule_not_found & !remove_last
   
@@ -432,20 +416,20 @@ is_singular <- function(words) {
 }
 
 is_plural <- function(words) {
-  is_singular_with_s <- words %like% English_s_singulars_string | 
+  is_singular_with_s <- (endsWithAny(words, English_s_singulars) | words %like% "\\b(?:bu|ga|ibi|len|ye)s$") | 
     (words %like% "[^e]iu?s$" & !endsWithAny(words, all_is_plurals)) | 
-    words %like% ending_with(any_of(Latin_us_to_i_singulars)) | 
+    endsWithAny(words, Latin_us_to_i_singulars) | 
     endsWithAny(words, c("corpus", "genus", "viscus")) | 
-    words %like% Latin_is_singulars_string | 
+    (endsWithAny(words, Latin_is_to_es_singulars) | words %like% "\\baxis$") | 
     endsWith(words, "itis") | 
     endsWith(words, "ss") | 
-    (endsWith(words, "us") & words %!like% ending_with(any_of(English_us_plurals)) & !endsWith(words, "eaus"))
+    (endsWith(words, "us") & !endsWithAny(words, English_us_plurals) & !endsWith(words, "eaus"))
   
   is_plural_without_s <- endsWith(words, "people") | 
     endsWithAny(words, c("brethren", "children")) | 
-    (endsWith(words, "men") & words %!like% "(\\b[ao]|abdo|acu|albu|bitu|fora|hy|lu|ra|regi|ru|se|speci|sta)men$") | 
+    (endsWith(words, "men") & !(endsWithAny(words, c("abdomen", "acumen", "albumen", "bitumen", "foramen", "hymen", "lumen", "ramen", "regimen", "rumen", "semen", "specimen", "stamen")) | words %like% "\\b[ao]men$")) | 
     endsWithAny(words, c("teeth", "feet", "geese")) | 
-    words %like% "((\\b|book|head)l|(\\b|dor|field|shrew|tit)m)ice$" | 
+    (endsWithAny(words, c("booklice", "headlice", "dormice", "fieldmice", "shrewmice", "titmice")) | words %like% "\\b[lm]ice$") | 
     words %like% "\\boxen$" | 
     words %like% "\\bdice$" | 
     endsWithAny(words, c("kobzari", "oblasti")) | 
@@ -457,13 +441,13 @@ is_plural <- function(words) {
     endsWith(words, "matzot") | 
     endsWithAny(words, c("hedra", "mata", "mena", "ria")) | 
     endsWithAny(words, c("genera", "viscera", "corpora")) | 
-    words %like% ending_with(any_of(Latin_us_to_i_plurals)) | 
-    words %like% ending_with(any_of(Latin_us_to_a_plurals))
+    endsWithAny(words, Latin_us_to_i_plurals) | 
+    endsWithAny(words, Latin_us_to_a_plurals)
   
-  is_indeterminate <- words %like% ending_with(any_of(English_invariant_words)) | 
-    words %like% English_invariant_words_s_string | 
-    words %like% ending_with(any_of(Japanese_words_in_English)) | 
-    words %like% ending_with(any_of(Maori_words_in_English)) | 
+  is_indeterminate <- endsWithAny(words, English_invariant_words) | 
+    endsWithAny(words, English_uncountable_words) | 
+    endsWithAny(words, Japanese_words_in_English) | 
+    endsWithAny(words, Maori_words_in_English) | 
     endsWith(words, "nese")
   
   is_plural <- !is_indeterminate & 
