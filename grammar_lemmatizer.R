@@ -238,7 +238,7 @@ digested_word_dictionary <- function(words) {
     orn_to_ear <- endsWith(subset, "shorn")
     subset[orn_to_ear] <- replace_last_n_chars_with(subset[orn_to_ear], 3L, "ear")
     # e.g. "drawn" -> "draw"
-    delete_n <- subset %!like% ending_with_word(any_of(c("blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown")))
+    delete_n <- subset %like% ending_with_word(any_of(c("blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown")))
     subset[delete_n] <- remove_last_n_chars(subset[delete_n], 1L)
     words[subset_scope] <- subset
   }

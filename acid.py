@@ -461,7 +461,7 @@ def digested_word_dictionary(words):
         orn_to_ear = subset.endswith("shorn")
         subset[orn_to_ear] = [string[:-3] + "ear" for string in subset[orn_to_ear]]
         # e.g. "drawn" -> "draw"
-        delete_n = np.array([not(bool(re.search("\\b" + any_of(["blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown"]) + "$", word))) for word in subset])
+        delete_n = np.array([bool(re.search("\\b" + any_of(["blown", "drawn", "grown", "known", "sewn", "shaken", "shown", "sown", "thrown"]) + "$", word)) for word in subset])
         subset[delete_n] = [string[:-1] for string in subset[delete_n]]
         words[subset_scope] = subset
   
