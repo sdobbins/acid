@@ -267,12 +267,12 @@ singularize <- function(words) {
   remove_last2 <- words %like% "\\boxen$"
   is_die <- words %like% "\\bdice$"
   
-  rule_not_found <- reduce_nor(is_invariant, is_person, remove_last3, is_brother, is_man, is_oo, is_ouse, remove_last2, is_die)
+  rule_not_found <- !(is_invariant | is_person | remove_last3 | is_brother | is_man | is_oo | is_ouse | remove_last2 | is_die)
   
   # foreign language rules
   remove_last <- endsWithAny(words, c("kobzari", "oblasti", "eaux", "ae")) & rule_not_found
   need_o <- endsWithAny(words, c("kniazhestva", "celli")) & rule_not_found
-  rule_not_found <- rule_not_found & reduce_nor(remove_last, need_o)
+  rule_not_found <- rule_not_found & !(remove_last | need_o)
   
   need_itis <- endsWith(words, "itides") & rule_not_found
   rule_not_found <- rule_not_found & !need_itis
@@ -282,12 +282,12 @@ singularize <- function(words) {
   
   remove_last2 <- remove_last2 | (endsWithAny(words, c("im", "mata")) & rule_not_found)
   need_ah <- endsWith(words, "ot") & rule_not_found
-  rule_not_found <- rule_not_found & reduce_nor(remove_last2, need_ah)
+  rule_not_found <- rule_not_found & !(remove_last2 | need_ah)
   
   need_ma <- endsWith(words, "mata") & rule_not_found
   need_us <- endsWith(words, "i") & rule_not_found
   need_us_special <- endsWithAny(words, c("corpora", "genera", "viscera")) & rule_not_found
-  rule_not_found <- rule_not_found & reduce_nor(need_ma, need_us, need_us_special)
+  rule_not_found <- rule_not_found & !(need_ma | need_us | need_us_special)
   
   need_um <- endsWith(words, "a") & rule_not_found
   rule_not_found <- rule_not_found & !need_um
@@ -298,12 +298,12 @@ singularize <- function(words) {
   need_ex <- endsWithAny(words, c("codices", "cortices", "indices", "vortices")) & rule_not_found
   need_ix <- endsWithAny(words, c("radices", "trices")) & rule_not_found
   need_is_greek <- endsWith(words, "eis") & !(endsWith(words, "senseis") | words %like% "\\bleis$") & rule_not_found
-  rule_not_found <- rule_not_found & reduce_nor(need_ex, need_ix, need_is_greek)
+  rule_not_found <- rule_not_found & !(need_ex | need_ix | need_is_greek)
   
   need_f <- endsWithAny(words, English_f_to_ves_plurals) & rule_not_found
   need_fe <- endsWithAny(words, English_fe_to_ves_plurals) & rule_not_found
   need_y <- endsWith(words, "ies") & !(endsWithAny(words, English_ie_singulars_plurals) | words %like% "\\b[lpt]ies$") & rule_not_found
-  rule_not_found <- rule_not_found & reduce_nor(need_f, need_fe, need_y)
+  rule_not_found <- rule_not_found & !(need_f | need_fe | need_y)
   
   remove_last3 <- remove_last3 | ((endsWithAny(words, c("busses", "gasses")) | 
                                      (endsWith(words, "zzes") & 
